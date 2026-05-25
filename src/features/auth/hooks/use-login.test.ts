@@ -3,6 +3,7 @@ import useLogin from "./use-login";
 
 const mockLogin = jest.fn();
 const mockPush = jest.fn();
+const mockResetApolloCache = jest.fn().mockResolvedValue(undefined);
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({ push: mockPush }),
@@ -10,6 +11,12 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("@apollo/client/react", () => ({
   useLazyQuery: () => [mockLogin, { loading: false, error: null }],
+}));
+
+jest.mock("../../../lib/apollo/client", () => ({
+  __esModule: true,
+  default: {},
+  resetApolloCache: (...args: unknown[]) => mockResetApolloCache(...args),
 }));
 
 jest.mock("../lib/auth-storage", () => ({
@@ -47,6 +54,7 @@ describe("useLogin", () => {
     });
 
     expect(mockPush).toHaveBeenCalledWith("/users");
+    expect(mockResetApolloCache).toHaveBeenCalledTimes(1);
     expect(result.current.error).toBeNull();
   });
 

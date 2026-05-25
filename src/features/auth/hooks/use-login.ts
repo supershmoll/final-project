@@ -7,6 +7,7 @@ import { LOGIN_QUERY } from "../graphql/login.query";
 import { saveAuthTokens } from "../lib/auth-storage";
 import type { LoginQueryData, LoginQueryVariables } from "../types/auth.types";
 import { extractGraphqlErrorMessage } from "@/shared/utils/formatMutationError";
+import { resetApolloCache } from "@/lib/apollo/client";
 
 const LOGIN_FAILED_MESSAGE =
   "Unable to sign in. Please check your credentials and try again.";
@@ -39,6 +40,7 @@ function useLogin() {
           authResult.refresh_token,
           authResult.user,
         );
+        await resetApolloCache();
         router.push("/users");
         return;
       }

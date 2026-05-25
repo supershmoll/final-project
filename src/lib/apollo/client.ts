@@ -79,6 +79,7 @@ const authErrorLink = new ErrorLink(({ error, operation, forward }) => {
 
   if (operation.getContext().authRetry) {
     clearAuthTokens();
+    void client.clearStore();
     return;
   }
 
@@ -88,6 +89,7 @@ const authErrorLink = new ErrorLink(({ error, operation, forward }) => {
     void tryRefreshSession().then((isRefreshed) => {
       if (!isRefreshed) {
         clearAuthTokens();
+        void client.clearStore();
         observer.error(error);
         return;
       }
@@ -126,5 +128,9 @@ const client = new ApolloClient({
     .concat(httpLink),
   cache: new InMemoryCache(),
 });
+
+export async function resetApolloCache(): Promise<void> {
+  await client.clearStore();
+}
 
 export default client;
