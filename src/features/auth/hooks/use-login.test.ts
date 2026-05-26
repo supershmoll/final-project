@@ -58,7 +58,7 @@ describe("useLogin", () => {
     expect(result.current.error).toBeNull();
   });
 
-  it("sets error state and logs when login throws", async () => {
+  it("sets error state when login throws invalid credentials", async () => {
     mockLogin.mockRejectedValue({
       graphQLErrors: [{ message: "Invalid credentials" }],
     });
@@ -75,12 +75,7 @@ describe("useLogin", () => {
     await waitFor(() => {
       expect(result.current.error?.message).toBe("Invalid credentials");
     });
-    expect(console.error).toHaveBeenCalledWith(
-      "Error logging in",
-      expect.objectContaining({
-        graphQLErrors: [{ message: "Invalid credentials" }],
-      }),
-    );
+    expect(console.error).not.toHaveBeenCalled();
     expect(mockPush).not.toHaveBeenCalled();
   });
 
