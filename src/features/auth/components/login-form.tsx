@@ -22,10 +22,23 @@ import useLogin from "../hooks/use-login";
 import AuthFormBody from "./auth-form-body";
 import AuthFormTabs from "./auth-form-tabs";
 import { useState } from "react";
+import {
+  consumeSessionEndReason,
+  isTelegramSessionEndMessage,
+} from "../lib/session-end-reason";
+import { useTranslation } from "@/i18n/use-translation";
 
 function LoginForm() {
   const { loading, error, loginUser } = useLogin();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
+  const [sessionReason] = useState(() => consumeSessionEndReason());
+
+  const sessionNotice = sessionReason
+    ? isTelegramSessionEndMessage(sessionReason)
+      ? t("auth.sessionExpired.telegram")
+      : sessionReason
+    : null;
   const {
     register,
     handleSubmit,
@@ -121,6 +134,15 @@ function LoginForm() {
         >
           Forgot password
         </Link>
+        {sessionNotice ? (
+          <Alert
+            sx={authFormStyles.formAlert}
+            severity="warning"
+            data-testid="login-session-notice"
+          >
+            {sessionNotice}
+          </Alert>
+        ) : null}
         {error && (
           <Alert
             sx={authFormStyles.formAlert}

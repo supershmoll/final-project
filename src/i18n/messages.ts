@@ -20,6 +20,38 @@ export type MessageKey =
   | "nav.projects"
   | "nav.departments"
   | "nav.positions"
+  | "nav.availability"
+  | "availability.filter.all"
+  | "availability.status.office"
+  | "availability.status.remote"
+  | "availability.status.sickDay"
+  | "availability.status.sickList"
+  | "availability.status.vacation"
+  | "availability.status.unknown"
+  | "availability.table.employee"
+  | "availability.table.status"
+  | "availability.table.updated"
+  | "availability.table.updatedBy"
+  | "availability.empty"
+  | "availability.liveIndicator"
+  | "availability.myStatus"
+  | "availability.updatedAt"
+  | "availability.noStatusYet"
+  | "availability.updatedBy.bot"
+  | "availability.updatedBy.user"
+  | "availability.updatedBy.admin"
+  | "telegram.title"
+  | "telegram.description"
+  | "telegram.usernameLabel"
+  | "telegram.usernamePlaceholder"
+  | "telegram.connect"
+  | "telegram.disconnect"
+  | "telegram.connectedAs"
+  | "telegram.pending"
+  | "telegram.refreshStatus"
+  | "telegram.help"
+  | "telegram.validation.username"
+  | "auth.sessionExpired.telegram"
   | "common.cancel"
   | "common.create"
   | "common.update"
@@ -112,6 +144,43 @@ const en: Messages = {
   "nav.projects": "Projects",
   "nav.departments": "Departments",
   "nav.positions": "Positions",
+  "nav.availability": "Team availability",
+  "availability.filter.all": "All statuses",
+  "availability.status.office": "Office",
+  "availability.status.remote": "Remote",
+  "availability.status.sickDay": "Sick day",
+  "availability.status.sickList": "Sick leave",
+  "availability.status.vacation": "Vacation",
+  "availability.status.unknown": "Unknown",
+  "availability.table.employee": "Employee",
+  "availability.table.status": "Status",
+  "availability.table.updated": "Updated",
+  "availability.table.updatedBy": "Source",
+  "availability.empty": "No team members match your filters.",
+  "availability.liveIndicator": "Live · refreshes every 30s",
+  "availability.myStatus": "Your status",
+  "availability.updatedAt": "Updated",
+  "availability.noStatusYet": "Set your status in Telegram to see it here.",
+  "availability.updatedBy.bot": "Telegram bot",
+  "availability.updatedBy.user": "Web app",
+  "availability.updatedBy.admin": "Admin",
+  "telegram.title": "Telegram status bot",
+  "telegram.description":
+    "Connect Telegram to receive daily status prompts and confirm your availability.",
+  "telegram.usernameLabel": "Telegram username",
+  "telegram.usernamePlaceholder": "your_username",
+  "telegram.connect": "Connect Telegram",
+  "telegram.disconnect": "Disconnect",
+  "telegram.connectedAs": "Connected as",
+  "telegram.pending":
+    "Finish in Telegram — open the bot chat and tap Start. This page updates automatically.",
+  "telegram.refreshStatus": "Check again",
+  "telegram.help":
+    "Daily prompts arrive at 9:00 MSK. Confirm before 12:00 or your session will end.",
+  "telegram.validation.username":
+    "Enter a valid Telegram username (5–32 characters, letters, numbers, underscore).",
+  "auth.sessionExpired.telegram":
+    "Your session ended because today's work status was not confirmed in Telegram. Please sign in again.",
   "common.cancel": "Cancel",
   "common.create": "Create",
   "common.update": "Update",
@@ -203,6 +272,44 @@ const ru: Messages = {
   "nav.projects": "Проекты",
   "nav.departments": "Отделы",
   "nav.positions": "Должности",
+  "nav.availability": "Доступность команды",
+  "availability.filter.all": "Все статусы",
+  "availability.status.office": "В офисе",
+  "availability.status.remote": "Удалённо",
+  "availability.status.sickDay": "Болею",
+  "availability.status.sickList": "На больничном",
+  "availability.status.vacation": "В отпуске",
+  "availability.status.unknown": "Неизвестно",
+  "availability.table.employee": "Сотрудник",
+  "availability.table.status": "Статус",
+  "availability.table.updated": "Обновлено",
+  "availability.table.updatedBy": "Источник",
+  "availability.empty": "Нет сотрудников по выбранным фильтрам.",
+  "availability.liveIndicator": "Онлайн · обновление каждые 30 с",
+  "availability.myStatus": "Ваш статус",
+  "availability.updatedAt": "Обновлено",
+  "availability.noStatusYet":
+    "Укажите статус в Telegram, чтобы он отображался здесь.",
+  "availability.updatedBy.bot": "Telegram-бот",
+  "availability.updatedBy.user": "Веб-приложение",
+  "availability.updatedBy.admin": "Админ",
+  "telegram.title": "Telegram-бот статуса",
+  "telegram.description":
+    "Подключите Telegram для ежедневных запросов статуса и подтверждения доступности.",
+  "telegram.usernameLabel": "Имя пользователя Telegram",
+  "telegram.usernamePlaceholder": "ваш_username",
+  "telegram.connect": "Подключить Telegram",
+  "telegram.disconnect": "Отключить",
+  "telegram.connectedAs": "Подключено как",
+  "telegram.pending":
+    "Завершите в Telegram — откройте чат с ботом и нажмите Start. Страница обновится автоматически.",
+  "telegram.refreshStatus": "Проверить снова",
+  "telegram.help":
+    "Запросы приходят в 9:00 МСК. Подтвердите до 12:00, иначе сессия будет завершена.",
+  "telegram.validation.username":
+    "Введите корректное имя пользователя Telegram (5–32 символа: буквы, цифры, _).",
+  "auth.sessionExpired.telegram":
+    "Сессия завершена, так как сегодняшний рабочий статус не был подтверждён в Telegram. Войдите снова.",
   "common.cancel": "Отмена",
   "common.create": "Создать",
   "common.update": "Обновить",
@@ -295,6 +402,44 @@ const de: Messages = {
   "nav.projects": "Projekte",
   "nav.departments": "Abteilungen",
   "nav.positions": "Positionen",
+  "nav.availability": "Team-Verfügbarkeit",
+  "availability.filter.all": "Alle Status",
+  "availability.status.office": "Im Büro",
+  "availability.status.remote": "Remote",
+  "availability.status.sickDay": "Krank (Tag)",
+  "availability.status.sickList": "Krankgeschrieben",
+  "availability.status.vacation": "Im Urlaub",
+  "availability.status.unknown": "Unbekannt",
+  "availability.table.employee": "Mitarbeiter",
+  "availability.table.status": "Status",
+  "availability.table.updated": "Aktualisiert",
+  "availability.table.updatedBy": "Quelle",
+  "availability.empty": "Keine Teammitglieder für die gewählten Filter.",
+  "availability.liveIndicator": "Live · Aktualisierung alle 30 s",
+  "availability.myStatus": "Ihr Status",
+  "availability.updatedAt": "Aktualisiert",
+  "availability.noStatusYet":
+    "Setzen Sie Ihren Status in Telegram, damit er hier erscheint.",
+  "availability.updatedBy.bot": "Telegram-Bot",
+  "availability.updatedBy.user": "Web-App",
+  "availability.updatedBy.admin": "Admin",
+  "telegram.title": "Telegram-Statusbot",
+  "telegram.description":
+    "Verbinden Sie Telegram, um tägliche Statusabfragen zu erhalten und Ihre Verfügbarkeit zu bestätigen.",
+  "telegram.usernameLabel": "Telegram-Benutzername",
+  "telegram.usernamePlaceholder": "ihr_benutzername",
+  "telegram.connect": "Telegram verbinden",
+  "telegram.disconnect": "Trennen",
+  "telegram.connectedAs": "Verbunden als",
+  "telegram.pending":
+    "In Telegram abschließen — Bot-Chat öffnen und Start tippen. Diese Seite aktualisiert sich automatisch.",
+  "telegram.refreshStatus": "Erneut prüfen",
+  "telegram.help":
+    "Tägliche Abfragen um 9:00 MSK. Bestätigen Sie vor 12:00, sonst endet Ihre Sitzung.",
+  "telegram.validation.username":
+    "Geben Sie einen gültigen Telegram-Benutzernamen ein (5–32 Zeichen: Buchstaben, Zahlen, _).",
+  "auth.sessionExpired.telegram":
+    "Ihre Sitzung wurde beendet, weil der heutige Arbeitsstatus in Telegram nicht bestätigt wurde. Bitte melden Sie sich erneut an.",
   "common.cancel": "Abbrechen",
   "common.create": "Erstellen",
   "common.update": "Aktualisieren",

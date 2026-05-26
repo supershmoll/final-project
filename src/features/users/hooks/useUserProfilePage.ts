@@ -18,6 +18,7 @@ export function useUserProfilePage() {
   const canEditProfile = Boolean(
     user && (isAdmin || currentUserId === user.id),
   );
+  const isOwnProfile = Boolean(user && currentUserId === user.id);
 
   return {
     user,
@@ -27,5 +28,6 @@ export function useUserProfilePage() {
     breadcrumbName,
     memberSinceText,
     canEditProfile,
+    isOwnProfile,
   };
 }

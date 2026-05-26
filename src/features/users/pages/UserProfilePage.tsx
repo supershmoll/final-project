@@ -20,6 +20,7 @@ export function UserProfilePage() {
     breadcrumbName,
     memberSinceText,
     canEditProfile,
+    isOwnProfile,
   } = useUserProfilePage();
 
   return (
@@ -51,6 +52,7 @@ export function UserProfilePage() {
           user={user}
           memberSinceText={memberSinceText}
           canEditProfile={canEditProfile}
+          isOwnProfile={isOwnProfile}
           onUserUpdated={refetch}
         />
       ) : null}

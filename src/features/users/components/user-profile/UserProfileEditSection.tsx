@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { TelegramConnectSection } from "@/features/availability/components/TelegramConnectSection";
 import { UserProfileForm } from "@/features/users/components/user-profile/UserProfileForm";
 import { UserProfileHeader } from "@/features/users/components/user-profile/UserProfileHeader";
 import { userProfileSx } from "@/features/users/components/user-profile/userProfile.styles";
@@ -10,6 +11,7 @@ type UserProfileEditSectionProps = {
   user: UserRow;
   memberSinceText: string;
   canEditProfile: boolean;
+  isOwnProfile: boolean;
   onUserUpdated: () => Promise<unknown>;
 };
 
@@ -17,6 +19,7 @@ export function UserProfileEditSection({
   user,
   memberSinceText,
   canEditProfile,
+  isOwnProfile,
   onUserUpdated,
 }: UserProfileEditSectionProps) {
   const {
@@ -65,6 +68,11 @@ export function UserProfileEditSection({
           }}
         />
       </Box>
+      {isOwnProfile ? (
+        <Box sx={userProfileSx.editSection}>
+          <TelegramConnectSection />
+        </Box>
+      ) : null}
     </>
   );
 }

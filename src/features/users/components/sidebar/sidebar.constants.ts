@@ -2,6 +2,7 @@ import type { SvgIconComponent } from "@mui/icons-material";
 import type { MessageKey } from "@/i18n/messages";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import CorporateFareOutlinedIcon from "@mui/icons-material/CorporateFareOutlined";
+import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import TranslateIcon from "@mui/icons-material/Translate";
@@ -112,6 +113,14 @@ const languagesCatalogNavItem: SidebarNavItem = {
 /** Default sidebar for non-admin users */
 export const SIDEBAR_NAV_ITEMS: SidebarNavItem[] = [
   employeesNavItem,
+  {
+    id: "availability",
+    labelKey: "nav.availability",
+    icon: EventAvailableOutlinedIcon,
+    href: "/availability",
+    isActive: (pathname) => pathname.startsWith("/availability"),
+    navigable: true,
+  },
   userSkillsNavItem,
   userLanguagesNavItem,
   {
@@ -130,6 +139,15 @@ export const ADMIN_SIDEBAR_SECTIONS: SidebarNavSection[] = [
   {
     items: [
       employeesNavItem,
+      {
+        id: "availability",
+        labelKey: "nav.availability",
+        icon: EventAvailableOutlinedIcon,
+        href: "/availability",
+        isActive: (pathname) => pathname.startsWith("/availability"),
+        navigable: true,
+        showInMobileBar: false,
+      },
       {
         id: "projects",
         labelKey: "nav.projects",

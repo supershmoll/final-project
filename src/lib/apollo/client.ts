@@ -12,7 +12,23 @@ import {
   getAccessToken,
 } from "@/features/auth/lib/auth-storage";
 import isAuthFailure from "@/features/auth/lib/is-auth-failure";
+import {
+  extractAuthErrorMessage,
+  isTelegramSessionEndMessage,
+  setSessionEndReason,
+} from "@/features/auth/lib/session-end-reason";
 import tryRefreshSession from "@/features/auth/lib/try-refresh-session";
+import {
+  shouldLogGraphqlError,
+  shouldLogHttpGraphqlResponse,
+} from "./should-log-graphql-error";
+
+function rememberSessionEndReason(error: unknown) {
+  const message = extractAuthErrorMessage(error);
+  if (message && isTelegramSessionEndMessage(message)) {
+    setSessionEndReason(message);
+  }
+}
 
 function getGraphqlUri() {
   return (
@@ -50,15 +66,25 @@ const authLink = new ApolloLink((operation, forward) => {
 });
 
 const loggingErrorLink = new ErrorLink(({ error, operation }) => {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+
   if (CombinedGraphQLErrors.is(error)) {
+    const graphQLErrors = error.errors.map((graphQLError) => ({
+      message: graphQLError.message,
+      path: graphQLError.path,
+      extensions: graphQLError.extensions,
+    }));
+
+    if (!shouldLogGraphqlError(operation.operationName, graphQLErrors)) {
+      return;
+    }
+
     console.error("GraphQL errors", {
       operation: operation.operationName,
       variables: operation.variables,
-      graphQLErrors: error.errors.map((graphQLError) => ({
-        message: graphQLError.message,
-        path: graphQLError.path,
-        extensions: graphQLError.extensions,
-      })),
+      graphQLErrors,
     });
     return;
   }
@@ -78,6 +104,7 @@ const authErrorLink = new ErrorLink(({ error, operation, forward }) => {
   }
 
   if (operation.getContext().authRetry) {
+    rememberSessionEndReason(error);
     clearAuthTokens();
     void client.clearStore();
     return;
@@ -88,6 +115,7 @@ const authErrorLink = new ErrorLink(({ error, operation, forward }) => {
 
     void tryRefreshSession().then((isRefreshed) => {
       if (!isRefreshed) {
+        rememberSessionEndReason(error);
         clearAuthTokens();
         void client.clearStore();
         observer.error(error);
@@ -112,9 +140,16 @@ const httpLink = new HttpLink({
     if (!res.ok) {
       try {
         const text = await res.clone().text();
-        console.error("GraphQL HTTP error", res.status, text);
+        if (
+          process.env.NODE_ENV === "development" &&
+          shouldLogHttpGraphqlResponse(res.status, text)
+        ) {
+          console.error("GraphQL HTTP error", res.status, text);
+        }
       } catch {
-        console.error("GraphQL HTTP error", res.status);
+        if (process.env.NODE_ENV === "development") {
+          console.error("GraphQL HTTP error", res.status);
+        }
       }
     }
     return res;

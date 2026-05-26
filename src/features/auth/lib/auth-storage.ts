@@ -63,6 +63,23 @@ export const clearAuthTokens = (): void => {
   notifyAuthStorageChanged();
 };
 
+/** Drop expired JWTs so stale sessions do not spam protected queries. */
+export const purgeExpiredAuthTokens = (): void => {
+  const token = getAccessToken();
+  if (!token) return;
+
+  const payload = decodeJwtPayload(token);
+  if (!payload) {
+    clearAuthTokens();
+    return;
+  }
+
+  const exp = payload.exp;
+  if (typeof exp === "number" && exp * 1000 <= Date.now()) {
+    clearAuthTokens();
+  }
+};
+
 export const subscribeToAuthTokens = (callback: () => void): (() => void) => {
   if (typeof window === "undefined") return () => {};
   window.addEventListener(AUTH_STORAGE_CHANGED_EVENT, callback);

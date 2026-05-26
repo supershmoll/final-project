@@ -48,7 +48,6 @@ function useLogin() {
       console.error("Login failed: no auth result returned", result);
       setLoginError(LOGIN_FAILED_MESSAGE);
     } catch (error) {
-      console.error("Error logging in", error);
       setLoginError(getLoginErrorMessage(error));
     }
   };
