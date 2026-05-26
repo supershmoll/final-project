@@ -7,6 +7,7 @@ import formatDisplayDate from "@/lib/format-display-date";
 import type { CvProject } from "../../shared/types";
 import { catalogTableSx } from "@/shared/styles/catalogTable.styles";
 import { cvsStyles } from "@/features/cvs/styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type CvProjectCardProps = {
   project: CvProject;
@@ -15,6 +16,7 @@ type CvProjectCardProps = {
 };
 
 function CvProjectCard({ project, canEdit, onOpenMenu }: CvProjectCardProps) {
+  const { t } = useTranslation();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
     onOpenMenu(event, project);
   };
@@ -32,7 +34,7 @@ function CvProjectCard({ project, canEdit, onOpenMenu }: CvProjectCardProps) {
           {formatDisplayDate(project.start_date)}
         </Typography>
         <Typography sx={[cvsStyles.projectGridCell, cvsStyles.projectMeta]}>
-          {formatDisplayDate(project.end_date)}
+          {formatDisplayDate(project.end_date, t("common.tillNow"))}
         </Typography>
         <Box sx={cvsStyles.projectGridActions}>
           {canEdit ? (

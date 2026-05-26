@@ -11,6 +11,7 @@ import { formDialogSx } from "@/shared/styles/formDialog.styles";
 import { useSkillFormDialog } from "@/features/skills/hooks/useSkillFormDialog";
 import type { SkillFormValues } from "@/features/skills/types/skillForm.types";
 import type { SkillCategoryOption, SkillRow } from "../types";
+import { useTranslation } from "@/i18n/use-translation";
 
 type SkillFormDialogProps = {
   open: boolean;
@@ -30,6 +31,7 @@ function SkillFormDialogContent({
   onClose,
   onSubmit,
 }: Omit<SkillFormDialogProps, "open">) {
+  const { t } = useTranslation();
   const {
     labels,
     name,
@@ -74,7 +76,7 @@ function SkillFormDialogContent({
         >
           {categories.length === 0 ? (
             <MenuItem value="" disabled>
-              No categories
+              {t("common.noCategories")}
             </MenuItem>
           ) : (
             categories.map((category) => (

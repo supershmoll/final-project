@@ -16,6 +16,7 @@ import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import type { CreateCvFormValues } from "../../list/schemas/create-cv.schema";
 import CvDetailsFormFields from "../details/CvDetailsFormFields";
 import { cvsStyles } from "../../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type CreateCvDialogProps = {
   open: boolean;
@@ -40,6 +41,8 @@ function CreateCvDialog({
   errorMessage,
   onSubmit,
 }: CreateCvDialogProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={open}
@@ -49,11 +52,11 @@ function CreateCvDialog({
       maxWidth={false}
     >
       <DialogTitle sx={cvsStyles.dialogTitle}>
-        Create CV
+        {t("cvs.dialog.createTitle")}
         <IconButton
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           size="small"
         >
           <CloseIcon />
@@ -92,7 +95,7 @@ function CreateCvDialog({
               sx={cvsStyles.dialogCreateCvCancelButton}
               disabled={isPending}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               type="submit"
@@ -107,7 +110,7 @@ function CreateCvDialog({
               {isPending ? (
                 <CircularProgress size={18} color="inherit" />
               ) : (
-                "Create"
+                t("common.create")
               )}
             </Button>
           </Stack>

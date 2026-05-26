@@ -47,7 +47,7 @@ export type ProjectCandidatesFilters = {
   educationHint?: string;
   departmentId?: string;
   positionId?: string;
-  requireAvailable?: boolean;
+  availabilityStatuses?: AvailabilityStatus[];
   limit?: number;
 };
 

@@ -1,5 +1,5 @@
-import { CONFIRM_BULK_REMOVE_LANGUAGES_LABELS } from "@/features/users/constants/userLanguages.constants";
-import { bulkRemoveMessage } from "@/features/users/utils/bulkRemoveMessages";
+import { useUserLanguageDialogLabels } from "@/i18n/hooks/use-user-language-dialog-labels";
+import { bulkRemoveMessage } from "@/i18n/utils/bulk-remove-message";
 import { ProfileBulkRemoveDialog } from "../ProfileBulkRemoveDialog";
 import type { ConfirmBulkRemoveLanguagesDialogProps } from "./userLanguageDialogs.types";
 
@@ -11,17 +11,19 @@ export function ConfirmBulkRemoveLanguagesDialog({
   submitting,
   errorMessage,
 }: ConfirmBulkRemoveLanguagesDialogProps) {
+  const labels = useUserLanguageDialogLabels();
+
   return (
     <ProfileBulkRemoveDialog
       open={open}
-      title={CONFIRM_BULK_REMOVE_LANGUAGES_LABELS.title}
-      cancelLabel={CONFIRM_BULK_REMOVE_LANGUAGES_LABELS.cancel}
-      deleteLabel={CONFIRM_BULK_REMOVE_LANGUAGES_LABELS.delete}
+      title={labels.bulkRemove.title}
+      cancelLabel={labels.bulkRemove.cancel}
+      deleteLabel={labels.bulkRemove.delete}
       message={bulkRemoveMessage(
         selectedCount,
-        "Remove this language from the profile? This cannot be undone.",
-        (count) =>
-          `Remove ${count} languages from the profile? This cannot be undone.`,
+        labels.bulkRemove.one,
+        labels.bulkRemove.manyPrefix,
+        labels.bulkRemove.manySuffix,
       )}
       submitting={submitting}
       errorMessage={errorMessage}

@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import { FORM_INPUT_LABEL_SLOT_PROPS } from "@/shared/constants/formDialog.constants";
 import { formDialogSx } from "@/features/users/components/user-profile/userLanguages.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 export type SkillFormDialogFieldsProps = {
   title: string;
@@ -42,6 +43,8 @@ export function SkillFormDialogFields({
   submitError,
   onClose,
 }: SkillFormDialogFieldsProps) {
+  const { t } = useTranslation();
+
   return (
     <>
       <DialogTitle component="div" sx={formDialogSx.addLanguageDialogTitleRoot}>
@@ -51,7 +54,7 @@ export function SkillFormDialogFields({
           </Box>
           <IconButton
             type="button"
-            aria-label="Close dialog"
+            aria-label={t("common.closeDialog")}
             onClick={onClose}
             size="small"
             sx={formDialogSx.dialogCloseBtn}
@@ -61,7 +64,7 @@ export function SkillFormDialogFields({
         </Box>
       </DialogTitle>
       <DialogContent sx={formDialogSx.addLanguageDialogContent}>
-        {loading ? <Alert severity="info">Loading…</Alert> : null}
+        {loading ? <Alert severity="info">{t("common.loading")}</Alert> : null}
         {!loading && emptySkillsMessage ? (
           <Alert severity="warning">{emptySkillsMessage}</Alert>
         ) : null}
@@ -83,7 +86,7 @@ export function SkillFormDialogFields({
             >
               {!skillSelectDisabled ? (
                 <MenuItem value="">
-                  <em>Select skill</em>
+                  <em>{t("common.selectSkill")}</em>
                 </MenuItem>
               ) : null}
               {skillOptions.map((item) => (

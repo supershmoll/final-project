@@ -1,8 +1,4 @@
 import {
-  USER_PROFILE_AVATAR_SIZE_ERROR,
-  USER_PROFILE_AVATAR_TYPE_ERROR,
-} from "@/features/users/constants/userProfile.constants";
-import {
   isAvatarImageFile,
   readAvatarFile,
   validateAvatarFile,
@@ -28,10 +24,8 @@ describe("avatarFile utils", () => {
     });
     const valid = new File(["x"], "photo.png", { type: "image/png" });
 
-    expect(validateAvatarFile(invalidType)).toBe(
-      USER_PROFILE_AVATAR_TYPE_ERROR,
-    );
-    expect(validateAvatarFile(tooLarge)).toBe(USER_PROFILE_AVATAR_SIZE_ERROR);
+    expect(validateAvatarFile(invalidType)).toBe("profile.avatar.typeError");
+    expect(validateAvatarFile(tooLarge)).toBe("profile.avatar.sizeError");
     expect(validateAvatarFile(valid)).toBeNull();
   });
 

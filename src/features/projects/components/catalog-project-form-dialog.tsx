@@ -21,6 +21,7 @@ import type { CatalogProjectFormDialogProps } from "../types";
 import ProjectEnvironmentField from "./project-environment-field";
 import { ProjectAiSuggestSection } from "./project-ai-suggest-section";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 function CatalogProjectFormDialog({
   open,
@@ -35,8 +36,13 @@ function CatalogProjectFormDialog({
   onSubmit,
   onApplySuggestion,
 }: CatalogProjectFormDialogProps) {
-  const title = mode === "create" ? "Create project" : "Update project";
-  const submitLabel = mode === "create" ? "Create" : "Update";
+  const { t } = useTranslation();
+  const title =
+    mode === "create"
+      ? t("projects.dialog.createTitle")
+      : t("projects.dialog.editTitle");
+  const submitLabel =
+    mode === "create" ? t("common.create") : t("common.update");
   const maxDate = getProjectMaxDate();
 
   return (
@@ -52,7 +58,7 @@ function CatalogProjectFormDialog({
         <IconButton
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           size="small"
         >
           <CloseIcon />
@@ -72,7 +78,7 @@ function CatalogProjectFormDialog({
           ) : null}
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
-              label="Name"
+              label={t("projects.field.name")}
               sx={cvsStyles.formField}
               fullWidth
               autoFocus
@@ -84,7 +90,7 @@ function CatalogProjectFormDialog({
               {...register("name")}
             />
             <TextField
-              label="Domain"
+              label={t("table.domain")}
               sx={cvsStyles.formField}
               fullWidth
               error={!!errors.domain}
@@ -99,7 +105,7 @@ function CatalogProjectFormDialog({
           </Stack>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
-              label="Start Date"
+              label={t("table.startDate")}
               type="date"
               sx={cvsStyles.formField}
               fullWidth
@@ -115,7 +121,7 @@ function CatalogProjectFormDialog({
               {...register("startDate")}
             />
             <TextField
-              label="End Date"
+              label={t("table.endDate")}
               type="date"
               sx={cvsStyles.formField}
               fullWidth
@@ -128,14 +134,13 @@ function CatalogProjectFormDialog({
               }}
               error={!!errors.endDate}
               helperText={
-                errors.endDate?.message ??
-                "Leave empty if the project is ongoing"
+                errors.endDate?.message ?? t("projects.field.ongoingHint")
               }
               {...register("endDate")}
             />
           </Stack>
           <TextField
-            label="Description"
+            label={t("projects.field.description")}
             sx={cvsStyles.formField}
             fullWidth
             multiline
@@ -158,7 +163,7 @@ function CatalogProjectFormDialog({
       </DialogContent>
       <DialogActions sx={cvsStyles.dialogActions}>
         <Button type="button" onClick={onClose} sx={cvsStyles.cancelButton}>
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           type="submit"

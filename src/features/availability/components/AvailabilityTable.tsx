@@ -11,6 +11,7 @@ import { useTranslation } from "@/i18n/use-translation";
 import { catalogTableSx } from "@/shared/styles";
 import type { TeamAvailabilityRow } from "../types";
 import { formatEmployeeName } from "../utils/availability.utils";
+import { availabilitySx } from "../styles/availability.styles";
 import { AvailabilityStatusChip } from "./AvailabilityStatusChip";
 
 type AvailabilityTableProps = {
@@ -46,10 +47,13 @@ export function AvailabilityTable({ rows }: AvailabilityTableProps) {
     <TableContainer
       component={Paper}
       elevation={0}
-      sx={catalogTableSx.tableContainer}
+      sx={[catalogTableSx.tableContainer, availabilitySx.tableContainer]}
       data-testid="availability-table"
     >
-      <Table sx={catalogTableSx.table} aria-label="team availability table">
+      <Table
+        sx={[catalogTableSx.table, availabilitySx.table]}
+        aria-label="team availability table"
+      >
         <TableHead>
           <TableRow>
             <TableCell sx={catalogTableSx.headFirstNameCell}>
@@ -63,7 +67,12 @@ export function AvailabilityTable({ rows }: AvailabilityTableProps) {
             >
               {t("table.department")}
             </TableCell>
-            <TableCell sx={catalogTableSx.headEmailCell}>
+            <TableCell
+              sx={[
+                catalogTableSx.headEmailCell,
+                availabilitySx.tableHeadStatus,
+              ]}
+            >
               {t("availability.table.status")}
             </TableCell>
             <TableCell
@@ -86,18 +95,12 @@ export function AvailabilityTable({ rows }: AvailabilityTableProps) {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.userId} hover>
-              <TableCell>
-                <Typography sx={{ color: "var(--app-text)", fontWeight: 500 }}>
+            <TableRow key={row.userId} sx={catalogTableSx.row}>
+              <TableCell sx={availabilitySx.employeeCell}>
+                <Typography sx={availabilitySx.employeeName}>
                   {formatEmployeeName(row)}
                 </Typography>
-                <Typography
-                  sx={{
-                    color: "var(--app-text-muted)",
-                    fontSize: 13,
-                    display: { xs: "block", md: "none" },
-                  }}
-                >
+                <Typography sx={availabilitySx.employeeMeta}>
                   {row.department || "—"}
                 </Typography>
               </TableCell>
@@ -109,7 +112,7 @@ export function AvailabilityTable({ rows }: AvailabilityTableProps) {
               >
                 {row.department || "—"}
               </TableCell>
-              <TableCell>
+              <TableCell sx={availabilitySx.statusCell}>
                 <AvailabilityStatusChip status={row.status} />
               </TableCell>
               <TableCell

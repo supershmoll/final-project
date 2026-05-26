@@ -16,6 +16,9 @@ const pillButtonBase: SxProps<Theme> = {
   fontWeight: 700,
   letterSpacing: 0.6,
   boxShadow: "none",
+  boxSizing: "border-box",
+  lineHeight: 1,
+  py: 0,
 };
 
 const dialogCreateCvButtonBase: SxProps<Theme> = {
@@ -653,6 +656,14 @@ export const cvsStyles = {
       maxWidth: 220,
       m: 0,
     },
+    "@media (max-width: 767px)": {
+      gap: 1,
+      "& > *": {
+        flex: "1 1 0",
+        minWidth: 0,
+        maxWidth: "none",
+      },
+    },
   },
 
   dialogMessage: {
@@ -669,7 +680,7 @@ export const cvsStyles = {
     width: "100%",
     height: { xs: 40, sm: 48 },
     minHeight: { xs: 40, sm: 48 },
-    fontSize: { xs: 11, sm: 12 },
+    fontSize: 14,
     px: { xs: 2, sm: 4 },
     bgcolor: "transparent",
     backgroundColor: "transparent",
@@ -708,6 +719,15 @@ export const cvsStyles = {
     backgroundColor: "transparent",
     color: "var(--app-text-muted)",
     border: "1px solid var(--app-control-border)",
+    "@media (max-width: 767px)": {
+      minWidth: 0,
+      flex: "1 1 0",
+      height: 44,
+      minHeight: 44,
+      px: 2,
+      fontSize: 12,
+      letterSpacing: 0.4,
+    },
     "@media (hover: hover)": {
       "&:hover": {
         bgcolor: "transparent",
@@ -749,6 +769,15 @@ export const cvsStyles = {
     letterSpacing: 0.6,
     bgcolor: "var(--color-primary)",
     color: "var(--app-on-primary)",
+    "@media (max-width: 767px)": {
+      minWidth: 0,
+      flex: "1 1 0",
+      height: 44,
+      minHeight: 44,
+      px: 2,
+      fontSize: 12,
+      letterSpacing: 0.4,
+    },
     "@media (hover: hover)": {
       "&:hover": {
         bgcolor: "var(--color-primary-hover)",
@@ -770,6 +799,15 @@ export const cvsStyles = {
     letterSpacing: 0.6,
     bgcolor: "var(--app-overlay-25)",
     color: "var(--app-text-muted)",
+    "@media (max-width: 767px)": {
+      minWidth: 0,
+      flex: "1 1 0",
+      height: 44,
+      minHeight: 44,
+      px: 2,
+      fontSize: 12,
+      letterSpacing: 0.4,
+    },
     "@media (hover: hover)": {
       "&:hover": {
         bgcolor: "var(--app-overlay-25)",

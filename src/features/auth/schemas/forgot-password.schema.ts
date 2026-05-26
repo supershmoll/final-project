@@ -1,7 +1,12 @@
 import { z } from "zod";
+import type { TranslateFn } from "@/i18n/messages";
 
-export const forgotPasswordSchema = z.object({
-  email: z.email("Please enter a valid email address."),
-});
+export function createForgotPasswordSchema(t: TranslateFn) {
+  return z.object({
+    email: z.email(t("auth.validation.invalidEmail")),
+  });
+}
 
-export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordFormValues = z.infer<
+  ReturnType<typeof createForgotPasswordSchema>
+>;

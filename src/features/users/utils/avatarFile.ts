@@ -1,12 +1,9 @@
-import {
-  USER_PROFILE_AVATAR_ACCEPT_MIMES,
-  USER_PROFILE_AVATAR_MAX_BYTES,
-  USER_PROFILE_AVATAR_SIZE_ERROR,
-  USER_PROFILE_AVATAR_TYPE_ERROR,
-} from "@/features/users/constants/userProfile.constants";
+import { USER_PROFILE_AVATAR_ACCEPT_MIMES } from "@/features/users/constants/userProfile.constants";
+import type { MessageKey } from "@/i18n/messages";
 import type { AvatarUploadState } from "@/features/users/types/userProfile.types";
 
 export const AVATAR_FILE_ACCEPT = USER_PROFILE_AVATAR_ACCEPT_MIMES.join(",");
+export const USER_PROFILE_AVATAR_MAX_BYTES = 500 * 1024;
 
 export function isAvatarImageFile(file: File): boolean {
   const allowed = new Set<string>(USER_PROFILE_AVATAR_ACCEPT_MIMES);
@@ -15,17 +12,17 @@ export function isAvatarImageFile(file: File): boolean {
 }
 
 export type AvatarFileValidationError =
-  | typeof USER_PROFILE_AVATAR_TYPE_ERROR
-  | typeof USER_PROFILE_AVATAR_SIZE_ERROR;
+  | "profile.avatar.typeError"
+  | "profile.avatar.sizeError";
 
 export function validateAvatarFile(
   file: File,
 ): AvatarFileValidationError | null {
   if (!isAvatarImageFile(file)) {
-    return USER_PROFILE_AVATAR_TYPE_ERROR;
+    return "profile.avatar.typeError";
   }
   if (file.size > USER_PROFILE_AVATAR_MAX_BYTES) {
-    return USER_PROFILE_AVATAR_SIZE_ERROR;
+    return "profile.avatar.sizeError";
   }
   return null;
 }

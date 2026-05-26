@@ -6,11 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { UserSkillCard } from "@/features/users/components/user-profile/UserSkillCard";
 import { profileRemoveModeSx } from "@/features/users/components/user-profile/profileRemoveMode.styles";
 import { userSkillsSx } from "@/features/users/components/user-profile/userSkills.styles";
-import {
-  CONFIRM_BULK_REMOVE_SKILLS_LABELS,
-  USER_SKILLS_ADD_LABEL,
-  USER_SKILLS_REMOVE_LABEL,
-} from "@/features/users/constants/userSkills.constants";
+import { useUserSkillDialogLabels } from "@/i18n/hooks/use-user-skill-dialog-labels";
+import { useTranslation } from "@/i18n/use-translation";
 import type {
   UserSkill,
   UserSkillCategory,
@@ -44,15 +41,16 @@ export function UserSkillsCategories({
   onExitRemove,
   onOpenBulkConfirm,
 }: UserSkillsCategoriesProps) {
+  const { t } = useTranslation();
+  const labels = useUserSkillDialogLabels();
+
   return (
     <Box sx={userSkillsSx.mainColumn}>
       <Typography component="h2" sx={userSkillsSx.sectionTitle}>
-        Skills
+        {t("profile.tab.skills")}
       </Typography>
       {!hasSkills ? (
-        <Typography sx={userSkillsSx.emptyState}>
-          No skills listed yet.
-        </Typography>
+        <Typography sx={userSkillsSx.emptyState}>{labels.empty}</Typography>
       ) : (
         <Box sx={userSkillsSx.categoriesStack}>
           {categories.map((category) => (
@@ -108,7 +106,7 @@ export function UserSkillsCategories({
                 onClick={onExitRemove}
                 sx={profileRemoveModeSx.toolbarCancelBtn}
               >
-                {CONFIRM_BULK_REMOVE_SKILLS_LABELS.cancel}
+                {labels.bulkRemove.cancel}
               </Button>
               <Button
                 type="button"
@@ -126,9 +124,7 @@ export function UserSkillsCategories({
                     gap: 1.25,
                   }}
                 >
-                  <Box component="span">
-                    {CONFIRM_BULK_REMOVE_SKILLS_LABELS.delete}
-                  </Box>
+                  <Box component="span">{labels.bulkRemove.delete}</Box>
                   <Box
                     component="span"
                     sx={profileRemoveModeSx.toolbarCountBadge}
@@ -147,7 +143,7 @@ export function UserSkillsCategories({
                 sx={userSkillsSx.addSkillBtn}
                 onClick={onAdd}
               >
-                {USER_SKILLS_ADD_LABEL}
+                {labels.addButton}
               </Button>
               <Button
                 type="button"
@@ -157,7 +153,7 @@ export function UserSkillsCategories({
                 disabled={!hasSkills}
                 onClick={onStartRemove}
               >
-                {USER_SKILLS_REMOVE_LABEL}
+                {labels.removeButton}
               </Button>
             </>
           )}

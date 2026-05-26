@@ -23,7 +23,7 @@ import { useAuthSnapshot } from "@/features/auth/lib/auth-storage";
 import { useUserQuery } from "@/features/users/api/getUser";
 import { SidebarNavItem } from "./SidebarNavItem";
 import { SidebarProfileLink } from "./SidebarProfileLink";
-import { useSidebarCollapse } from "./SidebarCollapseContext";
+import { useSidebarLayout } from "./useSidebarLayout";
 import {
   getDisplayName,
   getInitial,
@@ -36,7 +36,13 @@ import "./sidebar-nav.css";
 export function AppSidebar() {
   const pathname = usePathname() ?? "";
   const router = useRouter();
-  const { collapsed, toggle } = useSidebarCollapse();
+  const {
+    effectiveCollapsed,
+    iconOnly,
+    isMobile,
+    showCollapseControl,
+    toggle,
+  } = useSidebarLayout();
   const { userId, role } = useAuthSnapshot();
   const isAdmin = role === "Admin";
   const navSections = React.useMemo(() => toNavSections(isAdmin), [isAdmin]);
@@ -73,39 +79,48 @@ export function AppSidebar() {
     <Box
       component="nav"
       aria-label="Main navigation"
-      className={["sidebar-root", collapsed ? "sidebar-nav--collapsed" : ""]
+      className={[
+        "sidebar-root",
+        effectiveCollapsed ? "sidebar-nav--collapsed" : "",
+        iconOnly ? "sidebar-nav--icon-only" : "",
+      ]
         .filter(Boolean)
         .join(" ")}
-      sx={sidebarSx.root(collapsed)}
+      sx={sidebarSx.root(effectiveCollapsed)}
     >
-      <Box className="sidebar-nav-list" sx={sidebarSx.navList}>
-        {navSections.map((section, sectionIndex) => (
-          <React.Fragment key={sectionIndex}>
-            {sectionIndex > 0 ? (
-              <Divider className="sidebar-nav-divider" aria-hidden />
-            ) : null}
-            {section.items.map((item) => (
-              <SidebarNavItem
-                key={item.id}
-                item={item}
-                pathname={pathname}
-                userId={userId}
-                collapsed={collapsed}
-              />
-            ))}
-          </React.Fragment>
-        ))}
-        <Box className="sidebar-nav-item--mobile-only">
-          <Box onClickCapture={handleMenuOpen} sx={{ cursor: "pointer" }}>
-            <SidebarProfileLink
-              profileHref={profileHref}
-              profileActive={profileActive}
-              displayName={displayName}
-              initial={initial}
-              avatarUrl={user?.avatarUrl}
-              collapsed={false}
-            />
-          </Box>
+      <Box className="sidebar-nav-scroll" sx={sidebarSx.navScroll}>
+        <Box className="sidebar-nav-list" sx={sidebarSx.navList}>
+          {navSections.map((section, sectionIndex) => (
+            <React.Fragment key={sectionIndex}>
+              {sectionIndex > 0 ? (
+                <Divider className="sidebar-nav-divider" aria-hidden />
+              ) : null}
+              {section.items.map((item) => (
+                <SidebarNavItem
+                  key={item.id}
+                  item={item}
+                  pathname={pathname}
+                  userId={userId}
+                  iconOnly={iconOnly}
+                  isMobile={isMobile}
+                />
+              ))}
+            </React.Fragment>
+          ))}
+        </Box>
+      </Box>
+
+      <Box className="sidebar-nav-mobile-actions" sx={sidebarSx.mobileActions}>
+        <Box onClickCapture={handleMenuOpen} sx={{ cursor: "pointer" }}>
+          <SidebarProfileLink
+            profileHref={profileHref}
+            profileActive={profileActive}
+            displayName={displayName}
+            initial={initial}
+            avatarUrl={user?.avatarUrl}
+            iconOnly={iconOnly}
+            isMobile={isMobile}
+          />
         </Box>
       </Box>
 
@@ -121,7 +136,8 @@ export function AppSidebar() {
             displayName={displayName}
             initial={initial}
             avatarUrl={user?.avatarUrl}
-            collapsed={collapsed}
+            iconOnly={iconOnly}
+            isMobile={isMobile}
           />
         </Box>
 
@@ -144,7 +160,9 @@ export function AppSidebar() {
             "& .MuiMenuItem-root": {
               py: 1.5,
               px: 2,
-              "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
+              "@media (hover: hover)": {
+                "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
+              },
             },
             "& .MuiListItemIcon-root": {
               color: "var(--app-text)",
@@ -186,19 +204,33 @@ export function AppSidebar() {
           </MenuItem>
         </Menu>
 
-        <Tooltip
-          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          placement="right"
-        >
-          <IconButton
-            type="button"
-            onClick={toggle}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            sx={sidebarSx.collapseBtn(collapsed)}
-          >
-            {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </Tooltip>
+        {showCollapseControl ? (
+          <Box sx={sidebarSx.collapseBtnRow(effectiveCollapsed)}>
+            <Tooltip
+              title={
+                effectiveCollapsed ? t("sidebar.expand") : t("sidebar.collapse")
+              }
+              placement="right"
+            >
+              <IconButton
+                type="button"
+                onClick={toggle}
+                aria-label={
+                  effectiveCollapsed
+                    ? t("sidebar.expand")
+                    : t("sidebar.collapse")
+                }
+                sx={sidebarSx.collapseBtn}
+              >
+                {effectiveCollapsed ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );

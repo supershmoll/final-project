@@ -15,8 +15,10 @@ import {
 } from "@/features/users/components/user-profile/UserSkillDialogs";
 import { userProfileSx } from "@/features/users/components/user-profile/userProfile.styles";
 import { useUserSkillsPage } from "@/features/users/hooks/useUserSkillsPage";
+import { useTranslation } from "@/i18n/use-translation";
 
 export function UserSkillsPage() {
+  const { t } = useTranslation();
   const {
     userId,
     user,
@@ -50,7 +52,7 @@ export function UserSkillsPage() {
           underline="hover"
           sx={userProfileSx.breadcrumbLink}
         >
-          Employees
+          {t("nav.employees")}
         </Link>
         <Typography component="span" sx={userProfileSx.breadcrumbActive}>
           {breadcrumbName}
@@ -62,7 +64,9 @@ export function UserSkillsPage() {
         <Typography color="error.main">{errorMessage}</Typography>
       ) : null}
       {!loading && !errorMessage && !user ? (
-        <Typography sx={userProfileSx.email}>User not found.</Typography>
+        <Typography sx={userProfileSx.email}>
+          {t("profile.notFound")}
+        </Typography>
       ) : null}
       {!loading && !errorMessage && user ? (
         <UserSkillsCategories

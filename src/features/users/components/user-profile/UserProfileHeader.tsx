@@ -3,10 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
-import {
-  USER_PROFILE_FALLBACK_MEMBER_SINCE,
-  USER_PROFILE_UPLOAD_HINT,
-} from "@/features/users/constants/userProfile.constants";
 import { useAvatarUpload } from "@/features/users/hooks/useAvatarUpload";
 import type { UserProfileHeaderProps } from "@/features/users/types/userProfileHeader.types";
 import type { AvatarUploadState } from "@/features/users/types/userProfile.types";
@@ -16,6 +12,7 @@ import {
   getUserFullName,
 } from "@/features/users/utils/userProfile.utils";
 import { userProfileSx } from "./userProfile.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type UserProfileHeaderContainerProps = UserProfileHeaderProps & {
   onAvatarSelected: (avatar: AvatarUploadState) => void;
@@ -32,6 +29,7 @@ export function UserProfileHeader({
   removeAvatarButtonLabel = "Remove photo",
   isRemovingAvatar = false,
 }: UserProfileHeaderContainerProps) {
+  const { t } = useTranslation();
   const {
     fileInputRef,
     uploadError,
@@ -104,7 +102,7 @@ export function UserProfileHeader({
               </Typography>
             </Button>
             <Typography sx={userProfileSx.uploadHint}>
-              {USER_PROFILE_UPLOAD_HINT}
+              {t("profile.avatar.uploadHint")}
             </Typography>
             {uploadError ? (
               <Typography sx={userProfileSx.formError} role="alert">
@@ -130,7 +128,7 @@ export function UserProfileHeader({
         <Typography sx={userProfileSx.fullName}>{fullName}</Typography>
         <Typography sx={userProfileSx.email}>{user.email}</Typography>
         <Typography sx={userProfileSx.memberSince}>
-          {memberSinceText || USER_PROFILE_FALLBACK_MEMBER_SINCE}
+          {memberSinceText || t("profile.memberSinceFallback")}
         </Typography>
       </Box>
     </>

@@ -3,11 +3,11 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { USER_PROFILE_FORM_LABELS } from "@/features/users/constants/userProfile.constants";
 import { useUserProfileForm } from "@/features/users/hooks/useUserProfileForm";
 import type { UserRow } from "@/features/users/types";
 import type { AvatarUploadState } from "@/features/users/types/userProfile.types";
 import { userProfileSx } from "./userProfile.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 export {
   formatMutationError,
@@ -27,6 +27,7 @@ export function UserProfileForm({
   avatarUpload,
   onUpdated,
 }: UserProfileFormProps) {
+  const { t } = useTranslation();
   const {
     form,
     submitError,
@@ -43,7 +44,7 @@ export function UserProfileForm({
     <>
       <Box sx={userProfileSx.formGrid}>
         <TextField
-          label={USER_PROFILE_FORM_LABELS.firstName}
+          label={t("table.firstName")}
           value={form.firstName}
           onChange={handleFieldChange("firstName")}
           slotProps={{ htmlInput: { readOnly: !canEditProfile } }}
@@ -53,7 +54,7 @@ export function UserProfileForm({
           ]}
         />
         <TextField
-          label={USER_PROFILE_FORM_LABELS.lastName}
+          label={t("table.lastName")}
           value={form.lastName}
           onChange={handleFieldChange("lastName")}
           slotProps={{ htmlInput: { readOnly: !canEditProfile } }}
@@ -65,12 +66,12 @@ export function UserProfileForm({
         {canEditProfile ? (
           <TextField
             select
-            label={USER_PROFILE_FORM_LABELS.department}
+            label={t("table.department")}
             value={selectedDepartmentId}
             onChange={handleFieldChange("departmentId")}
             sx={userProfileSx.field}
           >
-            <MenuItem value="">Unassigned</MenuItem>
+            <MenuItem value="">{t("common.unassigned")}</MenuItem>
             {departmentOptions.map((option) => (
               <MenuItem key={option.id} value={option.id}>
                 {option.name}
@@ -79,7 +80,7 @@ export function UserProfileForm({
           </TextField>
         ) : (
           <TextField
-            label={USER_PROFILE_FORM_LABELS.department}
+            label={t("table.department")}
             value={user.department}
             slotProps={{ htmlInput: { readOnly: true } }}
             sx={[userProfileSx.field, userProfileSx.fieldReadOnly]}
@@ -88,12 +89,12 @@ export function UserProfileForm({
         {canEditProfile ? (
           <TextField
             select
-            label={USER_PROFILE_FORM_LABELS.position}
+            label={t("table.position")}
             value={selectedPositionId}
             onChange={handleFieldChange("positionId")}
             sx={userProfileSx.field}
           >
-            <MenuItem value="">Unassigned</MenuItem>
+            <MenuItem value="">{t("common.unassigned")}</MenuItem>
             {positionOptions.map((option) => (
               <MenuItem key={option.id} value={option.id}>
                 {option.name}
@@ -102,14 +103,14 @@ export function UserProfileForm({
           </TextField>
         ) : (
           <TextField
-            label={USER_PROFILE_FORM_LABELS.position}
+            label={t("table.position")}
             value={user.position}
             slotProps={{ htmlInput: { readOnly: true } }}
             sx={[userProfileSx.field, userProfileSx.fieldReadOnly]}
           />
         )}
         <TextField
-          label={USER_PROFILE_FORM_LABELS.birthDate}
+          label={t("profile.birthDate")}
           type="date"
           value={form.birthDate}
           onChange={handleFieldChange("birthDate")}
@@ -123,7 +124,7 @@ export function UserProfileForm({
           ]}
         />
         <TextField
-          label={USER_PROFILE_FORM_LABELS.education}
+          label={t("table.education")}
           value={form.education}
           onChange={handleFieldChange("education")}
           slotProps={{ htmlInput: { readOnly: !canEditProfile } }}
@@ -148,7 +149,7 @@ export function UserProfileForm({
               : userProfileSx.updateBtnDisabled,
           ]}
         >
-          Update
+          {t("common.update")}
         </Button>
       </Box>
     </>

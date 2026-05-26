@@ -1,6 +1,9 @@
-function formatDisplayDate(value: string | null | undefined): string {
+function formatDisplayDate(
+  value: string | null | undefined,
+  tillNowLabel = "Till now",
+): string {
   if (!value) {
-    return "Till now";
+    return tillNowLabel;
   }
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {

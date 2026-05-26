@@ -39,7 +39,8 @@ export const sidebarSx = {
       pl: 0,
       pr: collapsed ? 1 : 2,
       pb: 2.5,
-      transition: "width 0.2s ease, min-width 0.2s ease, padding 0.2s ease",
+      transition:
+        "width 0.28s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.28s cubic-bezier(0.4, 0, 0.2, 1), padding 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
     },
   }),
   navList: {
@@ -49,6 +50,23 @@ export const sidebarSx = {
     width: "100%",
     [SIDEBAR_DESKTOP_MEDIA]: {
       flex: "none",
+    },
+  },
+  navScroll: {
+    display: "flex",
+    flex: 1,
+    minWidth: 0,
+    [SIDEBAR_DESKTOP_MEDIA]: {
+      display: "block",
+      flex: "none",
+      width: "100%",
+    },
+  },
+  mobileActions: {
+    display: "flex",
+    flexShrink: 0,
+    [SIDEBAR_DESKTOP_MEDIA]: {
+      display: "none",
     },
   },
   footer: {
@@ -75,21 +93,32 @@ export const sidebarSx = {
     fontSize: 16,
     fontWeight: 700,
   },
-  collapseBtn: (collapsed: boolean) => ({
+  collapseBtnRow: (collapsed: boolean) => ({
+    display: "none",
+    [SIDEBAR_DESKTOP_MEDIA]: {
+      display: "flex",
+      justifyContent: collapsed ? "center" : "flex-end",
+      alignItems: "center",
+      width: "100%",
+      minWidth: 0,
+    },
+  }),
+  collapseBtn: {
     display: "none",
     [SIDEBAR_DESKTOP_MEDIA]: {
       display: "inline-flex",
-      alignSelf: collapsed ? "center" : "flex-start",
-      ml: collapsed ? 0 : 2,
+      flexShrink: 0,
       color: "var(--app-text-muted)",
       width: 40,
       height: 40,
-      "&:hover": {
-        bgcolor: "var(--app-nav-active-bg)",
-        color: "var(--app-text)",
+      "@media (hover: hover)": {
+        "&:hover": {
+          bgcolor: "var(--app-nav-active-bg)",
+          color: "var(--app-text)",
+        },
       },
     },
-  }),
+  },
 } as const;
 
 export function sidebarPageLayoutSx(collapsed: boolean) {
@@ -103,7 +132,7 @@ export function sidebarPageLayoutSx(collapsed: boolean) {
     [SIDEBAR_DESKTOP_MEDIA]: {
       paddingBottom: 0,
       paddingLeft: `${sidebarWidth}px`,
-      transition: "padding-left 0.2s ease",
+      transition: "padding-left 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
     },
   };
 }

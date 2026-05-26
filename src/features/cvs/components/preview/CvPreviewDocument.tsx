@@ -22,6 +22,7 @@ import {
   getCvPreviewDomains,
 } from "../../preview/utils/cv-preview-format";
 import { cvsStyles } from "../../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type CvPreviewDocumentProps = {
   cv: Cv;
@@ -34,6 +35,7 @@ function CvPreviewDocument({
   groupedSkills,
   documentRef,
 }: CvPreviewDocumentProps) {
+  const { t } = useTranslation();
   const skillRows = buildSkillTableRows(groupedSkills);
   const domains = getCvPreviewDomains(cv);
   const subtitle = formatCvPreviewSubtitle(cv);
@@ -56,7 +58,9 @@ function CvPreviewDocument({
 
       <Box sx={cvsStyles.previewSplitGrid}>
         <Box sx={cvsStyles.previewSidebar}>
-          <Typography sx={cvsStyles.previewBlockTitle}>Education</Typography>
+          <Typography sx={cvsStyles.previewBlockTitle}>
+            {t("cvs.preview.education")}
+          </Typography>
           <Typography sx={cvsStyles.previewBodyText}>
             {cv.education ?? "—"}
           </Typography>
@@ -64,7 +68,7 @@ function CvPreviewDocument({
           {cv.languages.length > 0 && (
             <>
               <Typography sx={cvsStyles.previewBlockTitle}>
-                Language proficiency
+                {t("cvs.preview.languageProficiency")}
               </Typography>
               {cv.languages.map((lang) => (
                 <Typography key={lang.name} sx={cvsStyles.previewBodyText}>
@@ -76,7 +80,9 @@ function CvPreviewDocument({
 
           {domains ? (
             <>
-              <Typography sx={cvsStyles.previewBlockTitle}>Domains</Typography>
+              <Typography sx={cvsStyles.previewBlockTitle}>
+                {t("cvs.preview.domains")}
+              </Typography>
               <Typography sx={cvsStyles.previewBodyText}>{domains}</Typography>
             </>
           ) : null}
@@ -108,17 +114,19 @@ function CvPreviewDocument({
       {skillRows.length > 0 && (
         <Box sx={cvsStyles.previewSkillsTableSection}>
           <Typography sx={cvsStyles.previewSectionHeading}>
-            Professional skills
+            {t("cvs.preview.professionalSkills")}
           </Typography>
           <Box sx={cvsStyles.previewTableScroll}>
             <Table sx={cvsStyles.previewSkillsTable}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Skills</TableCell>
+                  <TableCell>{t("cvs.preview.skills")}</TableCell>
                   <TableCell className="col-narrow">
-                    Experience in years
+                    {t("cvs.preview.experienceYears")}
                   </TableCell>
-                  <TableCell className="col-narrow">Last used</TableCell>
+                  <TableCell className="col-narrow">
+                    {t("cvs.preview.lastUsed")}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -144,7 +152,9 @@ function CvPreviewDocument({
 
       {cv.projects.length > 0 && (
         <Box sx={cvsStyles.previewProjectsSection}>
-          <Typography sx={cvsStyles.previewSectionHeading}>Projects</Typography>
+          <Typography sx={cvsStyles.previewSectionHeading}>
+            {t("cvs.preview.projects")}
+          </Typography>
           {cv.projects.map((project) => (
             <Box key={project.id} sx={cvsStyles.previewProjectBlock}>
               <Box sx={cvsStyles.previewProjectGrid}>
@@ -162,7 +172,7 @@ function CvPreviewDocument({
                       component="span"
                       sx={cvsStyles.previewMetaLabel}
                     >
-                      Project roles
+                      {t("cvs.preview.projectRoles")}
                     </Typography>
                     <Typography sx={cvsStyles.previewMetaValue}>
                       {formatProjectRoles(project.roles)}
@@ -173,10 +183,14 @@ function CvPreviewDocument({
                       component="span"
                       sx={cvsStyles.previewMetaLabel}
                     >
-                      Period
+                      {t("cvs.preview.period")}
                     </Typography>
                     <Typography sx={cvsStyles.previewMetaValue}>
-                      {formatCvPeriod(project.start_date, project.end_date)}
+                      {formatCvPeriod(
+                        project.start_date,
+                        project.end_date,
+                        t("common.tillNow"),
+                      )}
                     </Typography>
                   </Box>
                   <Box sx={cvsStyles.previewMetaBlock}>
@@ -184,7 +198,7 @@ function CvPreviewDocument({
                       component="span"
                       sx={cvsStyles.previewMetaLabel}
                     >
-                      Responsibilities
+                      {t("cvs.preview.responsibilities")}
                     </Typography>
                     <Box
                       component="ul"
@@ -202,7 +216,7 @@ function CvPreviewDocument({
                       component="span"
                       sx={cvsStyles.previewMetaLabel}
                     >
-                      Environment
+                      {t("common.environment")}
                     </Typography>
                     <Typography sx={cvsStyles.previewMetaValue}>
                       {formatProjectEnvironment(project.environment)}

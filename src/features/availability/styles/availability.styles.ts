@@ -66,9 +66,11 @@ export const availabilitySx = {
     borderColor: "var(--app-control-border)",
     color: "var(--app-text-muted)",
     textTransform: "none",
-    "&:hover": {
-      borderColor: "rgba(255,255,255,0.35)",
-      bgcolor: "rgba(255,255,255,0.04)",
+    "@media (hover: hover)": {
+      "&:hover": {
+        borderColor: "rgba(255,255,255,0.35)",
+        bgcolor: "rgba(255,255,255,0.04)",
+      },
     },
   },
   pageMetaRow: {
@@ -198,6 +200,68 @@ export const availabilitySx = {
   assistantForm: {
     display: "flex",
     gap: 1,
-    alignItems: "flex-start",
+    alignItems: "stretch",
+  },
+  assistantFormField: {
+    flex: 1,
+    minWidth: 0,
+    "& .MuiOutlinedInput-root": {
+      height: 40,
+      boxSizing: "border-box",
+    },
+  },
+  assistantFormSubmit: {
+    flexShrink: 0,
+    height: 40,
+    minHeight: 40,
+    px: 2.5,
+    whiteSpace: "nowrap",
+  },
+  tableContainer: {
+    "@media (max-width: 767px)": {
+      border: "1px solid var(--app-control-border)",
+      borderRadius: 2,
+      bgcolor: "rgba(255,255,255,0.02)",
+    },
+  },
+  table: {
+    "@media (max-width: 767px)": {
+      "& .MuiTableCell-root": {
+        py: 1.5,
+        px: 1.5,
+        verticalAlign: "middle",
+        borderBottom: "1px solid var(--app-divider)",
+      },
+      "& .MuiTableRow-root:last-child .MuiTableCell-root": {
+        borderBottom: "none",
+      },
+    },
+  },
+  employeeCell: {
+    minWidth: 0,
+  },
+  employeeName: {
+    color: "var(--app-text)",
+    fontWeight: 500,
+    fontSize: { xs: 14, md: 16 },
+    lineHeight: 1.3,
+    wordBreak: "break-word",
+  },
+  employeeMeta: {
+    color: "var(--app-text-muted)",
+    fontSize: 12,
+    lineHeight: 1.3,
+    mt: 0.25,
+    display: { xs: "block", md: "none" },
+  },
+  statusCell: {
+    width: { xs: "auto", md: "unset" },
+    whiteSpace: "nowrap",
+    textAlign: { xs: "right", md: "left" },
+  },
+  tableHeadStatus: {
+    "@media (max-width: 767px)": {
+      textAlign: "right",
+    },
   },
 } as const;

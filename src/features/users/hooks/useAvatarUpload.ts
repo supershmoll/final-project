@@ -4,6 +4,7 @@ import {
   readAvatarFile,
   validateAvatarFile,
 } from "@/features/users/utils/avatarFile";
+import { useTranslation } from "@/i18n/use-translation";
 
 type UseAvatarUploadParams = {
   canEdit: boolean;
@@ -14,6 +15,7 @@ export function useAvatarUpload({
   canEdit,
   onSelected,
 }: UseAvatarUploadParams) {
+  const { t } = useTranslation();
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [uploadError, setUploadError] = React.useState<string | null>(null);
   const [isDragging, setIsDragging] = React.useState(false);
@@ -23,13 +25,13 @@ export function useAvatarUpload({
     (file: File) => {
       const validationError = validateAvatarFile(file);
       if (validationError) {
-        setUploadError(validationError);
+        setUploadError(t(validationError));
         return;
       }
       setUploadError(null);
       readAvatarFile(file, onSelected);
     },
-    [onSelected],
+    [onSelected, t],
   );
 
   const openFileDialog = React.useCallback(() => {

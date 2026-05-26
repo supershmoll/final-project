@@ -3,8 +3,15 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import NextLink from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { USER_PROFILE_TABS } from "@/features/users/constants/userProfile.constants";
 import { userProfileSx } from "./userProfile.styles";
+import { useTranslation } from "@/i18n/use-translation";
+import type { MessageKey } from "@/i18n/messages";
+
+const PROFILE_TAB_KEYS = [
+  "profile.tab.profile",
+  "profile.tab.skills",
+  "profile.tab.languages",
+] as const satisfies readonly MessageKey[];
 
 function profileHref(userId: string) {
   return `/users/${userId}/profile`;
@@ -19,6 +26,7 @@ function languagesHref(userId: string) {
 }
 
 export function UserProfileTabs() {
+  const { t } = useTranslation();
   const params = useParams<{ userId: string }>();
   const pathname = usePathname();
   const userId = params?.userId ?? "";
@@ -33,13 +41,8 @@ export function UserProfileTabs() {
   if (!userId) {
     return (
       <Tabs value={0} sx={userProfileSx.tabs} aria-label="user profile tabs">
-        {USER_PROFILE_TABS.map((tabLabel) => (
-          <Tab
-            key={tabLabel}
-            label={tabLabel}
-            sx={userProfileSx.tab}
-            disabled
-          />
+        {PROFILE_TAB_KEYS.map((key) => (
+          <Tab key={key} label={t(key)} sx={userProfileSx.tab} disabled />
         ))}
       </Tabs>
     );
@@ -52,21 +55,21 @@ export function UserProfileTabs() {
       aria-label="user profile tabs"
     >
       <Tab
-        label={USER_PROFILE_TABS[0]}
+        label={t(PROFILE_TAB_KEYS[0])}
         sx={userProfileSx.tab}
         component={NextLink}
         href={profileHref(userId)}
         scroll={false}
       />
       <Tab
-        label={USER_PROFILE_TABS[1]}
+        label={t(PROFILE_TAB_KEYS[1])}
         sx={userProfileSx.tab}
         component={NextLink}
         href={skillsHref(userId)}
         scroll={false}
       />
       <Tab
-        label={USER_PROFILE_TABS[2]}
+        label={t(PROFILE_TAB_KEYS[2])}
         sx={userProfileSx.tab}
         component={NextLink}
         href={languagesHref(userId)}

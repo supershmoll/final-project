@@ -7,6 +7,7 @@ import {
   type CreateCvFormValues,
 } from "../../list/schemas/create-cv.schema";
 import { cvsStyles } from "../../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type CvDetailsFormFieldsProps = {
   register: UseFormRegister<CreateCvFormValues>;
@@ -35,6 +36,8 @@ function CvDetailsFormFields({
   reserveHelperSpace = false,
   compact = false,
 }: CvDetailsFormFieldsProps) {
+  const { t } = useTranslation();
+
   return (
     <Stack
       sx={
@@ -42,7 +45,7 @@ function CvDetailsFormFields({
       }
     >
       <TextField
-        label="Name"
+        label={t("cvs.field.name")}
         autoFocus={autoFocusName}
         sx={[cvsStyles.formField, compact && cvsStyles.formFieldCompact]}
         {...register("name")}
@@ -55,7 +58,7 @@ function CvDetailsFormFields({
         fullWidth
       />
       <TextField
-        label="Education"
+        label={t("table.education")}
         sx={[cvsStyles.formField, compact && cvsStyles.formFieldCompact]}
         {...register("education")}
         error={!!errors.education}
@@ -67,7 +70,7 @@ function CvDetailsFormFields({
         fullWidth
       />
       <TextField
-        label="Description"
+        label={t("cvs.field.description")}
         sx={[
           cvsStyles.formField,
           cvsStyles.formFieldMultiline,

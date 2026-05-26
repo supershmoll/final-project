@@ -31,6 +31,7 @@ import {
   PROJECT_MIN_DATE,
 } from "../../projects/utils/project-form-dates";
 import { cvsStyles } from "../../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type ProjectFormDialogProps = {
   open: boolean;
@@ -67,8 +68,10 @@ function ProjectFormDialog({
   onClose,
   onSubmit,
 }: ProjectFormDialogProps) {
-  const dialogTitle = mode === "add" ? "Add project" : "Update project";
-  const submitLabel = mode === "add" ? "Add" : "Update";
+  const { t } = useTranslation();
+  const dialogTitle =
+    mode === "add" ? t("cvs.projects.addTitle") : t("cvs.projects.updateTitle");
+  const submitLabel = mode === "add" ? t("common.add") : t("common.update");
   const isPending = isSubmitting || loading;
   const submitEnabled = canSubmit && !isPending;
   const startDate = useWatch({ control, name: "startDate" });
@@ -89,7 +92,7 @@ function ProjectFormDialog({
         <IconButton
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           size="small"
         >
           <CloseIcon />
@@ -115,9 +118,9 @@ function ProjectFormDialog({
                   disabled={isUpdateMode}
                   error={!!errors.projectId}
                 >
-                  <InputLabel>Project</InputLabel>
+                  <InputLabel>{t("common.project")}</InputLabel>
                   <Select
-                    label="Project"
+                    label={t("common.project")}
                     {...field}
                     MenuProps={{
                       slotProps: {
@@ -138,7 +141,7 @@ function ProjectFormDialog({
               )}
             />
             <TextField
-              label="Domain"
+              label={t("table.domain")}
               value={domainValue}
               sx={cvsStyles.formField}
               fullWidth
@@ -147,7 +150,7 @@ function ProjectFormDialog({
           </Stack>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
-              label="Start Date"
+              label={t("table.startDate")}
               type="date"
               sx={cvsStyles.formField}
               fullWidth
@@ -163,7 +166,7 @@ function ProjectFormDialog({
               {...register("startDate")}
             />
             <TextField
-              label="End Date"
+              label={t("table.endDate")}
               type="date"
               sx={cvsStyles.formField}
               fullWidth
@@ -176,14 +179,13 @@ function ProjectFormDialog({
               }}
               error={!!errors.endDate}
               helperText={
-                errors.endDate?.message ??
-                "Leave empty if the project is ongoing"
+                errors.endDate?.message ?? t("projects.field.ongoingHint")
               }
               {...register("endDate")}
             />
           </Stack>
           <TextField
-            label="Description"
+            label={t("common.description")}
             value={descriptionValue}
             sx={cvsStyles.formField}
             fullWidth
@@ -192,17 +194,17 @@ function ProjectFormDialog({
             disabled
           />
           <TextField
-            label="Environment"
+            label={t("common.environment")}
             value={environmentValue}
             sx={cvsStyles.formField}
             fullWidth
             disabled
           />
           <TextField
-            label="Responsibilities"
+            label={t("common.responsibilities")}
             sx={cvsStyles.formField}
             fullWidth
-            placeholder="One responsibility per line"
+            placeholder={t("cvs.field.responsibilitiesPlaceholder")}
             error={!!errors.responsibilities}
             helperText={errors.responsibilities?.message}
             {...register("responsibilities")}
@@ -211,7 +213,7 @@ function ProjectFormDialog({
       </DialogContent>
       <DialogActions sx={cvsStyles.dialogActions}>
         <Button type="button" onClick={onClose} sx={cvsStyles.cancelButton}>
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           type="submit"

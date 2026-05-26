@@ -3,16 +3,14 @@
 import Box from "@mui/material/Box";
 import { AppSidebar } from "./AppSidebar";
 import { sidebarMainSx, sidebarPageLayoutSx } from "./sidebar.styles";
-import {
-  SidebarCollapseProvider,
-  useSidebarCollapse,
-} from "./SidebarCollapseContext";
+import { SidebarCollapseProvider } from "./SidebarCollapseContext";
+import { useSidebarLayout } from "./useSidebarLayout";
 
 function AppPageLayoutInner({ children }: { children: React.ReactNode }) {
-  const { collapsed } = useSidebarCollapse();
+  const { effectiveCollapsed } = useSidebarLayout();
 
   return (
-    <Box sx={sidebarPageLayoutSx(collapsed)}>
+    <Box sx={sidebarPageLayoutSx(effectiveCollapsed)}>
       <AppSidebar />
       <Box component="main" sx={sidebarMainSx}>
         {children}

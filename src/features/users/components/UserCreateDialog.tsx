@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import { editDialogSx } from "@/features/users/components/styles/editDialog.styles";
 import { useUserCreateDialog } from "@/features/users/hooks/useUserCreateDialog";
+import { useTranslation } from "@/i18n/use-translation";
+import { roleLabel } from "@/i18n/utils/role-label";
 
 type UserCreateDialogProps = {
   open: boolean;
@@ -25,6 +27,7 @@ export function UserCreateDialog({
   onClose,
   onCreated,
 }: UserCreateDialogProps) {
+  const { t } = useTranslation();
   const {
     form,
     submitError,
@@ -47,10 +50,10 @@ export function UserCreateDialog({
       sx={editDialogSx.editDialogRoot}
     >
       <DialogTitle sx={editDialogSx.editDialogTitle}>
-        Add user
+        {t("users.dialog.createTitle")}
         <IconButton
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           sx={editDialogSx.editDialogCloseBtn}
         >
           <CloseIcon />
@@ -59,7 +62,7 @@ export function UserCreateDialog({
       <DialogContent sx={editDialogSx.editDialogContent}>
         <Box sx={editDialogSx.editDialogGrid}>
           <TextField
-            label="Email"
+            label={t("table.email")}
             value={form.email}
             onChange={handleField("email")}
             fullWidth
@@ -68,7 +71,7 @@ export function UserCreateDialog({
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="Password"
+            label={t("common.password")}
             type="password"
             value={form.password}
             onChange={handleField("password")}
@@ -78,7 +81,7 @@ export function UserCreateDialog({
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="First Name"
+            label={t("table.firstName")}
             value={form.firstName}
             onChange={handleField("firstName")}
             fullWidth
@@ -87,7 +90,7 @@ export function UserCreateDialog({
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="Last Name"
+            label={t("table.lastName")}
             value={form.lastName}
             onChange={handleField("lastName")}
             fullWidth
@@ -97,7 +100,7 @@ export function UserCreateDialog({
           />
           <TextField
             select
-            label="Department"
+            label={t("table.department")}
             value={form.departmentId}
             onChange={handleField("departmentId")}
             fullWidth
@@ -112,7 +115,7 @@ export function UserCreateDialog({
           </TextField>
           <TextField
             select
-            label="Position"
+            label={t("table.position")}
             value={form.positionId}
             onChange={handleField("positionId")}
             fullWidth
@@ -128,7 +131,7 @@ export function UserCreateDialog({
           <Box sx={editDialogSx.editDialogSpacer}>
             <TextField
               select
-              label="Role"
+              label={t("common.role")}
               value={form.role}
               onChange={handleField("role")}
               fullWidth
@@ -137,7 +140,7 @@ export function UserCreateDialog({
             >
               {roleOptions.map((role) => (
                 <MenuItem key={role} value={role}>
-                  {role}
+                  {roleLabel(role, t)}
                 </MenuItem>
               ))}
             </TextField>
@@ -154,7 +157,7 @@ export function UserCreateDialog({
           disabled={isBusy}
           sx={editDialogSx.editDialogCancelBtn}
         >
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           onClick={() => void handleSubmit()}
@@ -162,7 +165,7 @@ export function UserCreateDialog({
           disabled={isBusy}
           sx={editDialogSx.editDialogUpdateBtn}
         >
-          Create
+          {t("common.create")}
         </Button>
       </DialogActions>
     </Dialog>

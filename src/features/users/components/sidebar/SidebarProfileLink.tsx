@@ -12,7 +12,8 @@ export type SidebarProfileLinkProps = {
   displayName: string;
   initial: string;
   avatarUrl?: string | null;
-  collapsed: boolean;
+  iconOnly: boolean;
+  isMobile: boolean;
   className?: string;
 };
 
@@ -22,7 +23,8 @@ export function SidebarProfileLink({
   displayName,
   initial,
   avatarUrl,
-  collapsed,
+  iconOnly,
+  isMobile,
   className = "",
 }: SidebarProfileLinkProps) {
   const profileLink = (
@@ -37,6 +39,7 @@ export function SidebarProfileLink({
         .filter(Boolean)
         .join(" ")}
       aria-label={displayName}
+      title={iconOnly ? displayName : undefined}
     >
       <Avatar
         src={avatarUrl ?? undefined}
@@ -51,10 +54,12 @@ export function SidebarProfileLink({
     </Box>
   );
 
-  if (collapsed) {
+  if (iconOnly) {
     return (
-      <Tooltip title={displayName} placement="right">
-        {profileLink}
+      <Tooltip title={displayName} placement={isMobile ? "top" : "right"}>
+        <Box component="span" sx={{ display: "flex", minWidth: 0 }}>
+          {profileLink}
+        </Box>
       </Tooltip>
     );
   }

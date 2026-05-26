@@ -1,4 +1,9 @@
-import { forgotPasswordSchema } from "./forgot-password.schema";
+import { translate } from "@/i18n/messages";
+import type { MessageKey } from "@/i18n/messages";
+import { createForgotPasswordSchema } from "./forgot-password.schema";
+
+const t = (key: MessageKey) => translate("en", key);
+const forgotPasswordSchema = createForgotPasswordSchema(t);
 
 describe("forgotPasswordSchema", () => {
   it("accepts valid email", () => {

@@ -1,4 +1,9 @@
-import { loginSchema } from "./login.schema";
+import { translate } from "@/i18n/messages";
+import type { MessageKey } from "@/i18n/messages";
+import { createLoginSchema } from "./login.schema";
+
+const t = (key: MessageKey) => translate("en", key);
+const loginSchema = createLoginSchema(t);
 
 describe("loginSchema", () => {
   it("accepts valid email and password", () => {

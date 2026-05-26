@@ -16,15 +16,21 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import NextLink from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema, type SignupFormValues } from "../schemas/signup.schema";
+import {
+  createSignupSchema,
+  type SignupFormValues,
+} from "../schemas/signup.schema";
 import useRegistration from "../hooks/use-registration";
 import { authFormStyles } from "../styles/auth-form.styles";
 import AuthFormBody from "./auth-form-body";
 import AuthFormTabs from "./auth-form-tabs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslation } from "@/i18n/use-translation";
 
 function RegistrationForm() {
   const { loading, error, registerUser } = useRegistration();
+  const { t } = useTranslation();
+  const signupSchema = useMemo(() => createSignupSchema(t), [t]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
@@ -44,11 +50,11 @@ function RegistrationForm() {
   const passwordInputType = showPassword ? "text" : "password";
   const confirmPasswordInputType = showConfirmPassword ? "text" : "password";
   const passwordVisibilityLabel = showPassword
-    ? "Hide password"
-    : "Show password";
+    ? t("auth.hidePassword")
+    : t("auth.showPassword");
   const confirmPasswordVisibilityLabel = showConfirmPassword
-    ? "Hide password"
-    : "Show password";
+    ? t("auth.hidePassword")
+    : t("auth.showPassword");
 
   const togglePasswordVisibility = () => {
     setShowPassword((current) => !current);
@@ -69,16 +75,16 @@ function RegistrationForm() {
       <AuthFormBody>
         <Box sx={authFormStyles.headerText}>
           <Typography variant="h2" component="h1" sx={authFormStyles.title}>
-            Sign up
+            {t("auth.signUp")}
           </Typography>
           <Typography sx={authFormStyles.subtitle}>
-            Create an account to continue
+            {t("auth.createAccountSubtitle")}
           </Typography>
         </Box>
         <TextField
           sx={authFormStyles.textField}
           type="email"
-          placeholder="Email"
+          placeholder={t("auth.emailPlaceholder")}
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
@@ -87,7 +93,7 @@ function RegistrationForm() {
         <TextField
           sx={authFormStyles.textField}
           type={passwordInputType}
-          placeholder="Password"
+          placeholder={t("auth.passwordPlaceholder")}
           {...register("password")}
           error={!!errors.password}
           helperText={errors.password?.message}
@@ -112,7 +118,7 @@ function RegistrationForm() {
         <TextField
           sx={authFormStyles.textField}
           type={confirmPasswordInputType}
-          placeholder="Confirm Password"
+          placeholder={t("auth.confirmPasswordPlaceholder")}
           {...register("confirmPassword")}
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message}
@@ -141,10 +147,10 @@ function RegistrationForm() {
           color="primary"
           disabled={isPending}
         >
-          {isPending ? <CircularProgress size={20} /> : "Sign up"}
+          {isPending ? <CircularProgress size={20} /> : t("auth.signUp")}
         </Button>
         <Link component={NextLink} href="/login" sx={authFormStyles.textAction}>
-          I have an account
+          {t("auth.iHaveAccount")}
         </Link>
         {error && (
           <Alert sx={authFormStyles.formAlert} severity="error">

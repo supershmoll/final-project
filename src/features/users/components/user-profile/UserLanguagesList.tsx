@@ -10,11 +10,8 @@ import {
 } from "@/features/users/components/user-profile/userLanguages.utils";
 import { profileRemoveModeSx } from "./profileRemoveMode.styles";
 import { userLanguagesSx } from "./userLanguages.styles";
-import {
-  CONFIRM_BULK_REMOVE_LANGUAGES_LABELS,
-  USER_LANGUAGES_ADD_LABEL,
-  USER_LANGUAGES_REMOVE_LABEL,
-} from "@/features/users/constants/userLanguages.constants";
+import { useUserLanguageDialogLabels } from "@/i18n/hooks/use-user-language-dialog-labels";
+import { useTranslation } from "@/i18n/use-translation";
 import type { UserLanguageRow } from "@/features/users/types/userLanguages.types";
 
 export type UserLanguagesListProps = {
@@ -42,14 +39,17 @@ export function UserLanguagesList({
   onExitRemove,
   onOpenBulkConfirm,
 }: UserLanguagesListProps) {
+  const { t } = useTranslation();
+  const labels = useUserLanguageDialogLabels();
+
   return (
     <Box sx={userLanguagesSx.mainColumn}>
       <Typography component="h2" sx={userLanguagesSx.sectionTitle}>
-        Languages
+        {t("profile.tab.languages")}
       </Typography>
       {languages.length === 0 ? (
         <Typography sx={userLanguagesSx.emptyState}>
-          No languages listed yet.
+          {t("userLanguages.empty")}
         </Typography>
       ) : (
         <Box
@@ -104,7 +104,7 @@ export function UserLanguagesList({
                 onClick={onExitRemove}
                 sx={profileRemoveModeSx.toolbarCancelBtn}
               >
-                {CONFIRM_BULK_REMOVE_LANGUAGES_LABELS.cancel}
+                {labels.bulkRemove.cancel}
               </Button>
               <Button
                 type="button"
@@ -122,9 +122,7 @@ export function UserLanguagesList({
                     gap: 1.25,
                   }}
                 >
-                  <Box component="span">
-                    {CONFIRM_BULK_REMOVE_LANGUAGES_LABELS.delete}
-                  </Box>
+                  <Box component="span">{labels.bulkRemove.delete}</Box>
                   <Box
                     component="span"
                     sx={profileRemoveModeSx.toolbarCountBadge}
@@ -143,7 +141,7 @@ export function UserLanguagesList({
                 sx={userLanguagesSx.addLanguageBtn}
                 onClick={onAdd}
               >
-                {USER_LANGUAGES_ADD_LABEL}
+                {labels.addButton}
               </Button>
               <Button
                 type="button"
@@ -153,7 +151,7 @@ export function UserLanguagesList({
                 disabled={languages.length === 0}
                 onClick={onStartRemove}
               >
-                {USER_LANGUAGES_REMOVE_LABEL}
+                {labels.removeButton}
               </Button>
             </>
           )}

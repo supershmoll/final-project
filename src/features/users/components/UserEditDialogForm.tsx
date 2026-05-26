@@ -6,12 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import type { UserRow } from "@/features/users/types";
-import {
-  USER_EDIT_DIALOG,
-  USER_ROLE_OPTIONS,
-} from "@/features/users/constants/users.constants";
+import { USER_ROLE_OPTIONS } from "@/features/users/constants/users.constants";
 import { useUserEditDialog } from "@/features/users/hooks/useUserEditDialog";
 import { editDialogSx } from "./styles/editDialog.styles";
+import { useTranslation } from "@/i18n/use-translation";
+import { roleLabel } from "@/i18n/utils/role-label";
 
 const SELECT_MENU_PROPS = { sx: editDialogSx.editDialogSelectMenu };
 
@@ -26,6 +25,7 @@ export function UserEditDialogForm({
   onClose,
   onSaved,
 }: UserEditDialogFormProps) {
+  const { t } = useTranslation();
   const {
     form,
     isAdmin,
@@ -45,7 +45,7 @@ export function UserEditDialogForm({
       <DialogContent sx={editDialogSx.editDialogContent}>
         <Box sx={editDialogSx.editDialogGrid}>
           <TextField
-            label="Email"
+            label={t("table.email")}
             value={form.email}
             onChange={handleFieldChange("email")}
             fullWidth
@@ -53,7 +53,7 @@ export function UserEditDialogForm({
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="Password"
+            label={t("common.password")}
             type="password"
             value="**********"
             fullWidth
@@ -61,14 +61,14 @@ export function UserEditDialogForm({
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="First Name"
+            label={t("table.firstName")}
             value={form.firstName}
             onChange={handleFieldChange("firstName")}
             fullWidth
             sx={editDialogSx.editDialogField}
           />
           <TextField
-            label="Last Name"
+            label={t("table.lastName")}
             value={form.lastName}
             onChange={handleFieldChange("lastName")}
             fullWidth
@@ -76,7 +76,7 @@ export function UserEditDialogForm({
           />
           <TextField
             select
-            label="Department"
+            label={t("table.department")}
             value={selectedDepartmentId}
             onChange={handleFieldChange("departmentId")}
             fullWidth
@@ -84,7 +84,7 @@ export function UserEditDialogForm({
             slotProps={{ select: { MenuProps: SELECT_MENU_PROPS } }}
             disabled={!isAdmin}
           >
-            <MenuItem value="">Unassigned</MenuItem>
+            <MenuItem value="">{t("common.unassigned")}</MenuItem>
             {departments.map((department) => (
               <MenuItem key={department.id} value={department.id}>
                 {department.name}
@@ -93,7 +93,7 @@ export function UserEditDialogForm({
           </TextField>
           <TextField
             select
-            label="Position"
+            label={t("table.position")}
             value={selectedPositionId}
             onChange={handleFieldChange("positionId")}
             fullWidth
@@ -101,7 +101,7 @@ export function UserEditDialogForm({
             slotProps={{ select: { MenuProps: SELECT_MENU_PROPS } }}
             disabled={!isAdmin}
           >
-            <MenuItem value="">Unassigned</MenuItem>
+            <MenuItem value="">{t("common.unassigned")}</MenuItem>
             {positions.map((position) => (
               <MenuItem key={position.id} value={position.id}>
                 {position.name}
@@ -111,7 +111,7 @@ export function UserEditDialogForm({
           <Box sx={editDialogSx.editDialogSpacer}>
             <TextField
               select
-              label="Role"
+              label={t("common.role")}
               value={form.role}
               onChange={handleFieldChange("role")}
               fullWidth
@@ -121,7 +121,7 @@ export function UserEditDialogForm({
             >
               {USER_ROLE_OPTIONS.map((roleName) => (
                 <MenuItem key={roleName} value={roleName}>
-                  {roleName}
+                  {roleLabel(roleName, t)}
                 </MenuItem>
               ))}
             </TextField>
@@ -138,7 +138,7 @@ export function UserEditDialogForm({
           disabled={loading}
           sx={editDialogSx.editDialogCancelBtn}
         >
-          {USER_EDIT_DIALOG.cancel}
+          {t("common.cancel")}
         </Button>
         <Button
           onClick={() => void handleSave()}
@@ -146,7 +146,7 @@ export function UserEditDialogForm({
           disabled={loading}
           sx={editDialogSx.editDialogUpdateBtn}
         >
-          {USER_EDIT_DIALOG.confirm}
+          {t("common.update")}
         </Button>
       </DialogActions>
     </>

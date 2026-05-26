@@ -1,11 +1,14 @@
 import { z } from "zod";
+import type { TranslateFn } from "@/i18n/messages";
 
-export const loginSchema = z.object({
-  email: z.email("Please enter a valid email address."),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long.")
-    .max(20, "Password is too long."),
-});
+export function createLoginSchema(t: TranslateFn) {
+  return z.object({
+    email: z.email(t("auth.validation.invalidEmail")),
+    password: z
+      .string()
+      .min(8, t("auth.validation.passwordMin"))
+      .max(20, t("auth.validation.passwordMax")),
+  });
+}
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
+export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;

@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import type { SkillManagerCatalogSkill } from "../types/skillManager.types";
 import SkillSelectField from "./SkillSelectField";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type SkillMutationDialogsProps<TMastery extends string> = {
   masteryLevels: readonly TMastery[];
@@ -54,6 +55,7 @@ function AddSkillDialog<TMastery extends string>({
   masteryLevels: readonly TMastery[];
   dialog: SkillMutationDialogsProps<TMastery>["addDialog"];
 }) {
+  const { t } = useTranslation();
   const submitEnabled = dialog.canSubmit && !dialog.loading;
 
   return (
@@ -66,11 +68,11 @@ function AddSkillDialog<TMastery extends string>({
       data-testid="add-skill-dialog"
     >
       <DialogTitle sx={cvsStyles.dialogTitle}>
-        Add skill
+        {t("skills.dialog.addTitle")}
         <IconButton
           type="button"
           onClick={dialog.onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           size="small"
         >
           <CloseIcon />
@@ -110,7 +112,7 @@ function AddSkillDialog<TMastery extends string>({
           onClick={dialog.onClose}
           sx={cvsStyles.skillDialogCancelButton}
         >
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           type="submit"
@@ -126,7 +128,7 @@ function AddSkillDialog<TMastery extends string>({
           {dialog.loading ? (
             <CircularProgress size={18} color="inherit" />
           ) : (
-            "Add"
+            t("common.add")
           )}
         </Button>
       </DialogActions>
@@ -141,6 +143,7 @@ function UpdateSkillDialog<TMastery extends string>({
   masteryLevels: readonly TMastery[];
   dialog: SkillMutationDialogsProps<TMastery>["editDialog"];
 }) {
+  const { t } = useTranslation();
   const submitEnabled = dialog.canSubmit && !dialog.loading;
 
   return (
@@ -152,11 +155,11 @@ function UpdateSkillDialog<TMastery extends string>({
       maxWidth="md"
     >
       <DialogTitle sx={cvsStyles.dialogTitle}>
-        Update skill
+        {t("skills.dialog.updateTitle")}
         <IconButton
           type="button"
           onClick={dialog.onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           size="small"
         >
           <CloseIcon />
@@ -176,7 +179,7 @@ function UpdateSkillDialog<TMastery extends string>({
         >
           <Stack spacing={2}>
             <TextField
-              label="Skill"
+              label={t("common.skill")}
               value={dialog.skillName}
               disabled
               fullWidth
@@ -201,7 +204,7 @@ function UpdateSkillDialog<TMastery extends string>({
           onClick={dialog.onClose}
           sx={cvsStyles.skillDialogCancelButton}
         >
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           type="submit"
@@ -216,7 +219,7 @@ function UpdateSkillDialog<TMastery extends string>({
           {dialog.loading ? (
             <CircularProgress size={18} color="inherit" />
           ) : (
-            "Update"
+            t("common.update")
           )}
         </Button>
       </DialogActions>
@@ -233,11 +236,13 @@ function MasteryField<TMastery extends string>({
   levels: readonly TMastery[];
   onChange: (mastery: TMastery) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <FormControl fullWidth sx={cvsStyles.formField}>
-      <InputLabel>Skill mastery</InputLabel>
+      <InputLabel>{t("common.skillMastery")}</InputLabel>
       <Select
-        label="Skill mastery"
+        label={t("common.skillMastery")}
         value={value}
         onChange={(event) => onChange(event.target.value as TMastery)}
         data-testid="add-skill-mastery"
@@ -254,7 +259,7 @@ function MasteryField<TMastery extends string>({
         ))}
       </Select>
       {!levels.length ? (
-        <FormHelperText>No mastery levels</FormHelperText>
+        <FormHelperText>{t("common.noMasteryLevels")}</FormHelperText>
       ) : null}
     </FormControl>
   );

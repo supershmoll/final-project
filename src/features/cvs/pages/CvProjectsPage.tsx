@@ -36,7 +36,7 @@ function CvProjectsPage() {
                 onClick={page.openAddForm}
                 sx={catalogPageSx.createButton}
               >
-                + ADD PROJECT
+                {t("cvs.projects.addButton")}
               </Button>
             </Box>
           ) : null}
@@ -53,7 +53,7 @@ function CvProjectsPage() {
             <Box sx={cvsStyles.projectsList}>
               {page.showNoResults ? (
                 <Typography sx={cvsStyles.projectsEmptyResults}>
-                  No results found
+                  {t("common.noResults")}
                 </Typography>
               ) : (
                 page.projects.map((project) => (
@@ -105,10 +105,10 @@ function CvProjectsPage() {
 
         <ConfirmDialog
           open={page.removeDialog.isOpen}
-          title="Remove project"
+          title={t("cvs.projects.removeTitle")}
           message={
             <>
-              Are you sure you want to remove project{" "}
+              {t("cvs.projects.removeConfirm")}{" "}
               <ConfirmHighlight>
                 {page.removeDialog.payload?.name}
               </ConfirmHighlight>

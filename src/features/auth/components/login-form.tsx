@@ -17,11 +17,14 @@ import { authFormStyles } from "../styles/auth-form.styles";
 import { useForm } from "react-hook-form";
 import NextLink from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type LoginFormValues, loginSchema } from "../schemas/login.schema";
+import {
+  createLoginSchema,
+  type LoginFormValues,
+} from "../schemas/login.schema";
 import useLogin from "../hooks/use-login";
 import AuthFormBody from "./auth-form-body";
 import AuthFormTabs from "./auth-form-tabs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   consumeSessionEndReason,
   isTelegramSessionEndMessage,
@@ -31,6 +34,7 @@ import { useTranslation } from "@/i18n/use-translation";
 function LoginForm() {
   const { loading, error, loginUser } = useLogin();
   const { t } = useTranslation();
+  const loginSchema = useMemo(() => createLoginSchema(t), [t]);
   const [showPassword, setShowPassword] = useState(false);
   const [sessionReason] = useState(() => consumeSessionEndReason());
 
@@ -54,8 +58,8 @@ function LoginForm() {
   const isPending = isSubmitting || loading;
   const passwordInputType = showPassword ? "text" : "password";
   const passwordVisibilityLabel = showPassword
-    ? "Hide password"
-    : "Show password";
+    ? t("auth.hidePassword")
+    : t("auth.showPassword");
 
   const togglePasswordVisibility = () => {
     setShowPassword((current) => !current);
@@ -73,16 +77,16 @@ function LoginForm() {
       <AuthFormBody>
         <Box sx={authFormStyles.headerText}>
           <Typography variant="h2" component="h1" sx={authFormStyles.title}>
-            Sign in
+            {t("auth.signIn")}
           </Typography>
           <Typography sx={authFormStyles.subtitle}>
-            Welcome back. Sign in to continue
+            {t("auth.welcomeBack")}
           </Typography>
         </Box>
         <TextField
           sx={authFormStyles.textField}
           type="email"
-          placeholder="Email"
+          placeholder={t("auth.emailPlaceholder")}
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
@@ -94,7 +98,7 @@ function LoginForm() {
         <TextField
           sx={authFormStyles.textField}
           type={passwordInputType}
-          placeholder="Password"
+          placeholder={t("auth.passwordPlaceholder")}
           {...register("password")}
           error={!!errors.password}
           helperText={errors.password?.message}
@@ -125,14 +129,14 @@ function LoginForm() {
           disabled={isPending}
           data-testid="login-submit"
         >
-          {isPending ? <CircularProgress size={20} /> : "Sign in"}
+          {isPending ? <CircularProgress size={20} /> : t("auth.signIn")}
         </Button>
         <Link
           component={NextLink}
           href="/forgot-password"
           sx={authFormStyles.textAction}
         >
-          Forgot password
+          {t("auth.forgotPassword")}
         </Link>
         {sessionNotice ? (
           <Alert

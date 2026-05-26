@@ -66,7 +66,7 @@ function buildTopSkillsHtml(grouped: GroupedSkills<SkillMastery>[]): string {
     .join("");
 }
 
-function buildProjectsHtml(cv: Cv): string {
+function buildProjectsHtml(cv: Cv, tillNowLabel: string): string {
   if (!cv.projects.length) {
     return "";
   }
@@ -87,7 +87,7 @@ function buildProjectsHtml(cv: Cv): string {
             </div>
             <div class="meta-block">
               <span class="meta-label">Period</span>
-              <p class="meta-value">${escapeHtml(formatCvPeriod(project.start_date, project.end_date))}</p>
+              <p class="meta-value">${escapeHtml(formatCvPeriod(project.start_date, project.end_date, tillNowLabel))}</p>
             </div>
             <div class="meta-block">
               <span class="meta-label">Responsibilities</span>
@@ -113,6 +113,7 @@ function buildProjectsHtml(cv: Cv): string {
 function buildCvPreviewHtml(
   cv: Cv,
   grouped: GroupedSkills<SkillMastery>[],
+  tillNowLabel = "Till now",
 ): string {
   const cvName = escapeHtml(cv.name);
   const education = escapeHtml(cv.education ?? "—");
@@ -161,7 +162,7 @@ function buildCvPreviewHtml(
       </div>
     </div>
     ${buildSkillsTableHtml(grouped)}
-    ${buildProjectsHtml(cv)}
+    ${buildProjectsHtml(cv, tillNowLabel)}
   </div>
 </body>
 </html>`;

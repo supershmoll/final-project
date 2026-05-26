@@ -123,6 +123,34 @@ export const projectsStyles = {
     mb: 2,
   },
 
+  candidatesProjectLabel: {
+    color: "var(--app-text-muted)",
+    fontSize: 12,
+    fontWeight: 600,
+    textTransform: "uppercase",
+    letterSpacing: 0.4,
+    mb: 0.25,
+  },
+
+  candidatesAvailabilitySection: {
+    pt: 0.5,
+  },
+
+  candidatesAvailabilityLabel: {
+    fontSize: 13,
+    fontWeight: 600,
+    color: "var(--app-text-muted)",
+    mb: 0.5,
+  },
+
+  candidatesAvailabilityOptions: {
+    display: "flex",
+    flexDirection: { xs: "column", sm: "row" },
+    flexWrap: "wrap",
+    gap: { xs: 0, sm: 1 },
+    ml: { xs: 0, sm: -1 },
+  },
+
   candidatesLoading: {
     display: "flex",
     alignItems: "center",

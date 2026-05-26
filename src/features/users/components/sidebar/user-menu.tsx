@@ -76,8 +76,10 @@ export default function UserMenu() {
             py: 1.5,
             px: 2,
             transition: "background-color 0.2s",
-            "&:hover": {
-              bgcolor: "rgba(255,255,255,0.05)",
+            "@media (hover: hover)": {
+              "&:hover": {
+                bgcolor: "rgba(255,255,255,0.05)",
+              },
             },
           },
           "& .MuiListItemIcon-root": {

@@ -143,6 +143,7 @@ export function HrAssistantPanel() {
           size="small"
           fullWidth
           disabled={loading}
+          sx={availabilitySx.assistantFormField}
           slotProps={{
             htmlInput: { "data-testid": "hr-assistant-input" },
           }}
@@ -152,6 +153,7 @@ export function HrAssistantPanel() {
           variant="contained"
           disabled={loading || !input.trim()}
           data-testid="hr-assistant-submit"
+          sx={availabilitySx.assistantFormSubmit}
         >
           {loading ? t("assistant.sending") : t("assistant.send")}
         </Button>

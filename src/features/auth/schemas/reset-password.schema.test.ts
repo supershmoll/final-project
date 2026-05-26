@@ -1,4 +1,9 @@
-import { resetPasswordSchema } from "./reset-password.schema";
+import { translate } from "@/i18n/messages";
+import type { MessageKey } from "@/i18n/messages";
+import { createResetPasswordSchema } from "./reset-password.schema";
+
+const t = (key: MessageKey) => translate("en", key);
+const resetPasswordSchema = createResetPasswordSchema(t);
 
 describe("resetPasswordSchema", () => {
   it("accepts matching new passwords", () => {

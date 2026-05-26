@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import { formDialogSx } from "@/features/users/components/user-profile/userLanguages.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 export type ProfileBulkRemoveDialogProps = {
   open: boolean;
@@ -33,6 +34,8 @@ export function ProfileBulkRemoveDialog({
   onClose,
   onConfirm,
 }: ProfileBulkRemoveDialogProps) {
+  const { t } = useTranslation();
+
   const handleClose = () => {
     if (!submitting) {
       onClose();
@@ -56,7 +59,7 @@ export function ProfileBulkRemoveDialog({
               </Box>
               <IconButton
                 type="button"
-                aria-label="Close dialog"
+                aria-label={t("common.closeDialog")}
                 onClick={handleClose}
                 size="small"
                 disabled={submitting}

@@ -3,9 +3,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import type { UserRow } from "../types";
-import { USER_EDIT_DIALOG } from "@/features/users/constants/users.constants";
 import { UserEditDialogForm } from "./UserEditDialogForm";
 import { editDialogSx } from "./styles/editDialog.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type UserEditDialogProps = {
   open: boolean;
@@ -20,6 +20,8 @@ export function UserEditDialog({
   onClose,
   onSaved,
 }: UserEditDialogProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={open}
@@ -29,10 +31,10 @@ export function UserEditDialog({
       sx={editDialogSx.editDialogRoot}
     >
       <DialogTitle sx={editDialogSx.editDialogTitle}>
-        {USER_EDIT_DIALOG.title}
+        {t("users.dialog.editTitle")}
         <IconButton
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           sx={editDialogSx.editDialogCloseBtn}
         >
           <CloseIcon />

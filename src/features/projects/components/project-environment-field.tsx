@@ -22,11 +22,14 @@ import type {
 } from "../types";
 import { projectsStyles } from "../styles/projects.styles";
 import EnvironmentSkillChip from "./environment-skill-chip";
+import { useTranslation } from "@/i18n/use-translation";
 
 function EnvironmentAddSkillPlaceholder() {
+  const { t } = useTranslation();
+
   return (
     <Box component="span" sx={projectsStyles.environmentAddLabel}>
-      Add skill
+      {t("projects.field.addSkill")}
     </Box>
   );
 }
@@ -37,6 +40,7 @@ function EnvironmentFieldContent({
   disabled,
   message,
 }: EnvironmentFieldContentProps) {
+  const { t } = useTranslation();
   const formRef = useRef<HTMLDivElement>(null);
   const [menuMinWidth, setMenuMinWidth] = useState<number | undefined>();
   const selected = field.value;
@@ -82,7 +86,7 @@ function EnvironmentFieldContent({
       sx={[cvsStyles.formField, cvsStyles.skillSelectField]}
     >
       <InputLabel id={ENVIRONMENT_FIELD_LABEL_ID} shrink>
-        Environment
+        {t("common.environment")}
       </InputLabel>
       <Box sx={projectsStyles.environmentBox}>
         {(selected ?? []).map((name) => (
@@ -95,7 +99,7 @@ function EnvironmentFieldContent({
         ))}
         <Select
           labelId={ENVIRONMENT_FIELD_LABEL_ID}
-          label="Environment"
+          label={t("common.environment")}
           displayEmpty
           value=""
           onChange={handleSkillSelectChange}

@@ -20,8 +20,13 @@ export const SIDEBAR_NAV_ITEM_HEIGHT = 56;
 /** Matches project-wide tablet/desktop split (see usersTable.styles) */
 export const SIDEBAR_DESKTOP_MEDIA = "@media (min-width: 768px)";
 
-/** Reserved space for the fixed bottom tab bar on mobile */
-export const SIDEBAR_BOTTOM_BAR_HEIGHT = 80;
+/** Viewport query helpers (match CSS breakpoints below) */
+export const SIDEBAR_MOBILE_QUERY = "(max-width: 767px)";
+export const SIDEBAR_COMPACT_DESKTOP_QUERY =
+  "(min-width: 768px) and (max-width: 1199px)";
+
+/** Reserved space for the fixed bottom tab bar on mobile (icon-only) */
+export const SIDEBAR_BOTTOM_BAR_HEIGHT = 64;
 
 export type SidebarNavItem = {
   id: string;
@@ -32,7 +37,7 @@ export type SidebarNavItem = {
   isActive: (pathname: string, currentUserId: string | null) => boolean;
   /** When false, the item is shown but does not navigate yet. */
   navigable?: boolean;
-  /** When false, hidden in the bottom tab bar (still shown in desktop sidebar). */
+  /** @deprecated All items are shown on mobile; kept for compatibility. */
   showInMobileBar?: boolean;
 };
 

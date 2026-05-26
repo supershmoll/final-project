@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  resetPasswordSchema,
+  createResetPasswordSchema,
   type ResetPasswordFormValues,
 } from "../schemas/reset-password.schema";
 import {
@@ -24,11 +24,14 @@ import NextLink from "next/link";
 import useResetPassword from "../hooks/use-reset-password";
 import { authFormStyles } from "../styles/auth-form.styles";
 import AuthFormBody from "./auth-form-body";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslation } from "@/i18n/use-translation";
 
 function ResetPasswordForm() {
   const { loading, error, resetPasswordUser, isSuccess, token } =
     useResetPassword();
+  const { t } = useTranslation();
+  const resetPasswordSchema = useMemo(() => createResetPasswordSchema(t), [t]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
@@ -44,11 +47,11 @@ function ResetPasswordForm() {
   const passwordInputType = showPassword ? "text" : "password";
   const confirmPasswordInputType = showConfirmPassword ? "text" : "password";
   const passwordVisibilityLabel = showPassword
-    ? "Hide password"
-    : "Show password";
+    ? t("auth.hidePassword")
+    : t("auth.showPassword");
   const confirmPasswordVisibilityLabel = showConfirmPassword
-    ? "Hide password"
-    : "Show password";
+    ? t("auth.hidePassword")
+    : t("auth.showPassword");
   const isSubmitDisabled = isPending || !token || isSuccess;
 
   const togglePasswordVisibility = () => {
@@ -69,16 +72,16 @@ function ResetPasswordForm() {
       <AuthFormBody standalone>
         <Box sx={authFormStyles.headerText}>
           <Typography variant="h2" component="h1" sx={authFormStyles.title}>
-            Reset password
+            {t("auth.resetPassword")}
           </Typography>
           <Typography sx={authFormStyles.subtitle}>
-            Enter your new password to continue
+            {t("auth.resetPasswordSubtitle")}
           </Typography>
         </Box>
         <TextField
           sx={authFormStyles.textField}
           type={passwordInputType}
-          placeholder="New Password"
+          placeholder={t("auth.newPasswordPlaceholder")}
           {...register("newPassword")}
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message}
@@ -103,7 +106,7 @@ function ResetPasswordForm() {
         <TextField
           sx={authFormStyles.textField}
           type={confirmPasswordInputType}
-          placeholder="Confirm New Password"
+          placeholder={t("auth.confirmNewPasswordPlaceholder")}
           {...register("confirmNewPassword")}
           error={!!errors.confirmNewPassword}
           helperText={errors.confirmNewPassword?.message}
@@ -132,15 +135,18 @@ function ResetPasswordForm() {
           color="primary"
           disabled={isSubmitDisabled}
         >
-          {isPending ? <CircularProgress size={20} /> : "Reset Password"}
+          {isPending ? (
+            <CircularProgress size={20} />
+          ) : (
+            t("auth.resetPasswordSubmit")
+          )}
         </Button>
         <Link component={NextLink} href="/login" sx={authFormStyles.textAction}>
-          Sign in
+          {t("auth.signIn")}
         </Link>
         {isSuccess && (
           <Alert sx={authFormStyles.formAlert} severity="success">
-            Password reset successfully. You can now sign in with your new
-            password.
+            {t("auth.resetPasswordSuccess")}
           </Alert>
         )}
         {error && (
@@ -150,7 +156,7 @@ function ResetPasswordForm() {
         )}
         {!token && (
           <Alert sx={authFormStyles.formAlert} severity="error">
-            Token is required
+            {t("auth.tokenRequired")}
           </Alert>
         )}
       </AuthFormBody>

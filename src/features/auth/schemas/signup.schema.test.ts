@@ -1,4 +1,9 @@
-import { signupSchema } from "./signup.schema";
+import { translate } from "@/i18n/messages";
+import type { MessageKey } from "@/i18n/messages";
+import { createSignupSchema } from "./signup.schema";
+
+const t = (key: MessageKey) => translate("en", key);
+const signupSchema = createSignupSchema(t);
 
 describe("signupSchema", () => {
   it("accepts matching passwords", () => {

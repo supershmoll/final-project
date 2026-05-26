@@ -7,8 +7,10 @@ import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
 import { catalogTableSx } from "@/shared/styles/catalogTable.styles";
 import type { MouseEvent } from "react";
 import type { ProjectCardProps } from "../types";
+import { useTranslation } from "@/i18n/use-translation";
 
 function ProjectCard({ project, canManage, onOpenMenu }: ProjectCardProps) {
+  const { t } = useTranslation();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
     onOpenMenu(event, project);
   };
@@ -26,7 +28,7 @@ function ProjectCard({ project, canManage, onOpenMenu }: ProjectCardProps) {
           {formatDisplayDate(project.start_date)}
         </Typography>
         <Typography sx={[cvsStyles.projectGridCell, cvsStyles.projectMeta]}>
-          {formatDisplayDate(project.end_date)}
+          {formatDisplayDate(project.end_date, t("common.tillNow"))}
         </Typography>
         <Box sx={cvsStyles.projectGridActions}>
           {canManage ? (

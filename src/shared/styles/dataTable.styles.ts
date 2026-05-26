@@ -176,7 +176,9 @@ export const dataTableSx = {
     },
   },
   row: {
-    "&:hover": { backgroundColor: "rgba(255,255,255,0.03)" },
+    "@media (hover: hover)": {
+      "&:hover": { backgroundColor: "rgba(255,255,255,0.03)" },
+    },
   },
   nameCell: {
     display: "flex",

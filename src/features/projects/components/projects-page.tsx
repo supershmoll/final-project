@@ -52,7 +52,7 @@ function ProjectsPage() {
       >
         {page.isEmpty ? (
           <Typography sx={catalogTableSx.emptyState}>
-            No projects found.
+            {t("projects.empty")}
           </Typography>
         ) : (
           <Box sx={cvsStyles.projectsTableScroll}>
@@ -65,7 +65,7 @@ function ProjectsPage() {
               <Box sx={cvsStyles.projectsList}>
                 {page.showNoResults ? (
                   <Typography sx={cvsStyles.projectsEmptyResults}>
-                    No results found
+                    {t("common.noResults")}
                   </Typography>
                 ) : (
                   page.projects.map((project) => (

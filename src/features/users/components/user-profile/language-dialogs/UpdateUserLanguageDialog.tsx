@@ -10,12 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import { FORM_INPUT_LABEL_SLOT_PROPS } from "@/shared/constants/formDialog.constants";
-import {
-  LANGUAGE_PROFICIENCY_OPTIONS,
-  UPDATE_LANGUAGE_DIALOG_LABELS,
-} from "@/features/users/constants/userLanguages.constants";
+import { LANGUAGE_PROFICIENCY_OPTIONS } from "@/features/users/constants/userLanguages.constants";
 import { useUpdateUserLanguageDialog } from "@/features/users/hooks/useUpdateUserLanguageDialog";
 import { formDialogSx } from "@/shared/styles/formDialog.styles";
+import { useUserLanguageDialogLabels } from "@/i18n/hooks/use-user-language-dialog-labels";
+import { useTranslation } from "@/i18n/use-translation";
 import type { UpdateUserLanguageDialogProps } from "./userLanguageDialogs.types";
 
 function UpdateUserLanguageDialogContent({
@@ -29,6 +28,8 @@ function UpdateUserLanguageDialogContent({
   onClose: () => void;
   onCompleted: () => Promise<unknown> | void;
 }) {
+  const labels = useUserLanguageDialogLabels();
+  const { t } = useTranslation();
   const { proficiency, setProficiency, submitError, saving, handleSubmit } =
     useUpdateUserLanguageDialog({
       userId,
@@ -42,11 +43,11 @@ function UpdateUserLanguageDialogContent({
       <DialogTitle component="div" sx={formDialogSx.dialogTitleRoot}>
         <Box sx={formDialogSx.dialogTitleRow}>
           <Box component="span" sx={formDialogSx.dialogTitleText}>
-            {UPDATE_LANGUAGE_DIALOG_LABELS.title}
+            {labels.update.title}
           </Box>
           <IconButton
             type="button"
-            aria-label="Close dialog"
+            aria-label={t("common.closeDialog")}
             onClick={onClose}
             size="small"
             sx={formDialogSx.dialogCloseBtn}
@@ -58,7 +59,7 @@ function UpdateUserLanguageDialogContent({
       <DialogContent sx={formDialogSx.dialogContent}>
         <TextField
           variant="outlined"
-          label={UPDATE_LANGUAGE_DIALOG_LABELS.languageField}
+          label={labels.update.languageField}
           value={language.name}
           fullWidth
           sx={formDialogSx.dialogField}
@@ -70,7 +71,7 @@ function UpdateUserLanguageDialogContent({
         <TextField
           select
           variant="outlined"
-          label={UPDATE_LANGUAGE_DIALOG_LABELS.proficiencyField}
+          label={labels.update.proficiencyField}
           value={proficiency}
           onChange={(e) => setProficiency(e.target.value)}
           fullWidth
@@ -92,7 +93,7 @@ function UpdateUserLanguageDialogContent({
           disabled={saving}
           sx={formDialogSx.dialogCancelBtn}
         >
-          {UPDATE_LANGUAGE_DIALOG_LABELS.cancel}
+          {labels.update.cancel}
         </Button>
         <Button
           variant="contained"
@@ -101,7 +102,7 @@ function UpdateUserLanguageDialogContent({
           disabled={saving || proficiency === language.proficiency}
           sx={formDialogSx.dialogConfirmBtn}
         >
-          {UPDATE_LANGUAGE_DIALOG_LABELS.confirm}
+          {labels.update.confirm}
         </Button>
       </DialogActions>
     </>

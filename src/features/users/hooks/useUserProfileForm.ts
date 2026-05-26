@@ -5,10 +5,7 @@ import {
   useUpdateUserMutation,
   useUserEditOptionsQuery,
 } from "@/features/users/api/updateUser";
-import {
-  USER_PROFILE_AVATAR_MAX_BYTES,
-  USER_PROFILE_AVATAR_SIZE_ERROR,
-} from "@/features/users/constants/userProfile.constants";
+import { USER_PROFILE_AVATAR_MAX_BYTES } from "@/features/users/utils/avatarFile";
 import type { UserRow } from "@/features/users/types";
 import {
   toProfileFormState,
@@ -16,6 +13,7 @@ import {
   type ProfileFormState,
 } from "@/features/users/types/userProfile.types";
 import { formatMutationError } from "@/shared/utils/formatMutationError";
+import { useTranslation } from "@/i18n/use-translation";
 
 type UseUserProfileFormParams = {
   user: UserRow;
@@ -30,6 +28,7 @@ export function useUserProfileForm({
   avatarUpload,
   onUpdated,
 }: UseUserProfileFormParams) {
+  const { t } = useTranslation();
   const initialForm = React.useMemo(() => toProfileFormState(user), [user]);
   const [form, setForm] = React.useState<ProfileFormState>(initialForm);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
@@ -95,7 +94,7 @@ export function useUserProfileForm({
         avatarUpload &&
         avatarUpload.size > USER_PROFILE_AVATAR_MAX_BYTES
       ) {
-        setSubmitError(USER_PROFILE_AVATAR_SIZE_ERROR);
+        setSubmitError(t("profile.avatar.sizeError"));
         return;
       }
 
@@ -166,6 +165,7 @@ export function useUserProfileForm({
     user.lastName,
     selectedDepartmentId,
     selectedPositionId,
+    t,
   ]);
 
   return {

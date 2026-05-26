@@ -9,6 +9,7 @@ import type {
   SkillManagerItem,
 } from "../types/skillManager.types";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type SkillManagerSectionProps<TSkill extends SkillManagerItem> = {
   grouped: SkillManagerGroup<TSkill["mastery"]>[];
@@ -38,6 +39,7 @@ function DeleteSkillsButton({
   mutating: boolean;
   onDelete: () => void;
 }) {
+  const { t } = useTranslation();
   const hasSelection = selectedCount > 0;
 
   return (
@@ -51,7 +53,7 @@ function DeleteSkillsButton({
       ]}
     >
       <Box component="span" sx={cvsStyles.skillRemoveDeleteLabel}>
-        <Box component="span">Delete</Box>
+        <Box component="span">{t("userSkills.manager.delete")}</Box>
         <Box
           component="span"
           sx={[
@@ -80,6 +82,8 @@ function SkillManagerSection<TSkill extends SkillManagerItem>({
   onRemove,
   renderSkill,
 }: SkillManagerSectionProps<TSkill>) {
+  const { t } = useTranslation();
+
   if (isEmpty) {
     return canEdit ? (
       <Box sx={cvsStyles.skillsSectionEmpty}>
@@ -89,11 +93,11 @@ function SkillManagerSection<TSkill extends SkillManagerItem>({
           sx={cvsStyles.addSkillEmptyButton}
           data-testid="add-skill-button"
         >
-          + Add skill
+          {t("skills.manager.addButton")}
         </Button>
       </Box>
     ) : (
-      <Typography sx={cvsStyles.emptyState}>No skills added yet.</Typography>
+      <Typography sx={cvsStyles.emptyState}>{t("userSkills.empty")}</Typography>
     );
   }
 
@@ -138,7 +142,7 @@ function SkillManagerSection<TSkill extends SkillManagerItem>({
             disabled={mutating}
             sx={cvsStyles.skillRemoveCancelButton}
           >
-            Cancel
+            {t("common.cancel")}
           </Button>
           <DeleteSkillsButton
             selectedCount={selected.length}
@@ -157,7 +161,7 @@ function SkillManagerSection<TSkill extends SkillManagerItem>({
             sx={cvsStyles.textActionLight}
             data-testid="add-skill-button"
           >
-            Add skill
+            {t("userSkills.addButton")}
           </Button>
           <Button
             type="button"
@@ -165,7 +169,7 @@ function SkillManagerSection<TSkill extends SkillManagerItem>({
             onClick={onEnableRemove}
             sx={cvsStyles.textActionPrimary}
           >
-            Remove skills
+            {t("userSkills.removeButton")}
           </Button>
         </Box>
       )}

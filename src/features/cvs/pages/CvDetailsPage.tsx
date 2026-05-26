@@ -6,8 +6,10 @@ import type { CreateCvFormValues } from "../schemas";
 import CvDetailsFormFields from "../components/details/CvDetailsFormFields";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { cvsStyles } from "../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 function CvDetailsPage() {
+  const { t } = useTranslation();
   const page = useCvDetailsPage();
 
   return (
@@ -29,7 +31,7 @@ function CvDetailsPage() {
 
         {!page.canEdit && (
           <Alert severity="info" sx={cvsStyles.detailsFormAlert}>
-            You can view this CV but cannot edit it.
+            {t("cvs.details.readOnlyNotice")}
           </Alert>
         )}
 
@@ -47,7 +49,7 @@ function CvDetailsPage() {
             {page.isPending ? (
               <CircularProgress size={18} color="inherit" />
             ) : (
-              "Update"
+              t("common.update")
             )}
           </Button>
         )}

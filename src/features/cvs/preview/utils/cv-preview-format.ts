@@ -20,6 +20,7 @@ function masteryToExperienceYears(mastery: MasteryLevel): number {
 function formatCvPeriod(
   start: string | null | undefined,
   end: string | null | undefined,
+  tillNowLabel = "Till now",
 ): string {
   const toPeriodPart = (value: string) => {
     const date = new Date(value);
@@ -36,7 +37,7 @@ function formatCvPeriod(
 
   const startPart = toPeriodPart(start);
   if (!end) {
-    return `${startPart} – Till now`;
+    return `${startPart} – ${tillNowLabel}`;
   }
 
   return `${startPart} – ${toPeriodPart(end)}`;

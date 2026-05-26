@@ -10,8 +10,10 @@ import { UserProfileEditSection } from "@/features/users/components/user-profile
 import { UserProfileTabs } from "@/features/users/components/user-profile/UserProfileTabs";
 import { userProfileSx } from "@/features/users/components/user-profile/userProfile.styles";
 import { useUserProfilePage } from "@/features/users/hooks/useUserProfilePage";
+import { useTranslation } from "@/i18n/use-translation";
 
 export function UserProfilePage() {
+  const { t } = useTranslation();
   const {
     user,
     loading,
@@ -32,7 +34,7 @@ export function UserProfilePage() {
           underline="hover"
           sx={userProfileSx.breadcrumbLink}
         >
-          Employees
+          {t("nav.employees")}
         </Link>
         <Typography component="span" sx={userProfileSx.breadcrumbActive}>
           {breadcrumbName}
@@ -41,10 +43,12 @@ export function UserProfilePage() {
       <UserProfileTabs />
       {loading ? <PageLoader /> : null}
       {!loading && error ? (
-        <Typography color="error.main">Failed to load user data.</Typography>
+        <Typography color="error.main">{t("profile.loadError")}</Typography>
       ) : null}
       {!loading && !error && !user ? (
-        <Typography sx={userProfileSx.email}>User not found.</Typography>
+        <Typography sx={userProfileSx.email}>
+          {t("profile.notFound")}
+        </Typography>
       ) : null}
       {!loading && !error && user ? (
         <UserProfileEditSection

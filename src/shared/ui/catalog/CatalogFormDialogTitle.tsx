@@ -3,6 +3,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { formDialogSx } from "@/shared/styles/formDialog.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 export type CatalogFormDialogTitleProps = {
   title: string;
@@ -13,6 +14,8 @@ export function CatalogFormDialogTitle({
   title,
   onClose,
 }: CatalogFormDialogTitleProps) {
+  const { t } = useTranslation();
+
   return (
     <DialogTitle component="div" sx={formDialogSx.addLanguageDialogTitleRoot}>
       <Box sx={formDialogSx.dialogTitleRow}>
@@ -21,7 +24,7 @@ export function CatalogFormDialogTitle({
         </Box>
         <IconButton
           type="button"
-          aria-label="Close dialog"
+          aria-label={t("common.closeDialog")}
           onClick={onClose}
           size="small"
           sx={formDialogSx.dialogCloseBtn}

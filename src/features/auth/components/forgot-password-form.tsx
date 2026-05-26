@@ -13,15 +13,22 @@ import NextLink from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  forgotPasswordSchema,
+  createForgotPasswordSchema,
   type ForgotPasswordFormValues,
 } from "../schemas/forgot-password.schema";
 import useForgotPassword from "../hooks/use-forgot-password";
 import { authFormStyles } from "../styles/auth-form.styles";
 import AuthFormBody from "./auth-form-body";
+import { useMemo } from "react";
+import { useTranslation } from "@/i18n/use-translation";
 
 function ForgotPasswordForm() {
   const { loading, error, forgotPasswordUser, isSuccess } = useForgotPassword();
+  const { t } = useTranslation();
+  const forgotPasswordSchema = useMemo(
+    () => createForgotPasswordSchema(t),
+    [t],
+  );
   const {
     register,
     handleSubmit,
@@ -32,7 +39,7 @@ function ForgotPasswordForm() {
   });
 
   const isPending = isSubmitting || loading;
-  const submitLabel = isSuccess ? "Sent" : "Forgot password";
+  const submitLabel = isSuccess ? t("auth.sent") : t("auth.forgotPassword");
 
   return (
     <Stack
@@ -44,16 +51,16 @@ function ForgotPasswordForm() {
       <AuthFormBody standalone>
         <Box sx={authFormStyles.headerText}>
           <Typography variant="h2" component="h1" sx={authFormStyles.title}>
-            Forgot password
+            {t("auth.forgotPasswordTitle")}
           </Typography>
           <Typography sx={authFormStyles.subtitle}>
-            We will send you an email with further instructions
+            {t("auth.forgotPasswordSubtitle")}
           </Typography>
         </Box>
         <TextField
           sx={authFormStyles.textField}
           type="email"
-          placeholder="Email"
+          placeholder={t("auth.emailPlaceholder")}
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
@@ -69,7 +76,7 @@ function ForgotPasswordForm() {
           {isPending ? <CircularProgress size={20} /> : submitLabel}
         </Button>
         <Link component={NextLink} href="/login" sx={authFormStyles.textAction}>
-          Cancel
+          {t("common.cancel")}
         </Link>
         {error && (
           <Alert sx={authFormStyles.formAlert} severity="error">
@@ -78,8 +85,7 @@ function ForgotPasswordForm() {
         )}
         {isSuccess && (
           <Alert sx={authFormStyles.formAlert} severity="success">
-            If an account with this email exists, password reset instructions
-            have been sent.
+            {t("auth.forgotPasswordSuccess")}
           </Alert>
         )}
       </AuthFormBody>

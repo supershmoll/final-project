@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import { UPDATE_SKILL_DIALOG_LABELS } from "@/features/users/constants/userSkills.constants";
+import { useUserSkillDialogLabels } from "@/i18n/hooks/use-user-skill-dialog-labels";
 import { useUpdateUserSkillDialog } from "@/features/users/hooks/useUpdateUserSkillDialog";
 import { formDialogSx } from "@/shared/styles/formDialog.styles";
 import { SkillFormDialogFields } from "../SkillFormDialogFields";
@@ -19,6 +19,7 @@ function UpdateUserSkillDialogContent({
   onClose: () => void;
   onCompleted: () => Promise<unknown> | void;
 }) {
+  const labels = useUserSkillDialogLabels();
   const {
     mastery,
     setMastery,
@@ -36,9 +37,9 @@ function UpdateUserSkillDialogContent({
   return (
     <>
       <SkillFormDialogFields
-        title={UPDATE_SKILL_DIALOG_LABELS.title}
-        skillLabel={UPDATE_SKILL_DIALOG_LABELS.skillField}
-        masteryLabel={UPDATE_SKILL_DIALOG_LABELS.masteryField}
+        title={labels.update.title}
+        skillLabel={labels.update.skillField}
+        masteryLabel={labels.update.masteryField}
         skillName={skill.name}
         onSkillNameChange={() => undefined}
         skillOptions={[{ id: skill.id, name: skill.name }]}
@@ -57,7 +58,7 @@ function UpdateUserSkillDialogContent({
           disabled={saving}
           sx={formDialogSx.dialogCancelBtn}
         >
-          {UPDATE_SKILL_DIALOG_LABELS.cancel}
+          {labels.update.cancel}
         </Button>
         <Button
           variant="contained"
@@ -66,7 +67,7 @@ function UpdateUserSkillDialogContent({
           disabled={saving || mastery === skill.mastery}
           sx={formDialogSx.dialogConfirmBtn}
         >
-          {UPDATE_SKILL_DIALOG_LABELS.confirm}
+          {labels.update.confirm}
         </Button>
       </DialogActions>
     </>

@@ -1,12 +1,9 @@
 import * as React from "react";
 import { useDeleteAvatarMutation } from "@/features/users/api/updateUser";
-import {
-  USER_PROFILE_DISCARD_AVATAR_SELECTION,
-  USER_PROFILE_REMOVE_PROFILE_PHOTO,
-} from "@/features/users/constants/userProfile.constants";
 import type { UserRow } from "@/features/users/types";
 import type { AvatarUploadState } from "@/features/users/types/userProfile.types";
 import { formatMutationError } from "@/shared/utils/formatMutationError";
+import { useTranslation } from "@/i18n/use-translation";
 
 type UseUserProfileAvatarParams = {
   user: UserRow;
@@ -19,6 +16,7 @@ export function useUserProfileAvatar({
   canEditProfile,
   onUserUpdated,
 }: UseUserProfileAvatarParams) {
+  const { t } = useTranslation();
   const [avatarUpload, setAvatarUpload] = React.useState<
     AvatarUploadState | undefined
   >(undefined);
@@ -39,8 +37,8 @@ export function useUserProfileAvatar({
     canEditProfile && (hasPendingAvatar || hasServerAvatar);
 
   const removeAvatarButtonLabel = avatarUpload
-    ? USER_PROFILE_DISCARD_AVATAR_SELECTION
-    : USER_PROFILE_REMOVE_PROFILE_PHOTO;
+    ? t("profile.avatar.discardSelection")
+    : t("profile.avatar.removePhoto");
 
   const handleRemoveAvatar = React.useCallback(async () => {
     setAvatarActionError(null);

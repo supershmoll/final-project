@@ -11,14 +11,16 @@ export type SidebarNavItemProps = {
   item: SidebarNavItemConfig;
   pathname: string;
   userId: string | null;
-  collapsed: boolean;
+  iconOnly: boolean;
+  isMobile: boolean;
 };
 
 export function SidebarNavItem({
   item,
   pathname,
   userId,
-  collapsed,
+  iconOnly,
+  isMobile,
 }: SidebarNavItemProps) {
   const { t } = useTranslation();
   const label = t(item.labelKey);
@@ -26,7 +28,6 @@ export function SidebarNavItem({
   const href = resolveHref(item.href, userId);
   const active = item.isActive(pathname, userId);
   const Icon = item.icon;
-  const hideOnMobile = item.showInMobileBar === false;
   const className = navItemClassName(active, !navigable);
 
   const itemContent = (
@@ -44,29 +45,33 @@ export function SidebarNavItem({
       href={href}
       className={className}
       aria-current={active ? "page" : undefined}
+      aria-label={iconOnly ? label : undefined}
+      title={iconOnly ? label : undefined}
       data-testid={`nav-${item.id}`}
     >
       {itemContent}
     </Box>
   ) : (
-    <Box component="span" className={className} aria-disabled="true">
+    <Box
+      component="span"
+      className={className}
+      aria-disabled="true"
+      aria-label={iconOnly ? label : undefined}
+      title={iconOnly ? label : undefined}
+    >
       {itemContent}
     </Box>
   );
 
-  const wrapped = collapsed ? (
-    <Tooltip title={label} placement="right">
-      {link}
-    </Tooltip>
-  ) : (
-    link
-  );
-
-  if (hideOnMobile) {
+  if (iconOnly) {
     return (
-      <Box sx={{ display: { xs: "none", md: "contents" } }}>{wrapped}</Box>
+      <Tooltip title={label} placement={isMobile ? "top" : "right"}>
+        <Box component="span" sx={{ display: "flex", flexShrink: 0 }}>
+          {link}
+        </Box>
+      </Tooltip>
     );
   }
 
-  return <React.Fragment>{wrapped}</React.Fragment>;
+  return link;
 }

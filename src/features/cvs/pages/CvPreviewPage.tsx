@@ -5,8 +5,10 @@ import { useRef } from "react";
 import useCvPreviewPage from "../preview/hooks/use-cv-preview-page";
 import CvPreviewDocument from "../components/preview/CvPreviewDocument";
 import { cvsStyles } from "../styles/cvs.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 function CvPreviewPage() {
+  const { t } = useTranslation();
   const page = useCvPreviewPage();
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +32,7 @@ function CvPreviewPage() {
           disabled={page.exporting}
           onClick={handleExport}
         >
-          {page.exporting ? <CircularProgress size={16} /> : "Export PDF"}
+          {page.exporting ? <CircularProgress size={16} /> : t("cvs.exportPdf")}
         </Button>
       </Stack>
 

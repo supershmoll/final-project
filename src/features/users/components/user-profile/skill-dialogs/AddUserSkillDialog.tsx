@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import { ADD_SKILL_DIALOG_LABELS } from "@/features/users/constants/userSkills.constants";
+import { useUserSkillDialogLabels } from "@/i18n/hooks/use-user-skill-dialog-labels";
 import { useAddUserSkillDialog } from "@/features/users/hooks/useAddUserSkillDialog";
 import { formDialogSx } from "@/shared/styles/formDialog.styles";
 import { SkillFormDialogFields } from "../SkillFormDialogFields";
@@ -14,6 +14,7 @@ function AddUserSkillDialogContent({
   onClose,
   onCompleted,
 }: Omit<AddUserSkillDialogProps, "open">) {
+  const labels = useUserSkillDialogLabels();
   const {
     skillName,
     setSkillName,
@@ -35,9 +36,9 @@ function AddUserSkillDialogContent({
   return (
     <>
       <SkillFormDialogFields
-        title={ADD_SKILL_DIALOG_LABELS.title}
-        skillLabel={ADD_SKILL_DIALOG_LABELS.skillField}
-        masteryLabel={ADD_SKILL_DIALOG_LABELS.masteryField}
+        title={labels.add.title}
+        skillLabel={labels.add.skillField}
+        masteryLabel={labels.add.masteryField}
         skillName={skillName}
         onSkillNameChange={setSkillName}
         skillOptions={addable.map((item) => ({
@@ -50,7 +51,7 @@ function AddUserSkillDialogContent({
         loading={skillsLoading}
         emptySkillsMessage={
           !skillsLoading && addable.length === 0
-            ? "No skills available to add, or the list is empty."
+            ? labels.add.noSkillsAvailable
             : null
         }
         submitError={submitError}
@@ -63,7 +64,7 @@ function AddUserSkillDialogContent({
           disabled={saving}
           sx={formDialogSx.dialogCancelBtn}
         >
-          {ADD_SKILL_DIALOG_LABELS.cancel}
+          {labels.add.cancel}
         </Button>
         <Button
           variant="contained"
@@ -72,7 +73,7 @@ function AddUserSkillDialogContent({
           disabled={saving || !skillName || addable.length === 0}
           sx={formDialogSx.dialogConfirmBtn}
         >
-          {ADD_SKILL_DIALOG_LABELS.confirm}
+          {labels.add.confirm}
         </Button>
       </DialogActions>
     </>

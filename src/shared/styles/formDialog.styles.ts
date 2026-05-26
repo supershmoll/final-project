@@ -10,6 +10,15 @@ const modalActionButtonBase = {
   fontWeight: 700,
   letterSpacing: 0.6,
   boxShadow: "none",
+  "@media (max-width: 767px)": {
+    minWidth: 0,
+    flex: "1 1 0",
+    height: 44,
+    minHeight: 44,
+    px: 2,
+    fontSize: 12,
+    letterSpacing: 0.4,
+  },
 } as const;
 
 export const formDialogSx = {
@@ -20,6 +29,11 @@ export const formDialogSx = {
       borderRadius: 2,
       maxWidth: 440,
       width: "100%",
+      "@media (max-width: 767px)": {
+        mx: 2,
+        width: "calc(100% - 32px)",
+        maxWidth: "calc(100% - 32px)",
+      },
     },
   },
   addLanguageDialog: {
@@ -39,6 +53,9 @@ export const formDialogSx = {
     px: 3,
     pt: 2,
     mb: 2.5,
+    "@media (max-width: 767px)": {
+      px: 2,
+    },
   },
   dialogTitleRow: {
     display: "flex",
@@ -79,6 +96,10 @@ export const formDialogSx = {
     gap: 2.5,
     minWidth: 320,
     overflow: "visible",
+    "@media (max-width: 767px)": {
+      px: 2,
+      minWidth: 0,
+    },
   },
   dialogField: {
     overflow: "visible",
@@ -123,11 +144,23 @@ export const formDialogSx = {
   dialogActions: {
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center",
+    alignItems: "stretch",
     gap: 2,
     px: 3,
     pb: 3,
     pt: 1,
+    width: "100%",
+    boxSizing: "border-box",
+    "@media (max-width: 767px)": {
+      gap: 1,
+      px: 2,
+      pb: 2,
+      "& > *": {
+        flex: "1 1 0",
+        minWidth: 0,
+        maxWidth: "none",
+      },
+    },
   },
   dialogCancelBtn: {
     ...modalActionButtonBase,

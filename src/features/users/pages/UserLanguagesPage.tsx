@@ -16,8 +16,10 @@ import {
 import { userProfileSx } from "@/features/users/components/user-profile/userProfile.styles";
 import { userProfileLanguagesSx } from "@/features/users/components/user-profile/userProfileLanguages.styles";
 import { useUserLanguagesPage } from "@/features/users/hooks/useUserLanguagesPage";
+import { useTranslation } from "@/i18n/use-translation";
 
 export function UserLanguagesPage() {
+  const { t } = useTranslation();
   const {
     userId,
     authPending,
@@ -54,7 +56,7 @@ export function UserLanguagesPage() {
           underline="hover"
           sx={userProfileSx.breadcrumbLink}
         >
-          Employees
+          {t("nav.employees")}
         </Link>
         <Typography component="span" sx={userProfileSx.breadcrumbActive}>
           {breadcrumbName}
@@ -68,7 +70,9 @@ export function UserLanguagesPage() {
         </Typography>
       ) : null}
       {!loading && !errorMessage && !user ? (
-        <Typography sx={userProfileSx.email}>User not found.</Typography>
+        <Typography sx={userProfileSx.email}>
+          {t("profile.notFound")}
+        </Typography>
       ) : null}
       {!loading && !errorMessage && user ? (
         <UserLanguagesList

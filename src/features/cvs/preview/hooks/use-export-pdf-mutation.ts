@@ -7,6 +7,7 @@ import type { Cv } from "../../shared/types";
 import { groupSkillsByCategory } from "@/utils/skills";
 import { EXPORT_PDF_MUTATION } from "../graphql/export-pdf.mutation";
 import buildCvPreviewHtml from "../utils/build-cv-preview-html";
+import { useTranslation } from "@/i18n/use-translation";
 import {
   downloadPdfPayload,
   isServerPdfUnavailable,
@@ -16,6 +17,7 @@ import exportCvPdfClient, {
 } from "../utils/export-cv-pdf-client";
 
 function useExportPdfMutation() {
+  const { t } = useTranslation();
   const { categories } = useCvSkillCatalog();
   const [exportPdfMutation, { loading }] = useMutation<{ exportPdf: string }>(
     EXPORT_PDF_MUTATION,
@@ -26,7 +28,7 @@ function useExportPdfMutation() {
     previewElement?: HTMLElement | null,
   ): Promise<MutationResult> => {
     const grouped = groupSkillsByCategory(cv.skills, categories);
-    const html = buildCvPreviewHtml(cv, grouped);
+    const html = buildCvPreviewHtml(cv, grouped, t("common.tillNow"));
     const fileName = `${cv.name.replace(/\s+/g, "-")}.pdf`;
 
     const serverResult = await runMutation(async () => {

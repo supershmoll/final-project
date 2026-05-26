@@ -3,12 +3,14 @@
 import { Button, Stack } from "@mui/material";
 import NextLink from "next/link";
 import { authFormStyles } from "../styles/auth-form.styles";
+import { useTranslation } from "@/i18n/use-translation";
 
 type AuthFormTabsProps = {
   active: "login" | "registration";
 };
 
 function AuthFormTabs({ active }: AuthFormTabsProps) {
+  const { t } = useTranslation();
   const isLoginActive = active === "login";
   const isSignUpActive = active === "registration";
 
@@ -20,7 +22,7 @@ function AuthFormTabs({ active }: AuthFormTabsProps) {
         href="/login"
         sx={[authFormStyles.tab, isLoginActive && authFormStyles.activeTab]}
       >
-        Sign in
+        {t("auth.signIn")}
       </Button>
       <Button
         type="button"
@@ -28,7 +30,7 @@ function AuthFormTabs({ active }: AuthFormTabsProps) {
         href="/registration"
         sx={[authFormStyles.tab, isSignUpActive && authFormStyles.activeTab]}
       >
-        Sign up
+        {t("auth.signUp")}
       </Button>
     </Stack>
   );

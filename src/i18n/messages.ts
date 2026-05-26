@@ -63,6 +63,32 @@ export type MessageKey =
   | "telegram.help"
   | "telegram.validation.username"
   | "auth.sessionExpired.telegram"
+  | "auth.signIn"
+  | "auth.signUp"
+  | "auth.welcomeBack"
+  | "auth.createAccountSubtitle"
+  | "auth.emailPlaceholder"
+  | "auth.passwordPlaceholder"
+  | "auth.confirmPasswordPlaceholder"
+  | "auth.newPasswordPlaceholder"
+  | "auth.confirmNewPasswordPlaceholder"
+  | "auth.forgotPassword"
+  | "auth.forgotPasswordTitle"
+  | "auth.forgotPasswordSubtitle"
+  | "auth.sent"
+  | "auth.forgotPasswordSuccess"
+  | "auth.resetPassword"
+  | "auth.resetPasswordSubtitle"
+  | "auth.resetPasswordSubmit"
+  | "auth.resetPasswordSuccess"
+  | "auth.tokenRequired"
+  | "auth.iHaveAccount"
+  | "auth.showPassword"
+  | "auth.hidePassword"
+  | "auth.validation.invalidEmail"
+  | "auth.validation.passwordMin"
+  | "auth.validation.passwordMax"
+  | "auth.validation.passwordsMismatch"
   | "common.cancel"
   | "common.create"
   | "common.update"
@@ -72,6 +98,27 @@ export type MessageKey =
   | "common.search"
   | "common.name"
   | "common.close"
+  | "common.closeDialog"
+  | "common.loading"
+  | "common.add"
+  | "common.password"
+  | "common.confirmPassword"
+  | "common.role"
+  | "common.unassigned"
+  | "common.description"
+  | "common.environment"
+  | "common.responsibilities"
+  | "common.proficiency"
+  | "common.language"
+  | "common.skill"
+  | "common.skillMastery"
+  | "common.noMasteryLevels"
+  | "common.noCategories"
+  | "common.selectSkill"
+  | "common.selectLanguage"
+  | "common.noResults"
+  | "common.project"
+  | "common.tillNow"
   | "common.validation.enterName"
   | "table.firstName"
   | "table.lastName"
@@ -119,19 +166,93 @@ export type MessageKey =
   | "skills.validation.enterName"
   | "skills.validation.selectCategory"
   | "skills.deleteConfirm"
+  | "skills.dialog.addTitle"
+  | "skills.dialog.updateTitle"
+  | "skills.manager.addButton"
+  | "sidebar.expand"
+  | "sidebar.collapse"
+  | "sidebar.mainNavigation"
   | "users.createButton"
   | "users.viewProfile"
   | "users.dialog.editTitle"
+  | "users.dialog.createTitle"
   | "users.dialog.deleteTitle"
   | "users.deleteConfirm"
+  | "users.role.employee"
+  | "users.role.admin"
   | "cvs.createButton"
+  | "cvs.dialog.createTitle"
   | "cvs.dialog.deleteTitle"
   | "cvs.deleteConfirm"
   | "cvs.empty"
   | "cvs.searchEmpty"
+  | "cvs.field.name"
+  | "cvs.field.description"
+  | "cvs.field.responsibilitiesPlaceholder"
+  | "cvs.details.readOnlyNotice"
+  | "cvs.exportPdf"
+  | "cvs.projects.addTitle"
+  | "cvs.projects.updateTitle"
+  | "cvs.projects.addButton"
+  | "cvs.projects.removeTitle"
+  | "cvs.projects.removeConfirm"
+  | "cvs.projects.empty"
+  | "cvs.preview.education"
+  | "cvs.preview.languageProficiency"
+  | "cvs.preview.domains"
+  | "cvs.preview.professionalSkills"
+  | "cvs.preview.skills"
+  | "cvs.preview.experienceYears"
+  | "cvs.preview.lastUsed"
+  | "cvs.preview.projects"
+  | "cvs.preview.projectRoles"
+  | "cvs.preview.period"
+  | "cvs.preview.responsibilities"
+  | "profile.tab.profile"
+  | "profile.tab.skills"
+  | "profile.tab.languages"
+  | "profile.birthDate"
+  | "profile.notFound"
+  | "profile.loadError"
+  | "profile.avatar.sizeError"
+  | "profile.avatar.typeError"
+  | "profile.avatar.uploadHint"
+  | "profile.avatar.discardSelection"
+  | "profile.avatar.removePhoto"
+  | "profile.memberSinceFallback"
+  | "userSkills.addButton"
+  | "userSkills.removeButton"
+  | "userSkills.empty"
+  | "userSkills.manager.delete"
+  | "userSkills.dialog.addTitle"
+  | "userSkills.dialog.updateTitle"
+  | "userSkills.dialog.deleteTitle"
+  | "userSkills.dialog.noSkillsAvailable"
+  | "userSkills.bulkRemove.one"
+  | "userSkills.bulkRemove.manyPrefix"
+  | "userSkills.bulkRemove.manySuffix"
+  | "userLanguages.addButton"
+  | "userLanguages.removeButton"
+  | "userLanguages.empty"
+  | "userLanguages.dialog.addTitle"
+  | "userLanguages.dialog.updateTitle"
+  | "userLanguages.dialog.deleteTitle"
+  | "userLanguages.loadingLanguages"
+  | "userLanguages.dialog.noLanguagesAvailable"
+  | "userLanguages.bulkRemove.one"
+  | "userLanguages.bulkRemove.manyPrefix"
+  | "userLanguages.bulkRemove.manySuffix"
   | "projects.dialog.deleteTitle"
+  | "projects.dialog.createTitle"
+  | "projects.dialog.editTitle"
   | "projects.createButton"
   | "projects.deleteConfirm"
+  | "projects.empty"
+  | "projects.field.name"
+  | "projects.field.description"
+  | "projects.field.ongoingHint"
+  | "projects.field.responsibilitiesPlaceholder"
+  | "projects.field.addSkill"
   | "projects.ai.title"
   | "projects.ai.description"
   | "projects.ai.briefLabel"
@@ -152,7 +273,8 @@ export type MessageKey =
   | "projects.candidates.position"
   | "projects.candidates.anyDepartment"
   | "projects.candidates.anyPosition"
-  | "projects.candidates.requireAvailable"
+  | "projects.candidates.projectLabel"
+  | "projects.candidates.availabilityFilter"
   | "projects.candidates.search"
   | "projects.candidates.searching"
   | "projects.candidates.empty"
@@ -235,6 +357,35 @@ const en: Messages = {
     "Enter a valid Telegram username (5–32 characters, letters, numbers, underscore).",
   "auth.sessionExpired.telegram":
     "Your session ended because today's work status was not confirmed in Telegram. Please sign in again.",
+  "auth.signIn": "Sign in",
+  "auth.signUp": "Sign up",
+  "auth.welcomeBack": "Welcome back. Sign in to continue",
+  "auth.createAccountSubtitle": "Create an account to continue",
+  "auth.emailPlaceholder": "Email",
+  "auth.passwordPlaceholder": "Password",
+  "auth.confirmPasswordPlaceholder": "Confirm Password",
+  "auth.newPasswordPlaceholder": "New Password",
+  "auth.confirmNewPasswordPlaceholder": "Confirm New Password",
+  "auth.forgotPassword": "Forgot password",
+  "auth.forgotPasswordTitle": "Forgot password",
+  "auth.forgotPasswordSubtitle":
+    "We will send you an email with further instructions",
+  "auth.sent": "Sent",
+  "auth.forgotPasswordSuccess":
+    "If an account with this email exists, password reset instructions have been sent.",
+  "auth.resetPassword": "Reset password",
+  "auth.resetPasswordSubtitle": "Enter your new password to continue",
+  "auth.resetPasswordSubmit": "Reset Password",
+  "auth.resetPasswordSuccess":
+    "Password reset successfully. You can now sign in with your new password.",
+  "auth.tokenRequired": "Token is required",
+  "auth.iHaveAccount": "I have an account",
+  "auth.showPassword": "Show password",
+  "auth.hidePassword": "Hide password",
+  "auth.validation.invalidEmail": "Please enter a valid email address.",
+  "auth.validation.passwordMin": "Password must be at least 8 characters long.",
+  "auth.validation.passwordMax": "Password is too long.",
+  "auth.validation.passwordsMismatch": "Passwords do not match.",
   "common.cancel": "Cancel",
   "common.create": "Create",
   "common.update": "Update",
@@ -244,6 +395,27 @@ const en: Messages = {
   "common.search": "Search",
   "common.name": "Name",
   "common.close": "Close",
+  "common.closeDialog": "Close dialog",
+  "common.loading": "Loading…",
+  "common.add": "Add",
+  "common.password": "Password",
+  "common.confirmPassword": "Confirm Password",
+  "common.role": "Role",
+  "common.unassigned": "Unassigned",
+  "common.description": "Description",
+  "common.environment": "Environment",
+  "common.responsibilities": "Responsibilities",
+  "common.proficiency": "Proficiency",
+  "common.language": "Language",
+  "common.skill": "Skill",
+  "common.skillMastery": "Skill mastery",
+  "common.noMasteryLevels": "No mastery levels",
+  "common.noCategories": "No categories",
+  "common.selectSkill": "Select skill",
+  "common.selectLanguage": "Select language",
+  "common.noResults": "No results found",
+  "common.project": "Project",
+  "common.tillNow": "Till now",
   "common.validation.enterName": "Enter a name.",
   "table.firstName": "First Name",
   "table.lastName": "Last Name",
@@ -291,19 +463,99 @@ const en: Messages = {
   "skills.validation.enterName": "Enter a skill name.",
   "skills.validation.selectCategory": "Select a category.",
   "skills.deleteConfirm": "Are you sure you want to delete skill",
+  "skills.dialog.addTitle": "Add skill",
+  "skills.dialog.updateTitle": "Update skill",
+  "skills.manager.addButton": "+ Add skill",
+  "sidebar.expand": "Expand sidebar",
+  "sidebar.collapse": "Collapse sidebar",
+  "sidebar.mainNavigation": "Main navigation",
   "users.createButton": "+ Create user",
   "users.viewProfile": "View profile",
+  "users.dialog.createTitle": "Add user",
   "users.dialog.editTitle": "Edit user",
   "users.dialog.deleteTitle": "Delete user",
   "users.deleteConfirm": "Are you sure you want to delete user",
+  "users.role.employee": "Employee",
+  "users.role.admin": "Admin",
   "cvs.createButton": "+ CREATE CV",
+  "cvs.dialog.createTitle": "Create CV",
   "cvs.dialog.deleteTitle": "Delete CV",
   "cvs.deleteConfirm": "Are you sure you want to delete CV",
   "cvs.empty": "No CVs found.",
   "cvs.searchEmpty": "No CVs match your search.",
+  "cvs.field.name": "Name",
+  "cvs.field.description": "Description",
+  "cvs.field.responsibilitiesPlaceholder": "One responsibility per line",
+  "cvs.details.readOnlyNotice": "You can view this CV but cannot edit it.",
+  "cvs.exportPdf": "Export PDF",
+  "cvs.projects.addTitle": "Add project",
+  "cvs.projects.updateTitle": "Update project",
+  "cvs.projects.addButton": "+ ADD PROJECT",
+  "cvs.projects.removeTitle": "Remove project",
+  "cvs.projects.removeConfirm": "Are you sure you want to remove project",
+  "cvs.projects.empty": "No projects found.",
+  "cvs.preview.education": "Education",
+  "cvs.preview.languageProficiency": "Language proficiency",
+  "cvs.preview.domains": "Domains",
+  "cvs.preview.professionalSkills": "Professional skills",
+  "cvs.preview.skills": "Skills",
+  "cvs.preview.experienceYears": "Experience in years",
+  "cvs.preview.lastUsed": "Last used",
+  "cvs.preview.projects": "Projects",
+  "cvs.preview.projectRoles": "Project roles",
+  "cvs.preview.period": "Period",
+  "cvs.preview.responsibilities": "Responsibilities",
+  "profile.tab.profile": "Profile",
+  "profile.tab.skills": "Skills",
+  "profile.tab.languages": "Languages",
+  "profile.birthDate": "Birth date",
+  "profile.notFound": "User not found.",
+  "profile.loadError": "Failed to load user data.",
+  "profile.avatar.sizeError": "Photo must not exceed 500 KB.",
+  "profile.avatar.typeError": "Please use a PNG, JPG, or GIF image.",
+  "profile.avatar.uploadHint": "png, jpg or gif no more than 0.5MB",
+  "profile.avatar.discardSelection": "Discard selected photo",
+  "profile.avatar.removePhoto": "Remove profile photo",
+  "profile.memberSinceFallback": "A member",
+  "userSkills.addButton": "Add skill",
+  "userSkills.removeButton": "Remove skills",
+  "userSkills.empty": "No skills added yet.",
+  "userSkills.manager.delete": "Delete",
+  "userSkills.dialog.addTitle": "Add skill",
+  "userSkills.dialog.updateTitle": "Update skill",
+  "userSkills.dialog.deleteTitle": "Delete skills",
+  "userSkills.dialog.noSkillsAvailable":
+    "No skills available to add, or the list is empty.",
+  "userSkills.bulkRemove.one":
+    "Remove this skill from the profile? This cannot be undone.",
+  "userSkills.bulkRemove.manyPrefix": "Remove",
+  "userSkills.bulkRemove.manySuffix":
+    "skills from the profile? This cannot be undone.",
+  "userLanguages.addButton": "Add language",
+  "userLanguages.removeButton": "Remove languages",
+  "userLanguages.empty": "No languages listed yet.",
+  "userLanguages.dialog.addTitle": "Add language",
+  "userLanguages.dialog.updateTitle": "Update language",
+  "userLanguages.dialog.deleteTitle": "Delete languages",
+  "userLanguages.loadingLanguages": "Loading languages…",
+  "userLanguages.dialog.noLanguagesAvailable":
+    "No languages available to add, or the list is empty.",
+  "userLanguages.bulkRemove.one":
+    "Remove this language from the profile? This cannot be undone.",
+  "userLanguages.bulkRemove.manyPrefix": "Remove",
+  "userLanguages.bulkRemove.manySuffix":
+    "languages from the profile? This cannot be undone.",
   "projects.createButton": "+ CREATE PROJECT",
+  "projects.dialog.createTitle": "Create project",
+  "projects.dialog.editTitle": "Update project",
   "projects.dialog.deleteTitle": "Delete project",
   "projects.deleteConfirm": "Are you sure you want to delete project",
+  "projects.empty": "No projects found.",
+  "projects.field.name": "Name",
+  "projects.field.description": "Description",
+  "projects.field.ongoingHint": "Leave empty if the project is ongoing",
+  "projects.field.responsibilitiesPlaceholder": "One responsibility per line",
+  "projects.field.addSkill": "Add skill",
   "projects.ai.title": "AI project assistant",
   "projects.ai.description":
     "Describe the project in a few words and AI will suggest a name, domain, description, and tech stack from your skills catalog.",
@@ -329,7 +581,8 @@ const en: Messages = {
   "projects.candidates.position": "Position",
   "projects.candidates.anyDepartment": "Any department",
   "projects.candidates.anyPosition": "Any position",
-  "projects.candidates.requireAvailable": "Only office / remote / unknown",
+  "projects.candidates.projectLabel": "Project",
+  "projects.candidates.availabilityFilter": "Availability",
   "projects.candidates.search": "Find candidates",
   "projects.candidates.searching": "Matching…",
   "projects.candidates.empty": "No candidates match these filters.",
@@ -412,6 +665,35 @@ const ru: Messages = {
     "Введите корректное имя пользователя Telegram (5–32 символа: буквы, цифры, _).",
   "auth.sessionExpired.telegram":
     "Сессия завершена, так как сегодняшний рабочий статус не был подтверждён в Telegram. Войдите снова.",
+  "auth.signIn": "Войти",
+  "auth.signUp": "Регистрация",
+  "auth.welcomeBack": "С возвращением. Войдите, чтобы продолжить",
+  "auth.createAccountSubtitle": "Создайте аккаунт, чтобы продолжить",
+  "auth.emailPlaceholder": "Email",
+  "auth.passwordPlaceholder": "Пароль",
+  "auth.confirmPasswordPlaceholder": "Подтвердите пароль",
+  "auth.newPasswordPlaceholder": "Новый пароль",
+  "auth.confirmNewPasswordPlaceholder": "Подтвердите новый пароль",
+  "auth.forgotPassword": "Забыли пароль",
+  "auth.forgotPasswordTitle": "Забыли пароль",
+  "auth.forgotPasswordSubtitle":
+    "Мы отправим вам письмо с дальнейшими инструкциями",
+  "auth.sent": "Отправлено",
+  "auth.forgotPasswordSuccess":
+    "Если аккаунт с этим email существует, инструкции по сбросу пароля отправлены.",
+  "auth.resetPassword": "Сброс пароля",
+  "auth.resetPasswordSubtitle": "Введите новый пароль, чтобы продолжить",
+  "auth.resetPasswordSubmit": "Сбросить пароль",
+  "auth.resetPasswordSuccess":
+    "Пароль успешно изменён. Теперь вы можете войти с новым паролем.",
+  "auth.tokenRequired": "Требуется токен",
+  "auth.iHaveAccount": "У меня уже есть аккаунт",
+  "auth.showPassword": "Показать пароль",
+  "auth.hidePassword": "Скрыть пароль",
+  "auth.validation.invalidEmail": "Введите корректный email.",
+  "auth.validation.passwordMin": "Пароль должен содержать не менее 8 символов.",
+  "auth.validation.passwordMax": "Пароль слишком длинный.",
+  "auth.validation.passwordsMismatch": "Пароли не совпадают.",
   "common.cancel": "Отмена",
   "common.create": "Создать",
   "common.update": "Обновить",
@@ -421,6 +703,27 @@ const ru: Messages = {
   "common.search": "Поиск",
   "common.name": "Название",
   "common.close": "Закрыть",
+  "common.closeDialog": "Закрыть диалог",
+  "common.loading": "Загрузка…",
+  "common.add": "Добавить",
+  "common.password": "Пароль",
+  "common.confirmPassword": "Подтвердите пароль",
+  "common.role": "Роль",
+  "common.unassigned": "Не назначен",
+  "common.description": "Описание",
+  "common.environment": "Окружение",
+  "common.responsibilities": "Обязанности",
+  "common.proficiency": "Уровень владения",
+  "common.language": "Язык",
+  "common.skill": "Навык",
+  "common.skillMastery": "Уровень навыка",
+  "common.noMasteryLevels": "Нет уровней владения",
+  "common.noCategories": "Нет категорий",
+  "common.selectSkill": "Выберите навык",
+  "common.selectLanguage": "Выберите язык",
+  "common.noResults": "Ничего не найдено",
+  "common.project": "Проект",
+  "common.tillNow": "По настоящее время",
   "common.validation.enterName": "Введите название.",
   "table.firstName": "Имя",
   "table.lastName": "Фамилия",
@@ -469,19 +772,100 @@ const ru: Messages = {
   "skills.validation.enterName": "Введите название навыка.",
   "skills.validation.selectCategory": "Выберите категорию.",
   "skills.deleteConfirm": "Вы уверены, что хотите удалить навык",
+  "skills.dialog.addTitle": "Добавить навык",
+  "skills.dialog.updateTitle": "Обновить навык",
+  "skills.manager.addButton": "+ Добавить навык",
+  "sidebar.expand": "Развернуть боковую панель",
+  "sidebar.collapse": "Свернуть боковую панель",
+  "sidebar.mainNavigation": "Основная навигация",
   "users.createButton": "+ Создать пользователя",
   "users.viewProfile": "Открыть профиль",
+  "users.dialog.createTitle": "Добавить пользователя",
   "users.dialog.editTitle": "Редактировать пользователя",
   "users.dialog.deleteTitle": "Удалить пользователя",
   "users.deleteConfirm": "Вы уверены, что хотите удалить пользователя",
+  "users.role.employee": "Сотрудник",
+  "users.role.admin": "Админ",
   "cvs.createButton": "+ СОЗДАТЬ РЕЗЮМЕ",
+  "cvs.dialog.createTitle": "Создать резюме",
   "cvs.dialog.deleteTitle": "Удалить резюме",
   "cvs.deleteConfirm": "Вы уверены, что хотите удалить резюме",
   "cvs.empty": "Резюме не найдены.",
   "cvs.searchEmpty": "По вашему запросу резюме не найдены.",
+  "cvs.field.name": "Имя",
+  "cvs.field.description": "Описание",
+  "cvs.field.responsibilitiesPlaceholder": "Одна обязанность на строку",
+  "cvs.details.readOnlyNotice":
+    "Вы можете просматривать это резюме, но не редактировать его.",
+  "cvs.exportPdf": "Экспорт PDF",
+  "cvs.projects.addTitle": "Добавить проект",
+  "cvs.projects.updateTitle": "Обновить проект",
+  "cvs.projects.addButton": "+ ДОБАВИТЬ ПРОЕКТ",
+  "cvs.projects.removeTitle": "Удалить проект",
+  "cvs.projects.removeConfirm": "Вы уверены, что хотите удалить проект",
+  "cvs.projects.empty": "Проекты не найдены.",
+  "cvs.preview.education": "Образование",
+  "cvs.preview.languageProficiency": "Владение языками",
+  "cvs.preview.domains": "Домены",
+  "cvs.preview.professionalSkills": "Профессиональные навыки",
+  "cvs.preview.skills": "Навыки",
+  "cvs.preview.experienceYears": "Опыт (лет)",
+  "cvs.preview.lastUsed": "Последнее использование",
+  "cvs.preview.projects": "Проекты",
+  "cvs.preview.projectRoles": "Роли в проекте",
+  "cvs.preview.period": "Период",
+  "cvs.preview.responsibilities": "Обязанности",
+  "profile.tab.profile": "Профиль",
+  "profile.tab.skills": "Навыки",
+  "profile.tab.languages": "Языки",
+  "profile.birthDate": "Дата рождения",
+  "profile.notFound": "Пользователь не найден.",
+  "profile.loadError": "Не удалось загрузить данные пользователя.",
+  "profile.avatar.sizeError": "Фото не должно превышать 500 КБ.",
+  "profile.avatar.typeError": "Используйте изображение PNG, JPG или GIF.",
+  "profile.avatar.uploadHint": "png, jpg или gif не более 0.5 МБ",
+  "profile.avatar.discardSelection": "Отменить выбранное фото",
+  "profile.avatar.removePhoto": "Удалить фото профиля",
+  "profile.memberSinceFallback": "Участник",
+  "userSkills.addButton": "Добавить навык",
+  "userSkills.removeButton": "Удалить навыки",
+  "userSkills.empty": "Навыки ещё не добавлены.",
+  "userSkills.manager.delete": "Удалить",
+  "userSkills.dialog.addTitle": "Добавить навык",
+  "userSkills.dialog.updateTitle": "Обновить навык",
+  "userSkills.dialog.deleteTitle": "Удалить навыки",
+  "userSkills.dialog.noSkillsAvailable":
+    "Нет доступных навыков для добавления или список пуст.",
+  "userSkills.bulkRemove.one":
+    "Удалить этот навык из профиля? Это действие нельзя отменить.",
+  "userSkills.bulkRemove.manyPrefix": "Удалить",
+  "userSkills.bulkRemove.manySuffix":
+    "навыков из профиля? Это действие нельзя отменить.",
+  "userLanguages.addButton": "Добавить язык",
+  "userLanguages.removeButton": "Удалить языки",
+  "userLanguages.empty": "Языки ещё не указаны.",
+  "userLanguages.dialog.addTitle": "Добавить язык",
+  "userLanguages.dialog.updateTitle": "Обновить язык",
+  "userLanguages.dialog.deleteTitle": "Удалить языки",
+  "userLanguages.loadingLanguages": "Загрузка языков…",
+  "userLanguages.dialog.noLanguagesAvailable":
+    "Нет доступных языков для добавления или список пуст.",
+  "userLanguages.bulkRemove.one":
+    "Удалить этот язык из профиля? Это действие нельзя отменить.",
+  "userLanguages.bulkRemove.manyPrefix": "Удалить",
+  "userLanguages.bulkRemove.manySuffix":
+    "языков из профиля? Это действие нельзя отменить.",
   "projects.createButton": "+ СОЗДАТЬ ПРОЕКТ",
+  "projects.dialog.createTitle": "Создать проект",
+  "projects.dialog.editTitle": "Обновить проект",
   "projects.dialog.deleteTitle": "Удалить проект",
   "projects.deleteConfirm": "Вы уверены, что хотите удалить проект",
+  "projects.empty": "Проекты не найдены.",
+  "projects.field.name": "Название",
+  "projects.field.description": "Описание",
+  "projects.field.ongoingHint": "Оставьте пустым, если проект продолжается",
+  "projects.field.responsibilitiesPlaceholder": "Одна обязанность на строку",
+  "projects.field.addSkill": "Добавить навык",
   "projects.ai.title": "AI-помощник проекта",
   "projects.ai.description":
     "Опишите проект в нескольких словах — AI предложит название, домен, описание и стек из каталога навыков.",
@@ -507,7 +891,8 @@ const ru: Messages = {
   "projects.candidates.position": "Должность",
   "projects.candidates.anyDepartment": "Любой отдел",
   "projects.candidates.anyPosition": "Любая должность",
-  "projects.candidates.requireAvailable": "Только офис / удалённо / неизвестно",
+  "projects.candidates.projectLabel": "Проект",
+  "projects.candidates.availabilityFilter": "Доступность",
   "projects.candidates.search": "Найти кандидатов",
   "projects.candidates.searching": "Подбор…",
   "projects.candidates.empty": "Нет кандидатов по этим фильтрам.",
@@ -591,6 +976,37 @@ const de: Messages = {
     "Geben Sie einen gültigen Telegram-Benutzernamen ein (5–32 Zeichen: Buchstaben, Zahlen, _).",
   "auth.sessionExpired.telegram":
     "Ihre Sitzung wurde beendet, weil der heutige Arbeitsstatus in Telegram nicht bestätigt wurde. Bitte melden Sie sich erneut an.",
+  "auth.signIn": "Anmelden",
+  "auth.signUp": "Registrieren",
+  "auth.welcomeBack": "Willkommen zurück. Melden Sie sich an, um fortzufahren",
+  "auth.createAccountSubtitle": "Erstellen Sie ein Konto, um fortzufahren",
+  "auth.emailPlaceholder": "E-Mail",
+  "auth.passwordPlaceholder": "Passwort",
+  "auth.confirmPasswordPlaceholder": "Passwort bestätigen",
+  "auth.newPasswordPlaceholder": "Neues Passwort",
+  "auth.confirmNewPasswordPlaceholder": "Neues Passwort bestätigen",
+  "auth.forgotPassword": "Passwort vergessen",
+  "auth.forgotPasswordTitle": "Passwort vergessen",
+  "auth.forgotPasswordSubtitle":
+    "Wir senden Ihnen eine E-Mail mit weiteren Anweisungen",
+  "auth.sent": "Gesendet",
+  "auth.forgotPasswordSuccess":
+    "Falls ein Konto mit dieser E-Mail existiert, wurden Anweisungen zum Zurücksetzen gesendet.",
+  "auth.resetPassword": "Passwort zurücksetzen",
+  "auth.resetPasswordSubtitle":
+    "Geben Sie Ihr neues Passwort ein, um fortzufahren",
+  "auth.resetPasswordSubmit": "Passwort zurücksetzen",
+  "auth.resetPasswordSuccess":
+    "Passwort erfolgreich zurückgesetzt. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.",
+  "auth.tokenRequired": "Token ist erforderlich",
+  "auth.iHaveAccount": "Ich habe bereits ein Konto",
+  "auth.showPassword": "Passwort anzeigen",
+  "auth.hidePassword": "Passwort ausblenden",
+  "auth.validation.invalidEmail": "Bitte geben Sie eine gültige E-Mail ein.",
+  "auth.validation.passwordMin":
+    "Das Passwort muss mindestens 8 Zeichen lang sein.",
+  "auth.validation.passwordMax": "Das Passwort ist zu lang.",
+  "auth.validation.passwordsMismatch": "Passwörter stimmen nicht überein.",
   "common.cancel": "Abbrechen",
   "common.create": "Erstellen",
   "common.update": "Aktualisieren",
@@ -600,6 +1016,27 @@ const de: Messages = {
   "common.search": "Suchen",
   "common.name": "Name",
   "common.close": "Schließen",
+  "common.closeDialog": "Dialog schließen",
+  "common.loading": "Wird geladen…",
+  "common.add": "Hinzufügen",
+  "common.password": "Passwort",
+  "common.confirmPassword": "Passwort bestätigen",
+  "common.role": "Rolle",
+  "common.unassigned": "Nicht zugewiesen",
+  "common.description": "Beschreibung",
+  "common.environment": "Umgebung",
+  "common.responsibilities": "Verantwortlichkeiten",
+  "common.proficiency": "Kenntnisstand",
+  "common.language": "Sprache",
+  "common.skill": "Fähigkeit",
+  "common.skillMastery": "Fähigkeitsniveau",
+  "common.noMasteryLevels": "Keine Niveaus",
+  "common.noCategories": "Keine Kategorien",
+  "common.selectSkill": "Fähigkeit wählen",
+  "common.selectLanguage": "Sprache wählen",
+  "common.noResults": "Keine Ergebnisse gefunden",
+  "common.project": "Projekt",
+  "common.tillNow": "Bis heute",
   "common.validation.enterName": "Geben Sie einen Namen ein.",
   "table.firstName": "Vorname",
   "table.lastName": "Nachname",
@@ -652,22 +1089,104 @@ const de: Messages = {
   "skills.validation.selectCategory": "Wählen Sie eine Kategorie.",
   "skills.deleteConfirm":
     "Sind Sie sicher, dass Sie die Fähigkeit löschen möchten",
+  "skills.dialog.addTitle": "Fähigkeit hinzufügen",
+  "skills.dialog.updateTitle": "Fähigkeit aktualisieren",
+  "skills.manager.addButton": "+ Fähigkeit hinzufügen",
+  "sidebar.expand": "Seitenleiste erweitern",
+  "sidebar.collapse": "Seitenleiste einklappen",
+  "sidebar.mainNavigation": "Hauptnavigation",
   "users.createButton": "+ Benutzer erstellen",
   "users.viewProfile": "Profil anzeigen",
+  "users.dialog.createTitle": "Benutzer hinzufügen",
   "users.dialog.editTitle": "Benutzer bearbeiten",
   "users.dialog.deleteTitle": "Benutzer löschen",
   "users.deleteConfirm":
     "Sind Sie sicher, dass Sie den Benutzer löschen möchten",
+  "users.role.employee": "Mitarbeiter",
+  "users.role.admin": "Admin",
   "cvs.createButton": "+ LEBENSLAUF ERSTELLEN",
+  "cvs.dialog.createTitle": "Lebenslauf erstellen",
   "cvs.dialog.deleteTitle": "Lebenslauf löschen",
   "cvs.deleteConfirm":
     "Sind Sie sicher, dass Sie den Lebenslauf löschen möchten",
   "cvs.empty": "Keine Lebensläufe gefunden.",
   "cvs.searchEmpty": "Keine Lebensläufe entsprechen Ihrer Suche.",
+  "cvs.field.name": "Name",
+  "cvs.field.description": "Beschreibung",
+  "cvs.field.responsibilitiesPlaceholder": "Eine Verantwortung pro Zeile",
+  "cvs.details.readOnlyNotice":
+    "Sie können diesen Lebenslauf ansehen, aber nicht bearbeiten.",
+  "cvs.exportPdf": "PDF exportieren",
+  "cvs.projects.addTitle": "Projekt hinzufügen",
+  "cvs.projects.updateTitle": "Projekt aktualisieren",
+  "cvs.projects.addButton": "+ PROJEKT HINZUFÜGEN",
+  "cvs.projects.removeTitle": "Projekt entfernen",
+  "cvs.projects.removeConfirm":
+    "Sind Sie sicher, dass Sie das Projekt entfernen möchten",
+  "cvs.projects.empty": "Keine Projekte gefunden.",
+  "cvs.preview.education": "Ausbildung",
+  "cvs.preview.languageProficiency": "Sprachkenntnisse",
+  "cvs.preview.domains": "Domänen",
+  "cvs.preview.professionalSkills": "Berufliche Fähigkeiten",
+  "cvs.preview.skills": "Fähigkeiten",
+  "cvs.preview.experienceYears": "Erfahrung in Jahren",
+  "cvs.preview.lastUsed": "Zuletzt verwendet",
+  "cvs.preview.projects": "Projekte",
+  "cvs.preview.projectRoles": "Projektrollen",
+  "cvs.preview.period": "Zeitraum",
+  "cvs.preview.responsibilities": "Verantwortlichkeiten",
+  "profile.tab.profile": "Profil",
+  "profile.tab.skills": "Fähigkeiten",
+  "profile.tab.languages": "Sprachen",
+  "profile.birthDate": "Geburtsdatum",
+  "profile.notFound": "Benutzer nicht gefunden.",
+  "profile.loadError": "Benutzerdaten konnten nicht geladen werden.",
+  "profile.avatar.sizeError": "Foto darf 500 KB nicht überschreiten.",
+  "profile.avatar.typeError": "Bitte PNG-, JPG- oder GIF-Bild verwenden.",
+  "profile.avatar.uploadHint": "png, jpg oder gif, maximal 0,5 MB",
+  "profile.avatar.discardSelection": "Ausgewähltes Foto verwerfen",
+  "profile.avatar.removePhoto": "Profilfoto entfernen",
+  "profile.memberSinceFallback": "Mitglied",
+  "userSkills.addButton": "Fähigkeit hinzufügen",
+  "userSkills.removeButton": "Fähigkeiten entfernen",
+  "userSkills.empty": "Noch keine Fähigkeiten hinzugefügt.",
+  "userSkills.manager.delete": "Löschen",
+  "userSkills.dialog.addTitle": "Fähigkeit hinzufügen",
+  "userSkills.dialog.updateTitle": "Fähigkeit aktualisieren",
+  "userSkills.dialog.deleteTitle": "Fähigkeiten löschen",
+  "userSkills.dialog.noSkillsAvailable":
+    "Keine Fähigkeiten zum Hinzufügen verfügbar oder Liste ist leer.",
+  "userSkills.bulkRemove.one":
+    "Diese Fähigkeit aus dem Profil entfernen? Dies kann nicht rückgängig gemacht werden.",
+  "userSkills.bulkRemove.manyPrefix": "Entfernen",
+  "userSkills.bulkRemove.manySuffix":
+    "Fähigkeiten aus dem Profil? Dies kann nicht rückgängig gemacht werden.",
+  "userLanguages.addButton": "Sprache hinzufügen",
+  "userLanguages.removeButton": "Sprachen entfernen",
+  "userLanguages.empty": "Noch keine Sprachen angegeben.",
+  "userLanguages.dialog.addTitle": "Sprache hinzufügen",
+  "userLanguages.dialog.updateTitle": "Sprache aktualisieren",
+  "userLanguages.dialog.deleteTitle": "Sprachen löschen",
+  "userLanguages.loadingLanguages": "Sprachen werden geladen…",
+  "userLanguages.dialog.noLanguagesAvailable":
+    "Keine Sprachen zum Hinzufügen verfügbar oder Liste ist leer.",
+  "userLanguages.bulkRemove.one":
+    "Diese Sprache aus dem Profil entfernen? Dies kann nicht rückgängig gemacht werden.",
+  "userLanguages.bulkRemove.manyPrefix": "Entfernen",
+  "userLanguages.bulkRemove.manySuffix":
+    "Sprachen aus dem Profil? Dies kann nicht rückgängig gemacht werden.",
   "projects.createButton": "+ PROJEKT ERSTELLEN",
+  "projects.dialog.createTitle": "Projekt erstellen",
+  "projects.dialog.editTitle": "Projekt aktualisieren",
   "projects.dialog.deleteTitle": "Projekt löschen",
   "projects.deleteConfirm":
     "Sind Sie sicher, dass Sie das Projekt löschen möchten",
+  "projects.empty": "Keine Projekte gefunden.",
+  "projects.field.name": "Name",
+  "projects.field.description": "Beschreibung",
+  "projects.field.ongoingHint": "Leer lassen, wenn das Projekt noch läuft",
+  "projects.field.responsibilitiesPlaceholder": "Eine Verantwortung pro Zeile",
+  "projects.field.addSkill": "Fähigkeit hinzufügen",
   "projects.ai.title": "KI-Projektassistent",
   "projects.ai.description":
     "Beschreiben Sie das Projekt in wenigen Worten — die KI schlägt Name, Domäne, Beschreibung und Stack aus dem Skills-Katalog vor.",
@@ -693,7 +1212,8 @@ const de: Messages = {
   "projects.candidates.position": "Position",
   "projects.candidates.anyDepartment": "Beliebige Abteilung",
   "projects.candidates.anyPosition": "Beliebige Position",
-  "projects.candidates.requireAvailable": "Nur Büro / remote / unbekannt",
+  "projects.candidates.projectLabel": "Projekt",
+  "projects.candidates.availabilityFilter": "Verfügbarkeit",
   "projects.candidates.search": "Kandidaten finden",
   "projects.candidates.searching": "Abgleich…",
   "projects.candidates.empty": "Keine Kandidaten für diese Filter.",

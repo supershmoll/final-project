@@ -10,12 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import { FORM_INPUT_LABEL_SLOT_PROPS } from "@/shared/constants/formDialog.constants";
-import {
-  ADD_LANGUAGE_DIALOG_LABELS,
-  LANGUAGE_PROFICIENCY_OPTIONS,
-} from "@/features/users/constants/userLanguages.constants";
+import { LANGUAGE_PROFICIENCY_OPTIONS } from "@/features/users/constants/userLanguages.constants";
 import { useAddUserLanguageDialog } from "@/features/users/hooks/useAddUserLanguageDialog";
 import { formDialogSx } from "@/shared/styles/formDialog.styles";
+import { useUserLanguageDialogLabels } from "@/i18n/hooks/use-user-language-dialog-labels";
+import { useTranslation } from "@/i18n/use-translation";
 import type { AddUserLanguageDialogProps } from "./userLanguageDialogs.types";
 
 function AddUserLanguageDialogContent({
@@ -24,6 +23,8 @@ function AddUserLanguageDialogContent({
   onClose,
   onCompleted,
 }: Omit<AddUserLanguageDialogProps, "open">) {
+  const labels = useUserLanguageDialogLabels();
+  const { t } = useTranslation();
   const {
     selectedLanguageName,
     setLanguageName,
@@ -47,11 +48,11 @@ function AddUserLanguageDialogContent({
       <DialogTitle component="div" sx={formDialogSx.addLanguageDialogTitleRoot}>
         <Box sx={formDialogSx.dialogTitleRow}>
           <Box component="span" sx={formDialogSx.dialogTitleText}>
-            {ADD_LANGUAGE_DIALOG_LABELS.title}
+            {labels.add.title}
           </Box>
           <IconButton
             type="button"
-            aria-label="Close dialog"
+            aria-label={t("common.closeDialog")}
             onClick={onClose}
             size="small"
             sx={formDialogSx.dialogCloseBtn}
@@ -62,19 +63,17 @@ function AddUserLanguageDialogContent({
       </DialogTitle>
       <DialogContent sx={formDialogSx.addLanguageDialogContent}>
         {catalogLoading ? (
-          <Alert severity="info">Loading languages…</Alert>
+          <Alert severity="info">{labels.add.loading}</Alert>
         ) : null}
         {!catalogLoading && addable.length === 0 ? (
-          <Alert severity="warning">
-            No languages available to add, or the list is empty.
-          </Alert>
+          <Alert severity="warning">{labels.add.noLanguagesAvailable}</Alert>
         ) : null}
         {!catalogLoading && addable.length > 0 ? (
           <>
             <TextField
               select
               variant="outlined"
-              label={ADD_LANGUAGE_DIALOG_LABELS.languageField}
+              label={labels.add.languageField}
               value={selectedLanguageName}
               onChange={(e) => setLanguageName(e.target.value)}
               fullWidth
@@ -85,7 +84,7 @@ function AddUserLanguageDialogContent({
               }}
             >
               <MenuItem value="">
-                <em>Select language</em>
+                <em>{labels.add.selectLanguage}</em>
               </MenuItem>
               {addable.map((item) => (
                 <MenuItem key={item.id ?? item.name} value={item.name}>
@@ -96,7 +95,7 @@ function AddUserLanguageDialogContent({
             <TextField
               select
               variant="outlined"
-              label={ADD_LANGUAGE_DIALOG_LABELS.proficiencyField}
+              label={labels.add.proficiencyField}
               value={proficiency}
               onChange={(e) => setProficiency(e.target.value)}
               fullWidth
@@ -120,7 +119,7 @@ function AddUserLanguageDialogContent({
           disabled={saving}
           sx={formDialogSx.dialogCancelBtn}
         >
-          {ADD_LANGUAGE_DIALOG_LABELS.cancel}
+          {labels.add.cancel}
         </Button>
         <Button
           variant="contained"
@@ -129,7 +128,7 @@ function AddUserLanguageDialogContent({
           disabled={saving || !canSubmit || addable.length === 0}
           sx={formDialogSx.dialogConfirmBtn}
         >
-          {ADD_LANGUAGE_DIALOG_LABELS.confirm}
+          {labels.add.confirm}
         </Button>
       </DialogActions>
     </>

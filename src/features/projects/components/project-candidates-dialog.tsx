@@ -22,7 +22,9 @@ import { AvailabilityStatusChip } from "@/features/availability/components/Avail
 import { useUserEditOptionsQuery } from "@/features/users/api/updateUser";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
 import { useTranslation } from "@/i18n/use-translation";
+import type { MessageKey } from "@/i18n/messages";
 import { usePreferences } from "@/lib/preferences/PreferencesProvider";
+import type { AvailabilityStatus } from "@/features/availability/types";
 import type { ProjectCandidate } from "../api/project-candidates";
 import { useProjectCandidatesQuery } from "../api/project-candidates";
 import { projectsStyles } from "../styles/projects.styles";
@@ -34,13 +36,31 @@ type ProjectCandidatesDialogProps = {
   onClose: () => void;
 };
 
+type CandidateAvailabilityFilter = Extract<
+  AvailabilityStatus,
+  "OFFICE" | "REMOTE" | "UNKNOWN"
+>;
+
+const CANDIDATE_AVAILABILITY_OPTIONS: CandidateAvailabilityFilter[] = [
+  "OFFICE",
+  "REMOTE",
+  "UNKNOWN",
+];
+
+const AVAILABILITY_LABEL_KEYS: Record<CandidateAvailabilityFilter, MessageKey> =
+  {
+    OFFICE: "availability.status.office",
+    REMOTE: "availability.status.remote",
+    UNKNOWN: "availability.status.unknown",
+  };
+
 type FilterState = {
   minAge: string;
   maxAge: string;
   educationHint: string;
   departmentId: string;
   positionId: string;
-  requireAvailable: boolean;
+  availabilityStatuses: CandidateAvailabilityFilter[];
 };
 
 const EMPTY_FILTERS: FilterState = {
@@ -49,7 +69,7 @@ const EMPTY_FILTERS: FilterState = {
   educationHint: "",
   departmentId: "",
   positionId: "",
-  requireAvailable: false,
+  availabilityStatuses: [],
 };
 
 function parseOptionalInt(value: string): number | undefined {
@@ -182,11 +202,23 @@ export function ProjectCandidatesDialog({
         educationHint: filters.educationHint.trim() || undefined,
         departmentId: filters.departmentId || undefined,
         positionId: filters.positionId || undefined,
-        requireAvailable: filters.requireAvailable || undefined,
+        availabilityStatuses:
+          filters.availabilityStatuses.length > 0
+            ? filters.availabilityStatuses
+            : undefined,
         limit: 10,
       },
       locale,
     );
+  };
+
+  const toggleAvailabilityStatus = (status: CandidateAvailabilityFilter) => {
+    setFilters((current) => ({
+      ...current,
+      availabilityStatuses: current.availabilityStatuses.includes(status)
+        ? current.availabilityStatuses.filter((item) => item !== status)
+        : [...current.availabilityStatuses, status],
+    }));
   };
 
   const departmentOptions = optionsData?.departments ?? [];
@@ -206,16 +238,25 @@ export function ProjectCandidatesDialog({
           <AutoAwesomeOutlinedIcon fontSize="small" />
           <span>{t("projects.candidates.title")}</span>
         </Box>
-        <IconButton aria-label="Close" onClick={handleClose} size="small">
+        <IconButton
+          aria-label={t("common.close")}
+          onClick={handleClose}
+          size="small"
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
 
       <DialogContent sx={cvsStyles.dialogContent}>
         {project ? (
-          <Typography sx={projectsStyles.candidatesProjectName}>
-            {project.name}
-          </Typography>
+          <Box sx={{ mb: 1 }}>
+            <Typography sx={projectsStyles.candidatesProjectLabel}>
+              {t("projects.candidates.projectLabel")}
+            </Typography>
+            <Typography sx={projectsStyles.candidatesProjectName}>
+              {project.name}
+            </Typography>
+          </Box>
         ) : null}
         <Typography sx={projectsStyles.candidatesHint}>
           {t("projects.candidates.description")}
@@ -309,20 +350,25 @@ export function ProjectCandidatesDialog({
             </TextField>
           </Stack>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={filters.requireAvailable}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    requireAvailable: event.target.checked,
-                  }))
-                }
-              />
-            }
-            label={t("projects.candidates.requireAvailable")}
-          />
+          <Box sx={projectsStyles.candidatesAvailabilitySection}>
+            <Typography sx={projectsStyles.candidatesAvailabilityLabel}>
+              {t("projects.candidates.availabilityFilter")}
+            </Typography>
+            <Box sx={projectsStyles.candidatesAvailabilityOptions}>
+              {CANDIDATE_AVAILABILITY_OPTIONS.map((status) => (
+                <FormControlLabel
+                  key={status}
+                  control={
+                    <Checkbox
+                      checked={filters.availabilityStatuses.includes(status)}
+                      onChange={() => toggleAvailabilityStatus(status)}
+                    />
+                  }
+                  label={t(AVAILABILITY_LABEL_KEYS[status])}
+                />
+              ))}
+            </Box>
+          </Box>
         </Stack>
 
         {error ? (
@@ -354,22 +400,21 @@ export function ProjectCandidatesDialog({
       </DialogContent>
 
       <DialogActions sx={cvsStyles.dialogActions}>
-        <Button type="button" onClick={handleClose}>
+        <Button type="button" onClick={handleClose} sx={cvsStyles.cancelButton}>
           {t("common.cancel")}
         </Button>
         <Button
           type="button"
-          variant="contained"
           onClick={() => void handleSearch()}
           disabled={!project || loading}
-          startIcon={
-            loading ? <CircularProgress size={16} color="inherit" /> : undefined
-          }
+          sx={cvsStyles.primaryButton}
           data-testid="project-candidates-search-button"
         >
-          {loading
-            ? t("projects.candidates.searching")
-            : t("projects.candidates.search")}
+          {loading ? (
+            <CircularProgress size={18} color="inherit" />
+          ) : (
+            t("projects.candidates.search")
+          )}
         </Button>
       </DialogActions>
     </Dialog>

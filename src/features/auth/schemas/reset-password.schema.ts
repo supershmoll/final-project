@@ -1,19 +1,24 @@
 import { z } from "zod";
+import type { TranslateFn } from "@/i18n/messages";
 
-export const resetPasswordSchema = z
-  .object({
-    newPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters long.")
-      .max(20, "Password is too long."),
-    confirmNewPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters long.")
-      .max(20, "Password is too long."),
-  })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    path: ["confirmNewPassword"],
-    message: "Passwords do not match.",
-  });
+export function createResetPasswordSchema(t: TranslateFn) {
+  return z
+    .object({
+      newPassword: z
+        .string()
+        .min(8, t("auth.validation.passwordMin"))
+        .max(20, t("auth.validation.passwordMax")),
+      confirmNewPassword: z
+        .string()
+        .min(8, t("auth.validation.passwordMin"))
+        .max(20, t("auth.validation.passwordMax")),
+    })
+    .refine((data) => data.newPassword === data.confirmNewPassword, {
+      path: ["confirmNewPassword"],
+      message: t("auth.validation.passwordsMismatch"),
+    });
+}
 
-export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
+export type ResetPasswordFormValues = z.infer<
+  ReturnType<typeof createResetPasswordSchema>
+>;
