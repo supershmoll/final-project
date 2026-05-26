@@ -56,6 +56,8 @@ export function useUserProfileForm({
   const isDirty =
     form.firstName !== initialForm.firstName ||
     form.lastName !== initialForm.lastName ||
+    form.birthDate !== initialForm.birthDate ||
+    form.education !== initialForm.education ||
     selectedDepartmentId !== initialForm.departmentId ||
     selectedPositionId !== initialForm.positionId ||
     Boolean(avatarUpload && avatarUpload.previewUrl !== user.avatarUrl);
@@ -75,9 +77,12 @@ export function useUserProfileForm({
     try {
       const trimmedFirstName = form.firstName.trim();
       const trimmedLastName = form.lastName.trim();
+      const trimmedEducation = form.education.trim();
       const profileChanged =
         trimmedFirstName !== initialForm.firstName.trim() ||
-        trimmedLastName !== initialForm.lastName.trim();
+        trimmedLastName !== initialForm.lastName.trim() ||
+        form.birthDate !== initialForm.birthDate ||
+        trimmedEducation !== initialForm.education.trim();
       const adminPartChanged =
         selectedDepartmentId !== initialForm.departmentId ||
         selectedPositionId !== initialForm.positionId;
@@ -101,6 +106,8 @@ export function useUserProfileForm({
               userId: user.id,
               first_name: trimmedFirstName || user.firstName,
               last_name: trimmedLastName || user.lastName,
+              birth_date: form.birthDate || null,
+              education: trimmedEducation || null,
             },
           },
         });
@@ -141,6 +148,10 @@ export function useUserProfileForm({
     canSubmit,
     form.firstName,
     form.lastName,
+    form.birthDate,
+    form.education,
+    initialForm.birthDate,
+    initialForm.education,
     initialForm.departmentId,
     initialForm.firstName,
     initialForm.lastName,

@@ -21,6 +21,8 @@ export const GET_USER = gql`
         first_name
         last_name
         avatar
+        birth_date
+        education
       }
     }
   }
@@ -44,6 +46,8 @@ type GetUserResponse = {
       first_name?: string | null;
       last_name?: string | null;
       avatar?: string | null;
+      birth_date?: string | null;
+      education?: string | null;
     } | null;
   } | null;
 };
@@ -68,6 +72,8 @@ export function useUserQuery(userId: string) {
         positionId: rawUser.position?.id ?? undefined,
         position: rawUser.position_name ?? "",
         avatarUrl: rawUser.profile?.avatar ?? undefined,
+        birthDate: rawUser.profile?.birth_date ?? undefined,
+        education: rawUser.profile?.education ?? undefined,
       }
     : null;
 

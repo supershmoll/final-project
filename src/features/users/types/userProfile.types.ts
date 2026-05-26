@@ -5,6 +5,8 @@ export type ProfileFormState = {
   lastName: string;
   departmentId: string;
   positionId: string;
+  birthDate: string;
+  education: string;
 };
 
 export type AvatarUploadState = {
@@ -20,5 +22,7 @@ export function toProfileFormState(user: UserRow): ProfileFormState {
     lastName: user.lastName,
     departmentId: user.departmentId ?? "",
     positionId: user.positionId ?? "",
+    birthDate: user.birthDate ?? "",
+    education: user.education ?? "",
   };
 }

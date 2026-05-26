@@ -83,6 +83,8 @@ describe("useUserProfileForm", () => {
           userId: "user-1",
           first_name: "Grace",
           last_name: "Lovelace",
+          birth_date: null,
+          education: null,
         },
       },
     });

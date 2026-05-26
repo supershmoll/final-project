@@ -1,8 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { getProjectMaxDate } from "@/features/cvs/projects/utils/project-form-dates";
+import type { ProjectSuggestion } from "../api/project-suggestion";
 import useActionFeedback from "@/hooks/use-action-feedback";
 import useAnchoredMenu from "@/hooks/use-anchored-menu";
 import useDialog from "@/hooks/use-dialog";
@@ -34,6 +36,7 @@ function useProjectsPage() {
     onChange: handleSearchChange,
   } = useSearch();
   const formDialog = useDialog<ProjectFormMode>();
+  const candidatesDialog = useDialog<Project>();
   const deleteDialog = useDialog<Project>();
   const projectMenu = useAnchoredMenu<Project>();
   const { showSuccess, showError, FeedbackSnackbar } = useActionFeedback();
@@ -60,6 +63,8 @@ function useProjectsPage() {
     control,
     register,
     reset,
+    setValue,
+    getValues,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid },
   } = form;
@@ -117,6 +122,14 @@ function useProjectsPage() {
     projectMenu.close();
   };
 
+  const openCandidatesDialog = () => {
+    if (!projectMenu.item) {
+      return;
+    }
+    candidatesDialog.open(projectMenu.item);
+    projectMenu.close();
+  };
+
   const submitCatalogProject = async (values: CatalogProjectFormValues) => {
     if (formDialog.payload === "update" && editingProject) {
       const result = await updateProject(
@@ -158,6 +171,35 @@ function useProjectsPage() {
   const isFormPending = isSubmitting || mutating;
   const canSubmit = isDirty && isValid && !isFormPending;
 
+  const applyProjectSuggestion = useCallback(
+    (suggestion: ProjectSuggestion) => {
+      setValue("name", suggestion.name, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setValue("domain", suggestion.domain, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setValue("description", suggestion.description, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setValue("environment", suggestion.environment, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+
+      if (!getValues("startDate")) {
+        setValue("startDate", getProjectMaxDate(), {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+      }
+    },
+    [getValues, setValue],
+  );
+
   return {
     loading,
     error,
@@ -174,6 +216,12 @@ function useProjectsPage() {
     projectMenu,
     openUpdateDialog,
     openDeleteDialog,
+    openCandidatesDialog,
+    candidatesDialog: {
+      open: candidatesDialog.isOpen,
+      project: candidatesDialog.payload,
+      close: candidatesDialog.close,
+    },
     formDialog: {
       open: formDialog.isOpen,
       mode: formDialog.payload ?? "create",
@@ -184,6 +232,7 @@ function useProjectsPage() {
       canSubmit,
       onClose: closeFormDialog,
       onSubmit: submitForm,
+      onApplySuggestion: applyProjectSuggestion,
     },
     deleteDialog: {
       isOpen: deleteDialog.isOpen,

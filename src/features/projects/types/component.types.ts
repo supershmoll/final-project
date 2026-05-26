@@ -7,6 +7,7 @@ import type {
 } from "react-hook-form";
 import type { Skill } from "@/features/cvs/types";
 import type { CatalogProjectFormValues } from "../schemas";
+import type { ProjectSuggestion } from "../api/project-suggestion";
 import type { Project } from "./project.model";
 import type { ProjectFormMode } from "./hook.types";
 
@@ -27,6 +28,7 @@ type CatalogProjectFormDialogProps = {
   canSubmit: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  onApplySuggestion?: (suggestion: ProjectSuggestion) => void;
 };
 
 type EnvironmentFieldContentProps = {

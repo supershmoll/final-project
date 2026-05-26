@@ -40,6 +40,17 @@ export type MessageKey =
   | "availability.updatedBy.bot"
   | "availability.updatedBy.user"
   | "availability.updatedBy.admin"
+  | "assistant.title"
+  | "assistant.description"
+  | "assistant.placeholder"
+  | "assistant.send"
+  | "assistant.sending"
+  | "assistant.empty"
+  | "assistant.source.ai"
+  | "assistant.source.rules"
+  | "assistant.suggestion.office"
+  | "assistant.suggestion.remote"
+  | "assistant.suggestion.vacation"
   | "telegram.title"
   | "telegram.description"
   | "telegram.usernameLabel"
@@ -120,7 +131,38 @@ export type MessageKey =
   | "cvs.searchEmpty"
   | "projects.dialog.deleteTitle"
   | "projects.createButton"
-  | "projects.deleteConfirm";
+  | "projects.deleteConfirm"
+  | "projects.ai.title"
+  | "projects.ai.description"
+  | "projects.ai.briefLabel"
+  | "projects.ai.briefPlaceholder"
+  | "projects.ai.generate"
+  | "projects.ai.generating"
+  | "projects.ai.source.ai"
+  | "projects.ai.source.rules"
+  | "projects.ai.footnote"
+  | "projects.candidates.menuItem"
+  | "projects.candidates.title"
+  | "projects.candidates.description"
+  | "projects.candidates.minAge"
+  | "projects.candidates.maxAge"
+  | "projects.candidates.educationHint"
+  | "projects.candidates.educationHintPlaceholder"
+  | "projects.candidates.department"
+  | "projects.candidates.position"
+  | "projects.candidates.anyDepartment"
+  | "projects.candidates.anyPosition"
+  | "projects.candidates.requireAvailable"
+  | "projects.candidates.search"
+  | "projects.candidates.searching"
+  | "projects.candidates.empty"
+  | "projects.candidates.matchScore"
+  | "projects.candidates.age"
+  | "projects.candidates.education"
+  | "projects.candidates.matchedSkills"
+  | "projects.candidates.missingSkills"
+  | "projects.candidates.source.ai"
+  | "projects.candidates.source.rules";
 
 type Messages = Record<MessageKey, string>;
 
@@ -164,6 +206,18 @@ const en: Messages = {
   "availability.updatedBy.bot": "Telegram bot",
   "availability.updatedBy.user": "Web app",
   "availability.updatedBy.admin": "Admin",
+  "assistant.title": "HR assistant",
+  "assistant.description":
+    "Ask about your team's availability. Answers use live data from this page.",
+  "assistant.placeholder": "Who is working remotely today?",
+  "assistant.send": "Ask",
+  "assistant.sending": "Thinking…",
+  "assistant.empty": "Ask a question or pick a suggestion above.",
+  "assistant.source.ai": "AI answer",
+  "assistant.source.rules": "Rule-based answer",
+  "assistant.suggestion.office": "Who is in the office?",
+  "assistant.suggestion.remote": "Who is working remotely?",
+  "assistant.suggestion.vacation": "Who is on vacation?",
   "telegram.title": "Telegram status bot",
   "telegram.description":
     "Connect Telegram to receive daily status prompts and confirm your availability.",
@@ -250,6 +304,42 @@ const en: Messages = {
   "projects.createButton": "+ CREATE PROJECT",
   "projects.dialog.deleteTitle": "Delete project",
   "projects.deleteConfirm": "Are you sure you want to delete project",
+  "projects.ai.title": "AI project assistant",
+  "projects.ai.description":
+    "Describe the project in a few words and AI will suggest a name, domain, description, and tech stack from your skills catalog.",
+  "projects.ai.briefLabel": "Project idea",
+  "projects.ai.briefPlaceholder":
+    "e.g. Mobile e-commerce app for fashion retail with React and Node.js",
+  "projects.ai.generate": "Suggest fields",
+  "projects.ai.generating": "Generating…",
+  "projects.ai.source.ai": "AI suggestion applied",
+  "projects.ai.source.rules": "Rule-based suggestion applied",
+  "projects.ai.footnote":
+    "Review and edit every field before creating the project. Stack items must exist in Skills.",
+  "projects.candidates.menuItem": "Find candidates",
+  "projects.candidates.title": "Find project candidates",
+  "projects.candidates.description":
+    "Match employees by skills, availability, age, education, and org fit. Optional AI summaries for top matches.",
+  "projects.candidates.minAge": "Min age",
+  "projects.candidates.maxAge": "Max age",
+  "projects.candidates.educationHint": "Education keywords",
+  "projects.candidates.educationHintPlaceholder":
+    "e.g. computer science, MBA, bachelor",
+  "projects.candidates.department": "Department",
+  "projects.candidates.position": "Position",
+  "projects.candidates.anyDepartment": "Any department",
+  "projects.candidates.anyPosition": "Any position",
+  "projects.candidates.requireAvailable": "Only office / remote / unknown",
+  "projects.candidates.search": "Find candidates",
+  "projects.candidates.searching": "Matching…",
+  "projects.candidates.empty": "No candidates match these filters.",
+  "projects.candidates.matchScore": "Match",
+  "projects.candidates.age": "Age",
+  "projects.candidates.education": "Education",
+  "projects.candidates.matchedSkills": "Matched skills",
+  "projects.candidates.missingSkills": "Missing skills",
+  "projects.candidates.source.ai": "AI summary",
+  "projects.candidates.source.rules": "Rule-based summary",
 };
 
 const ru: Messages = {
@@ -293,6 +383,18 @@ const ru: Messages = {
   "availability.updatedBy.bot": "Telegram-бот",
   "availability.updatedBy.user": "Веб-приложение",
   "availability.updatedBy.admin": "Админ",
+  "assistant.title": "HR-ассистент",
+  "assistant.description":
+    "Задавайте вопросы о доступности команды. Ответы строятся на актуальных данных этой страницы.",
+  "assistant.placeholder": "Кто сегодня работает удалённо?",
+  "assistant.send": "Спросить",
+  "assistant.sending": "Думаю…",
+  "assistant.empty": "Задайте вопрос или выберите подсказку выше.",
+  "assistant.source.ai": "Ответ ИИ",
+  "assistant.source.rules": "Ответ по правилам",
+  "assistant.suggestion.office": "Кто в офисе?",
+  "assistant.suggestion.remote": "Кто работает удалённо?",
+  "assistant.suggestion.vacation": "Кто в отпуске?",
   "telegram.title": "Telegram-бот статуса",
   "telegram.description":
     "Подключите Telegram для ежедневных запросов статуса и подтверждения доступности.",
@@ -380,6 +482,42 @@ const ru: Messages = {
   "projects.createButton": "+ СОЗДАТЬ ПРОЕКТ",
   "projects.dialog.deleteTitle": "Удалить проект",
   "projects.deleteConfirm": "Вы уверены, что хотите удалить проект",
+  "projects.ai.title": "AI-помощник проекта",
+  "projects.ai.description":
+    "Опишите проект в нескольких словах — AI предложит название, домен, описание и стек из каталога навыков.",
+  "projects.ai.briefLabel": "Идея проекта",
+  "projects.ai.briefPlaceholder":
+    "например: мобильный e-commerce для fashion с React и Node.js",
+  "projects.ai.generate": "Предложить поля",
+  "projects.ai.generating": "Генерация…",
+  "projects.ai.source.ai": "Применено предложение ИИ",
+  "projects.ai.source.rules": "Применено предложение на основе правил",
+  "projects.ai.footnote":
+    "Проверьте и отредактируйте поля перед созданием. Стек берётся только из Skills.",
+  "projects.candidates.menuItem": "Подобрать кандидатов",
+  "projects.candidates.title": "Подбор кандидатов на проект",
+  "projects.candidates.description":
+    "Подбор по навыкам, доступности, возрасту, образованию и отделу. Для топ-кандидатов — краткое AI-резюме.",
+  "projects.candidates.minAge": "Мин. возраст",
+  "projects.candidates.maxAge": "Макс. возраст",
+  "projects.candidates.educationHint": "Ключевые слова об образовании",
+  "projects.candidates.educationHintPlaceholder":
+    "например: информатика, MBA, бакалавр",
+  "projects.candidates.department": "Отдел",
+  "projects.candidates.position": "Должность",
+  "projects.candidates.anyDepartment": "Любой отдел",
+  "projects.candidates.anyPosition": "Любая должность",
+  "projects.candidates.requireAvailable": "Только офис / удалённо / неизвестно",
+  "projects.candidates.search": "Найти кандидатов",
+  "projects.candidates.searching": "Подбор…",
+  "projects.candidates.empty": "Нет кандидатов по этим фильтрам.",
+  "projects.candidates.matchScore": "Совпадение",
+  "projects.candidates.age": "Возраст",
+  "projects.candidates.education": "Образование",
+  "projects.candidates.matchedSkills": "Совпавшие навыки",
+  "projects.candidates.missingSkills": "Не хватает навыков",
+  "projects.candidates.source.ai": "AI-резюме",
+  "projects.candidates.source.rules": "Резюме по правилам",
 };
 
 const de: Messages = {
@@ -423,6 +561,19 @@ const de: Messages = {
   "availability.updatedBy.bot": "Telegram-Bot",
   "availability.updatedBy.user": "Web-App",
   "availability.updatedBy.admin": "Admin",
+  "assistant.title": "HR-Assistent",
+  "assistant.description":
+    "Fragen Sie nach der Verfügbarkeit Ihres Teams. Antworten basieren auf Live-Daten dieser Seite.",
+  "assistant.placeholder": "Wer arbeitet heute remote?",
+  "assistant.send": "Fragen",
+  "assistant.sending": "Denke nach…",
+  "assistant.empty":
+    "Stellen Sie eine Frage oder wählen Sie einen Vorschlag oben.",
+  "assistant.source.ai": "KI-Antwort",
+  "assistant.source.rules": "Regelbasierte Antwort",
+  "assistant.suggestion.office": "Wer ist im Büro?",
+  "assistant.suggestion.remote": "Wer arbeitet remote?",
+  "assistant.suggestion.vacation": "Wer ist im Urlaub?",
   "telegram.title": "Telegram-Statusbot",
   "telegram.description":
     "Verbinden Sie Telegram, um tägliche Statusabfragen zu erhalten und Ihre Verfügbarkeit zu bestätigen.",
@@ -517,6 +668,42 @@ const de: Messages = {
   "projects.dialog.deleteTitle": "Projekt löschen",
   "projects.deleteConfirm":
     "Sind Sie sicher, dass Sie das Projekt löschen möchten",
+  "projects.ai.title": "KI-Projektassistent",
+  "projects.ai.description":
+    "Beschreiben Sie das Projekt in wenigen Worten — die KI schlägt Name, Domäne, Beschreibung und Stack aus dem Skills-Katalog vor.",
+  "projects.ai.briefLabel": "Projektidee",
+  "projects.ai.briefPlaceholder":
+    "z. B. Mobile E-Commerce-App für Fashion mit React und Node.js",
+  "projects.ai.generate": "Felder vorschlagen",
+  "projects.ai.generating": "Wird generiert…",
+  "projects.ai.source.ai": "KI-Vorschlag übernommen",
+  "projects.ai.source.rules": "Regelbasierter Vorschlag übernommen",
+  "projects.ai.footnote":
+    "Prüfen Sie alle Felder vor dem Erstellen. Stack-Einträge müssen in Skills existieren.",
+  "projects.candidates.menuItem": "Kandidaten finden",
+  "projects.candidates.title": "Projektkandidaten finden",
+  "projects.candidates.description":
+    "Abgleich nach Skills, Verfügbarkeit, Alter, Ausbildung und Abteilung. Optionale KI-Zusammenfassungen für Top-Treffer.",
+  "projects.candidates.minAge": "Mindestalter",
+  "projects.candidates.maxAge": "Höchstalter",
+  "projects.candidates.educationHint": "Ausbildungs-Stichwörter",
+  "projects.candidates.educationHintPlaceholder":
+    "z. B. Informatik, MBA, Bachelor",
+  "projects.candidates.department": "Abteilung",
+  "projects.candidates.position": "Position",
+  "projects.candidates.anyDepartment": "Beliebige Abteilung",
+  "projects.candidates.anyPosition": "Beliebige Position",
+  "projects.candidates.requireAvailable": "Nur Büro / remote / unbekannt",
+  "projects.candidates.search": "Kandidaten finden",
+  "projects.candidates.searching": "Abgleich…",
+  "projects.candidates.empty": "Keine Kandidaten für diese Filter.",
+  "projects.candidates.matchScore": "Match",
+  "projects.candidates.age": "Alter",
+  "projects.candidates.education": "Ausbildung",
+  "projects.candidates.matchedSkills": "Passende Skills",
+  "projects.candidates.missingSkills": "Fehlende Skills",
+  "projects.candidates.source.ai": "KI-Zusammenfassung",
+  "projects.candidates.source.rules": "Regelbasierte Zusammenfassung",
 };
 
 const catalogs: Record<Locale, Messages> = { en, ru, de };

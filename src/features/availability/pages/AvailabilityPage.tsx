@@ -7,6 +7,7 @@ import { AvailabilityFilters } from "../components/AvailabilityFilters";
 import { AvailabilityLiveIndicator } from "../components/AvailabilityStatusChip";
 import { AvailabilityStatsBar } from "../components/AvailabilityStatsBar";
 import { AvailabilityTable } from "../components/AvailabilityTable";
+import { HrAssistantPanel } from "../components/HrAssistantPanel";
 import { MyAvailabilityStatus } from "../components/MyAvailabilityStatus";
 import { useAvailabilityPage } from "../hooks/useAvailabilityPage";
 import { availabilitySx } from "../styles/availability.styles";
@@ -42,6 +43,7 @@ export function AvailabilityPage() {
         <AvailabilityLiveIndicator />
       </Box>
       <MyAvailabilityStatus />
+      <HrAssistantPanel />
       {!loading || allRows.length > 0 ? (
         <AvailabilityStatsBar rows={allRows} />
       ) : null}

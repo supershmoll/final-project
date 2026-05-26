@@ -10,4 +10,6 @@ export interface UserRow {
   position: string;
   role?: string;
   avatarUrl?: string;
+  birthDate?: string;
+  education?: string;
 }

@@ -25,6 +25,8 @@ export const UPDATE_PROFILE = gql`
       first_name
       last_name
       avatar
+      birth_date
+      education
     }
   }
 `;
@@ -69,6 +71,8 @@ export type UpdateProfileVariables = {
     userId: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
+    education?: string | null;
   };
 };
 

@@ -19,6 +19,7 @@ import {
 import { CATALOG_PROJECT_LIMITS } from "../constants";
 import type { CatalogProjectFormDialogProps } from "../types";
 import ProjectEnvironmentField from "./project-environment-field";
+import { ProjectAiSuggestSection } from "./project-ai-suggest-section";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
 
 function CatalogProjectFormDialog({
@@ -32,6 +33,7 @@ function CatalogProjectFormDialog({
   canSubmit,
   onClose,
   onSubmit,
+  onApplySuggestion,
 }: CatalogProjectFormDialogProps) {
   const title = mode === "create" ? "Create project" : "Update project";
   const submitLabel = mode === "create" ? "Create" : "Update";
@@ -65,6 +67,9 @@ function CatalogProjectFormDialog({
           onSubmit={onSubmit}
           sx={cvsStyles.dialogContent}
         >
+          {mode === "create" && onApplySuggestion ? (
+            <ProjectAiSuggestSection onApply={onApplySuggestion} />
+          ) : null}
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
               label="Name"

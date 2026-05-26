@@ -108,6 +108,30 @@ export function UserProfileForm({
             sx={[userProfileSx.field, userProfileSx.fieldReadOnly]}
           />
         )}
+        <TextField
+          label={USER_PROFILE_FORM_LABELS.birthDate}
+          type="date"
+          value={form.birthDate}
+          onChange={handleFieldChange("birthDate")}
+          slotProps={{
+            htmlInput: { readOnly: !canEditProfile },
+            inputLabel: { shrink: true },
+          }}
+          sx={[
+            userProfileSx.field,
+            !canEditProfile ? userProfileSx.fieldReadOnly : {},
+          ]}
+        />
+        <TextField
+          label={USER_PROFILE_FORM_LABELS.education}
+          value={form.education}
+          onChange={handleFieldChange("education")}
+          slotProps={{ htmlInput: { readOnly: !canEditProfile } }}
+          sx={[
+            userProfileSx.field,
+            !canEditProfile ? userProfileSx.fieldReadOnly : {},
+          ]}
+        />
       </Box>
       {submitError ? (
         <Typography sx={userProfileSx.formError}>{submitError}</Typography>

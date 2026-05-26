@@ -15,6 +15,7 @@ import { catalogPageSx } from "@/shared/styles/catalogPage.styles";
 import { catalogTableSx } from "@/shared/styles/catalogTable.styles";
 import { cvsStyles } from "@/features/cvs/styles/cvs.styles";
 import CatalogProjectFormDialog from "./catalog-project-form-dialog";
+import { ProjectCandidatesDialog } from "./project-candidates-dialog";
 import ProjectCard from "./project-card";
 import { useTranslation } from "@/i18n/use-translation";
 import useProjectsPage from "../hooks/use-projects-page";
@@ -89,6 +90,9 @@ function ProjectsPage() {
         sx={catalogTableSx.rowMenu}
       >
         <MenuItem onClick={page.openUpdateDialog}>{t("common.edit")}</MenuItem>
+        <MenuItem onClick={page.openCandidatesDialog}>
+          {t("projects.candidates.menuItem")}
+        </MenuItem>
         <MenuItem
           onClick={page.openDeleteDialog}
           sx={catalogTableSx.rowMenuDeleteItem}
@@ -108,6 +112,13 @@ function ProjectsPage() {
         canSubmit={page.formDialog.canSubmit}
         onClose={page.formDialog.onClose}
         onSubmit={page.formDialog.onSubmit}
+        onApplySuggestion={page.formDialog.onApplySuggestion}
+      />
+
+      <ProjectCandidatesDialog
+        open={page.candidatesDialog.open}
+        project={page.candidatesDialog.project}
+        onClose={page.candidatesDialog.close}
       />
 
       <ConfirmDialog

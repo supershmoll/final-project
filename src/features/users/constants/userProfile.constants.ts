@@ -5,6 +5,8 @@ export const USER_PROFILE_FORM_LABELS = {
   lastName: "Last Name",
   department: "Department",
   position: "Position",
+  birthDate: "Birth date",
+  education: "Education",
 } as const;
 
 /** Max avatar file size (500 KiB). */
