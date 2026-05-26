@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { ProfileBulkRemoveDialog } from "./ProfileBulkRemoveDialog";
 
 describe("ProfileBulkRemoveDialog", () => {
@@ -18,6 +19,7 @@ describe("ProfileBulkRemoveDialog", () => {
         onClose={onClose}
         onConfirm={onConfirm}
       />,
+      { wrapper: TestProviders },
     );
 
     expect(screen.getByText("Remove selected languages?")).toBeInTheDocument();
@@ -38,6 +40,7 @@ describe("ProfileBulkRemoveDialog", () => {
         onClose={jest.fn()}
         onConfirm={jest.fn()}
       />,
+      { wrapper: TestProviders },
     );
 
     expect(screen.getByText("Failed to remove")).toBeInTheDocument();

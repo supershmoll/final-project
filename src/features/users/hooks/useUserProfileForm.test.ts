@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import type { ChangeEvent } from "react";
 import { useUserProfileForm } from "./useUserProfileForm";
 import type { UserRow } from "../types";
@@ -45,12 +46,14 @@ describe("useUserProfileForm", () => {
   });
 
   it("falls back select values to empty when current options are unavailable", () => {
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user,
-        canEditProfile: true,
-        onUpdated: jest.fn(),
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user,
+          canEditProfile: true,
+          onUpdated: jest.fn(),
+        }),
+      { wrapper: TestProviders },
     );
 
     expect(result.current.selectedDepartmentId).toBe("");
@@ -60,12 +63,14 @@ describe("useUserProfileForm", () => {
 
   it("updates profile names and admin fields when form changes", async () => {
     const onUpdated = jest.fn().mockResolvedValue(undefined);
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user,
-        canEditProfile: true,
-        onUpdated,
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user,
+          canEditProfile: true,
+          onUpdated,
+        }),
+      { wrapper: TestProviders },
     );
 
     act(() =>
@@ -109,12 +114,14 @@ describe("useUserProfileForm", () => {
       position: "Developer",
     };
 
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user: stableUser,
-        canEditProfile: true,
-        onUpdated: jest.fn(),
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user: stableUser,
+          canEditProfile: true,
+          onUpdated: jest.fn(),
+        }),
+      { wrapper: TestProviders },
     );
 
     expect(result.current.canSubmit).toBe(false);
@@ -128,18 +135,20 @@ describe("useUserProfileForm", () => {
 
   it("uploads avatar and clears submit errors on field change", async () => {
     const onUpdated = jest.fn();
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user: { ...user, avatarUrl: "old.png" },
-        canEditProfile: true,
-        avatarUpload: {
-          previewUrl: "new.png",
-          base64: "data:image/png;base64,abc",
-          size: 1024,
-          type: "image/png",
-        },
-        onUpdated,
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user: { ...user, avatarUrl: "old.png" },
+          canEditProfile: true,
+          avatarUpload: {
+            previewUrl: "new.png",
+            base64: "data:image/png;base64,abc",
+            size: 1024,
+            type: "image/png",
+          },
+          onUpdated,
+        }),
+      { wrapper: TestProviders },
     );
 
     expect(result.current.canSubmit).toBe(true);
@@ -163,18 +172,20 @@ describe("useUserProfileForm", () => {
   });
 
   it("shows avatar size validation error", async () => {
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user: { ...user, avatarUrl: "old.png" },
-        canEditProfile: true,
-        avatarUpload: {
-          previewUrl: "new.png",
-          base64: "data:image/png;base64,abc",
-          size: 10_000_000,
-          type: "image/png",
-        },
-        onUpdated: jest.fn(),
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user: { ...user, avatarUrl: "old.png" },
+          canEditProfile: true,
+          avatarUpload: {
+            previewUrl: "new.png",
+            base64: "data:image/png;base64,abc",
+            size: 10_000_000,
+            type: "image/png",
+          },
+          onUpdated: jest.fn(),
+        }),
+      { wrapper: TestProviders },
     );
 
     act(() =>
@@ -193,12 +204,14 @@ describe("useUserProfileForm", () => {
 
   it("stores submit errors from failed mutations", async () => {
     mockUpdateProfile.mockRejectedValueOnce(new Error("Update failed"));
-    const { result } = renderHook(() =>
-      useUserProfileForm({
-        user,
-        canEditProfile: true,
-        onUpdated: jest.fn(),
-      }),
+    const { result } = renderHook(
+      () =>
+        useUserProfileForm({
+          user,
+          canEditProfile: true,
+          onUpdated: jest.fn(),
+        }),
+      { wrapper: TestProviders },
     );
 
     act(() =>

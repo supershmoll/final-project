@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { CatalogFormDialogTitle } from "./CatalogFormDialogTitle";
 
 describe("CatalogFormDialogTitle", () => {
@@ -7,6 +8,7 @@ describe("CatalogFormDialogTitle", () => {
 
     render(
       <CatalogFormDialogTitle title="Create department" onClose={onClose} />,
+      { wrapper: TestProviders },
     );
 
     expect(screen.getByText("Create department")).toBeInTheDocument();

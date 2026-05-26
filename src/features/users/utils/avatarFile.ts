@@ -1,5 +1,4 @@
 import { USER_PROFILE_AVATAR_ACCEPT_MIMES } from "@/features/users/constants/userProfile.constants";
-import type { MessageKey } from "@/i18n/messages";
 import type { AvatarUploadState } from "@/features/users/types/userProfile.types";
 
 export const AVATAR_FILE_ACCEPT = USER_PROFILE_AVATAR_ACCEPT_MIMES.join(",");

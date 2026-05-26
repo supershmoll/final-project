@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { mockCv } from "../../test-utils/fixtures";
 import useExportPdfMutation from "./use-export-pdf-mutation";
 
@@ -44,7 +45,9 @@ describe("useExportPdfMutation", () => {
       data: { exportPdf: "data:application/pdf;base64,abc" },
     });
 
-    const { result } = renderHook(() => useExportPdfMutation());
+    const { result } = renderHook(() => useExportPdfMutation(), {
+      wrapper: TestProviders,
+    });
 
     let exportResult: { ok: boolean };
     await act(async () => {
@@ -62,7 +65,9 @@ describe("useExportPdfMutation", () => {
   it("falls back to client export when server PDF is unavailable", async () => {
     mockExportPdfMutation.mockRejectedValue(new Error("puppeteer failed"));
 
-    const { result } = renderHook(() => useExportPdfMutation());
+    const { result } = renderHook(() => useExportPdfMutation(), {
+      wrapper: TestProviders,
+    });
 
     let exportResult: { ok: boolean };
     await act(async () => {
@@ -82,7 +87,9 @@ describe("useExportPdfMutation", () => {
     mockExportPdfMutation.mockRejectedValue(new Error("puppeteer failed"));
     const element = document.createElement("div");
 
-    const { result } = renderHook(() => useExportPdfMutation());
+    const { result } = renderHook(() => useExportPdfMutation(), {
+      wrapper: TestProviders,
+    });
 
     await act(async () => {
       await result.current.exportPdf(mockCv, element);

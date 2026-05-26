@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { useForm } from "react-hook-form";
 import CatalogProjectFormDialog from "./catalog-project-form-dialog";
 import type { CatalogProjectFormValues } from "../schemas";
@@ -52,7 +53,7 @@ function TestHarness({
 
 describe("CatalogProjectFormDialog", () => {
   it("renders create dialog fields and actions", () => {
-    render(<TestHarness />);
+    render(<TestHarness />, { wrapper: TestProviders });
 
     expect(screen.getByText("Create project")).toBeInTheDocument();
     expect(screen.getByLabelText("Name")).toHaveValue("HRM App");
@@ -61,7 +62,9 @@ describe("CatalogProjectFormDialog", () => {
 
   it("renders update labels and calls close handler", () => {
     const onClose = jest.fn();
-    render(<TestHarness mode="update" onClose={onClose} />);
+    render(<TestHarness mode="update" onClose={onClose} />, {
+      wrapper: TestProviders,
+    });
 
     expect(screen.getByText("Update project")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
@@ -69,7 +72,7 @@ describe("CatalogProjectFormDialog", () => {
   });
 
   it("disables submit when form cannot be submitted", () => {
-    render(<TestHarness canSubmit={false} />);
+    render(<TestHarness canSubmit={false} />, { wrapper: TestProviders });
     expect(screen.getByRole("button", { name: "Create" })).toBeDisabled();
   });
 });

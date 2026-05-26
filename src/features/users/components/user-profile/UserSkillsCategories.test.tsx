@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { UserSkillsCategories } from "./UserSkillsCategories";
 import type { UserSkillCategory } from "@/features/users/types/userSkills.types";
 
@@ -39,6 +40,7 @@ describe("UserSkillsCategories", () => {
         onExitRemove={jest.fn()}
         onOpenBulkConfirm={jest.fn()}
       />,
+      { wrapper: TestProviders },
     );
 
     expect(screen.getByText("Frontend")).toBeInTheDocument();
@@ -68,12 +70,13 @@ describe("UserSkillsCategories", () => {
         onExitRemove={jest.fn()}
         onOpenBulkConfirm={jest.fn()}
       />,
+      { wrapper: TestProviders },
     );
 
     expect(
       screen.getByRole("heading", { name: "Skills", level: 2 }),
     ).toBeInTheDocument();
-    expect(screen.getByText("No skills listed yet.")).toBeInTheDocument();
+    expect(screen.getByText("No skills added yet.")).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /remove skills/i }),
     ).toBeDisabled();
@@ -96,6 +99,7 @@ describe("UserSkillsCategories", () => {
         onExitRemove={jest.fn()}
         onOpenBulkConfirm={onOpenBulkConfirm}
       />,
+      { wrapper: TestProviders },
     );
 
     fireEvent.click(screen.getByRole("button", { name: /delete/i }));

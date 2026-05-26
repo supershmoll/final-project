@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { TestProviders } from "@/features/auth/test-utils/render-with-theme";
 import { UserLanguagesList } from "./UserLanguagesList";
 
 describe("UserLanguagesList", () => {
@@ -25,6 +26,7 @@ describe("UserLanguagesList", () => {
         onExitRemove={jest.fn()}
         onOpenBulkConfirm={jest.fn()}
       />,
+      { wrapper: TestProviders },
     );
 
     expect(screen.getByText("Languages")).toBeInTheDocument();
@@ -56,6 +58,7 @@ describe("UserLanguagesList", () => {
         onExitRemove={onExitRemove}
         onOpenBulkConfirm={onOpenBulkConfirm}
       />,
+      { wrapper: TestProviders },
     );
 
     fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
